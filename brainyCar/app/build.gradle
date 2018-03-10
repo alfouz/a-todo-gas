@@ -4,6 +4,7 @@ android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
     defaultConfig {
+        vectorDrawables.useSupportLibrary = true
         applicationId "com.atodogas.brainycar"
         minSdkVersion 14
         targetSdkVersion 27

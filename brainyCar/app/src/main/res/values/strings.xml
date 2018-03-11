@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">brainyCar</string>
+    <string name="welcomeSubtitle">Empieza a sacar partido \na tu OBD</string>
+    <string name="welcome">¡Bienvenido!</string>
+    <string name="login">Inicia Sesión con Google</string>
+    <string name="loginButtonDescription">Este botón permite al usuario autenticarse con google</string>
+    <string name="roadPictureDescription">Imagen de fondo de la pantalla de inicio, contiene una carretera con árboles a los lados</string>
+    <string name="homeButtonDescription">Este botón da acceso al apartado home</string>
+    <string name="locationButtonDescription">Este botón da acceso al apartado de localización</string>
+    <string name="healthButtonDescription">Este botón da acceso al apartado de diagnóstico</string>
+    <string name="historicButtonDescription">Este botón da acceso al apartado de historial</string>
+    <string name="profileButtonDescription">Este botón da acceso al apartado de perfil de usuario</string>
+    <string name="driveButtonText">Conducir</string>
+    <string name="lastTripTitle">Último Viaje</string>
+    <string name="carDataTitle">Datos Generales</string>
+    <string name="kmTitle">Kilómetros recorridos:</string>
+    <string name="gasolineTitle">Gasolina:</string>string>
+    <string name="coolantTitle">Líquido refrigerante:</string>
+    <string name="coolantIconDescription">Este icono representa el nivel líquido refrigerante del coche</string>
+    <string name="gasolineIconDescription">Este icono representa el nivel de gasolina del coche</string>
+    <string name="hourglassIconDescription">Este icono representa el tiempo realizado</string>
+    <string name="dashboardIconDescription">Este icono representa los kilómetros recorridos</string>
+    <string name="infoIconDescription">Este icono representa que el elemento donde se encuentra puede ser seleccionado para más información</string>
+    <string name="emptyRectangleDescription">Rectángulo gris sin relleno</string>
+    <string name="solidCircleDescription">Círculo gris con relleno del mismo color</string>
+    <string name="pointToPointDescription">Este icono representa el lugar de inicio y fin de un viaje</string>
+    <string name="lineDescription">Línea horizontal que divide visualmente la pantalla</string>
 </resources>

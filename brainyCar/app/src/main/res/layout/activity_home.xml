@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.atodogas.brainycar.HomeActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- MARCA DEL COCHE -->
+        <!-- TODO rellenar con datos y eliminar ignore -->
+        <TextView
+            android:id="@+id/carBrand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/lastTripLayout"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/lastTripLayout"
+            android:layout_marginTop="16dp"
+            android:text="VW Golf TDI 2011"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+
+        <!-- ÚLTIMO VIAJE -->
+        <RelativeLayout
+            android:id="@+id/lastTripLayout"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_alignLeft="@+id/carDataLayout"
+            android:layout_alignStart="@+id/carDataLayout"
+            android:layout_below="@+id/carBrand"
+            android:layout_marginEnd="26dp"
+            android:layout_marginRight="26dp"
+            android:layout_marginTop="26dp"
+            android:onClick="tripDetail">
+
+
+            <ImageView
+                android:id="@+id/pointToPoint"
+                android:layout_width="40dp"
+                android:layout_height="70dp"
+                android:layout_above="@+id/tripInfoIcon"
+                android:layout_toLeftOf="@+id/firstPlace"
+                android:layout_toStartOf="@+id/firstPlace"
+                android:contentDescription="@string/pointToPointDescription"
+                app:srcCompat="@drawable/ic_point_to_point" />
+
+            <TextView
+                android:id="@+id/lastTripTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/lastTripTitle"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
+
+            <!-- TODO rellenar con datos y eliminar ignore -->
+            <TextView
+                android:id="@+id/lasTripDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="17/01/18"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"
+                tools:ignore="HardcodedText,SmallSp" />
+
+            <!-- TODO rellenar con datos y eliminar ignore -->
+            <TextView
+                android:id="@+id/firstPlace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/tripDashboardValue"
+                android:layout_alignRight="@+id/tripDashboardValue"
+                android:layout_below="@+id/lastTripTitle"
+                android:layout_marginTop="13dp"
+                android:text="Madrid"
+                android:textAllCaps="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <!-- TODO rellenar con datos y eliminar ignore -->
+            <TextView
+                android:id="@+id/firstTripTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/firstPlace"
+                android:layout_alignWithParentIfMissing="false"
+                android:layout_centerInParent="false"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@+id/firstPlace"
+                android:layout_toStartOf="@+id/firstPlace"
+                android:text="18:00h"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText" />
+
+            <!-- TODO rellenar con datos y eliminar ignore -->
+            <TextView
+                android:id="@+id/secondPlace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/firstPlace"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/firstPlace"
+                android:layout_marginBottom="13dp"
+                android:text="A Coruña"
+                android:textAllCaps="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <!-- TODO rellenar con datos y eliminar ignore -->
+            <TextView
+                android:id="@+id/secondTripTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/secondPlace"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@+id/secondPlace"
+                android:layout_toStartOf="@+id/secondPlace"
+                android:text="23:30h"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/tripDashboardIcon"
+                android:layout_width="15sp"
+                android:layout_height="15sp"
+                android:layout_above="@+id/secondPlace"
+                android:layout_marginBottom="16sp"
+                android:layout_toEndOf="@+id/lastTripTitle"
+                android:layout_toRightOf="@+id/lastTripTitle"
+                android:contentDescription="@string/dashboardIconDescription"
+                app:srcCompat="@drawable/ic_dashboard" />
+
+            <!-- TODO rellenar con datos y eliminar ignore -->
+            <TextView
+                android:id="@+id/tripDashboardValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tripDashboardIcon"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/tripDashboardIcon"
+                android:layout_toRightOf="@+id/tripDashboardIcon"
+                android:text="591km"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/tripHourglassIcon"
+                android:layout_width="14sp"
+                android:layout_height="14sp"
+                android:layout_alignTop="@+id/tripDashboardIcon"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/hourglassIconDescription"
+                app:srcCompat="@drawable/ic_hourglass" />
+
+            <!-- TODO rellenar con datos y eliminar ignore -->
+            <TextView
+                android:id="@+id/tripHourglassValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tripHourglassIcon"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/tripHourglassIcon"
+                android:layout_toRightOf="@+id/tripHourglassIcon"
+                android:text="5h 30m"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/tripGasolineIcon"
+                android:layout_width="13sp"
+                android:layout_height="13sp"
+                android:layout_alignBottom="@+id/tripDashboardIcon"
+                android:layout_alignTop="@+id/tripHourglassIcon"
+                android:layout_marginEnd="39dp"
+                android:layout_marginRight="39dp"
+                android:layout_toLeftOf="@+id/lasTripDate"
+                android:layout_toStartOf="@+id/lasTripDate"
+                android:contentDescription="@string/gasolineIconDescription"
+                app:srcCompat="@drawable/ic_gasoline_pump" />
+
+            <!-- TODO rellenar con datos y eliminar ignore -->
+            <TextView
+                android:id="@+id/tripGasolineValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tripGasolineIcon"
+                android:layout_alignStart="@+id/tripGasolineIcon"
+                android:layout_alignTop="@+id/tripGasolineIcon"
+                android:layout_marginLeft="18dp"
+                android:layout_marginStart="18dp"
+                android:text="72l"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/tripInfoIcon"
+                android:layout_width="15sp"
+                android:layout_height="15sp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="5sp"
+                android:layout_marginEnd="5sp"
+                android:layout_marginRight="5sp"
+                android:contentDescription="@string/infoIconDescription"
+                app:srcCompat="@drawable/ic_info" />
+
+            <FrameLayout
+                android:id="@+id/lastTripRectangleLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/rectangleLastTrip"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/emptyRectangleDescription"
+                    app:srcCompat="@drawable/empty_rectangle" />
+            </FrameLayout>
+
+        </RelativeLayout>
+
+        <!-- DATOS GENERALES -->
+        <RelativeLayout
+            android:id="@+id/carDataLayout"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/lastTripLayout"
+            android:layout_marginLeft="26dp"
+            android:layout_marginRight="26dp"
+            android:layout_marginTop="36dp">
+
+            <TextView
+                android:id="@+id/carDataTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/carDataTitle"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/dashboardIcon"
+                android:layout_width="20sp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/dashboardText"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:contentDescription="@string/dashboardIconDescription"
+                app:srcCompat="@drawable/ic_dashboard_accent" />
+
+            <TextView
+                android:id="@+id/dashboardText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/carDataTitle"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
+                android:layout_toEndOf="@+id/dashboardIcon"
+                android:layout_toRightOf="@+id/dashboardIcon"
+                android:text="@string/kmTitle"
+                android:textColor="@color/colorPrimary" />
+
+            <!-- TODO rellenar con datos y eliminar ignore -->
+            <TextView
+                android:id="@+id/dahsboardValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/dashboardText"
+                android:layout_alignBottom="@+id/dashboardText"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_toEndOf="@+id/dashboardText"
+                android:layout_toRightOf="@+id/dashboardText"
+                android:text="2500km"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/gasolineIcon"
+                android:layout_width="20sp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/gasolineText"
+                android:layout_alignLeft="@+id/dashboardIcon"
+                android:layout_alignStart="@+id/dashboardIcon"
+                android:contentDescription="@string/gasolineIconDescription"
+                app:srcCompat="@drawable/ic_gasoline_pump_accent" />
+
+            <TextView
+                android:id="@+id/gasolineText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/dashboardText"
+                android:layout_alignStart="@+id/dashboardText"
+                android:layout_below="@+id/dashboardIcon"
+                android:layout_marginTop="16dp"
+                android:text="@string/gasolineTitle"
+                android:textColor="@color/colorPrimary" />
+
+            <!-- TODO rellenar con datos y eliminar ignore -->
+            <TextView
+                android:id="@+id/gasolineValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/gasolineText"
+                android:layout_alignBottom="@+id/gasolineText"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_toEndOf="@+id/carDataTitle"
+                android:layout_toRightOf="@+id/carDataTitle"
+                android:text="25/50l"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/coolantIcon"
+                android:layout_width="20sp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/coolantText"
+                android:layout_alignLeft="@+id/dashboardIcon"
+                android:layout_alignStart="@+id/dashboardIcon"
+                android:contentDescription="@string/coolantIconDescription"
+                app:srcCompat="@drawable/ic_engine_coolant_accent" />
+
+            <TextView
+                android:id="@+id/coolantText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/gasolineText"
+                android:layout_alignStart="@+id/gasolineText"
+                android:layout_below="@+id/gasolineText"
+                android:layout_marginTop="16dp"
+                android:text="@string/coolantTitle"
+                android:textColor="@color/colorPrimary" />
+
+            <!-- TODO rellenar con datos y eliminar ignore -->
+            <TextView
+                android:id="@+id/coolantValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/coolantText"
+                android:layout_alignBottom="@+id/coolantText"
+                android:layout_toEndOf="@+id/dashboardText"
+                android:layout_toRightOf="@+id/dashboardText"
+                android:text="4l"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:rotation="90"
+                app:srcCompat="@drawable/ic_menu" />
+
+            <FrameLayout
+                android:id="@+id/carDataRectangleLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/rectangleCarData"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/emptyRectangleDescription"
+                    app:srcCompat="@drawable/empty_rectangle" />
+            </FrameLayout>
+
+        </RelativeLayout>
+
+        <!-- BOTÓN "CONDUCIR" -->
+        <FrameLayout
+            android:id="@+id/driveButtonLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_above="@+id/menuHorizontalLine"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="20dp">
+
+            <Button
+                android:id="@+id/driveButton"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
+                android:background="@drawable/round_button_accent"
+                android:onClick="drive"
+                android:text="@string/driveButtonText"
+                android:textColor="@android:color/background_light" />
+        </FrameLayout>
+
+        <!-- MENU PARTE INFERIOR -->
+        <ImageView
+            android:id="@+id/menuHorizontalLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/menuLayout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:contentDescription="@string/lineDescription"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:id="@+id/menuLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/homeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/homeButtonDescription"
+                app:srcCompat="@drawable/ic_home_accent" />
+
+            <ImageView
+                android:id="@+id/locationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/locationButtonDescription"
+                android:onClick="location"
+                app:srcCompat="@drawable/ic_location" />
+
+            <ImageView
+                android:id="@+id/healthButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/healthButtonDescription"
+                android:onClick="health"
+                app:srcCompat="@drawable/ic_heart_beat" />
+
+            <ImageView
+                android:id="@+id/historicButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/historicButtonDescription"
+                android:onClick="historic"
+                app:srcCompat="@drawable/ic_historic_backup" />
+
+            <ImageView
+                android:id="@+id/profileButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/profileButtonDescription"
+                android:onClick="profile"
+                app:srcCompat="@drawable/ic_account_profile" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

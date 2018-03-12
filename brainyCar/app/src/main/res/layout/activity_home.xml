@@ -382,6 +382,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:rotation="90"
+                android:contentDescription="@string/slidesDescription"
                 app:srcCompat="@drawable/ic_menu" />
 
             <FrameLayout

@@ -25,4 +25,5 @@
     <string name="solidCircleDescription">Círculo gris con relleno del mismo color</string>
     <string name="pointToPointDescription">Este icono representa el lugar de inicio y fin de un viaje</string>
     <string name="lineDescription">Línea horizontal que divide visualmente la pantalla</string>
+    <string name="slidesDescription">Icono que indica que se puede deslizar a la derecha y/o izquierda para ver más info</string>
 </resources>

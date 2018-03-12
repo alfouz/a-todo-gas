@@ -1,4 +1,7 @@
 <resources>
+    <!-- ACTIONS MENU -->
+    <string name="action_settings">Configuración</string>
+    <!--AUTHENTICATION ACTIVITY -->
     <string name="app_name">brainyCar</string>
     <string name="welcomeSubtitle">Empieza a sacar partido \na tu OBD</string>
     <string name="welcome">¡Bienvenido!</string>

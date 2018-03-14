@@ -29,4 +29,12 @@
     <string name="pointToPointDescription">Este icono representa el lugar de inicio y fin de un viaje</string>
     <string name="lineDescription">Línea horizontal que divide visualmente la pantalla</string>
     <string name="slidesDescription">Icono que indica que se puede deslizar a la derecha y/o izquierda para ver más info</string>
+
+    <!-- HEALTH RESULTS ACTIVITY -->
+    <string name="healthResultsTitle">Diágnostico</string>
+    <string name="reiniciarTitle">Reiniciar</string>
+    <string name="resumenTitle">Resumen</string>
+    <string name="tiempoTranscurridoTitle">Tiempo Transcurrido:</string>
+    <string name="erroresDetectadosTitle">Errores Detectados:</string>
+    <string name="erroresTitle">Errores</string>
 </resources>

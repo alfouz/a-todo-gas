@@ -2,6 +2,7 @@ package com.atodogas.brainycar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,19 +11,36 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TabHost;
 import android.widget.Toast;
 
-public class HomeActivity extends AppCompatActivity {
-    private static final String TAG = HomeActivity.class.getSimpleName();
+public class ProfileActivity extends AppCompatActivity {
+    private static final String TAG = ProfileActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_profile);
         // Setting action bar
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Estado bluetooth");
+        getSupportActionBar().setTitle("Perfil");
+
+        Resources res = getResources();
+
+        TabHost tabs= findViewById(R.id.my_host);
+        tabs.setup();
+        TabHost.TabSpec spec=tabs.newTabSpec("mitab1");
+        spec.setContent(R.id.Resumen);
+        spec.setIndicator("Resumen",
+                res.getDrawable(android.R.drawable.ic_dialog_map));
+        tabs.addTab(spec);
+
+        spec=tabs.newTabSpec("mitab2");
+        spec.setContent(R.id.Logros);
+        spec.setIndicator("Logros",
+                res.getDrawable(android.R.drawable.ic_dialog_map));
+        tabs.addTab(spec);
     }
 
     @Override
@@ -60,28 +78,6 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void drive(View view) {
-        Log.d(TAG, "clicked button drive");
-
-        Context context = getApplicationContext();
-        CharSequence text = "clicked button drive";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-    }
-
-    public void tripDetail(View view) {
-        Log.d(TAG, "clicked to see details of last trip");
-
-        Context context = getApplicationContext();
-        CharSequence text = "clicked to see details of last trip";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-    }
-
     /** Called when the user taps the "location" menu button */
     public void location(View view) {
         Log.d(TAG, "clicked button location");
@@ -105,12 +101,11 @@ public class HomeActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-        //TODO esto deberia llevar a la activity del boton grande de diagnostico que actualmente no esta creada
         Intent intent = new Intent(this, HealthResultsActivity.class);
         startActivity(intent);
     }
 
-    /** Called when the user taps the "historic" menu button */
+    /** Called when the user taps the "location" menu button */
     public void historic(View view) {
         Log.d(TAG, "clicked button historic");
 

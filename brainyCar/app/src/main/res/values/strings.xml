@@ -37,4 +37,5 @@
     <string name="tiempoTranscurridoTitle">Tiempo Transcurrido:</string>
     <string name="erroresDetectadosTitle">Errores Detectados:</string>
     <string name="erroresTitle">Errores</string>
+    <string name="historicMenu">Historial</string>
 </resources>

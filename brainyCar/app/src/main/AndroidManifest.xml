@@ -27,6 +27,13 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity android:name=".HealthResultsActivity"></activity>
+        <activity android:name=".HistoricActivity"
+            android:parentActivityName=".HomeActivity" >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
     </application>
 
 </manifest>

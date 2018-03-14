@@ -2,27 +2,42 @@ package com.atodogas.brainycar;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TabHost;
 import android.widget.Toast;
 
-public class HomeActivity extends AppCompatActivity {
-    private static final String TAG = HomeActivity.class.getSimpleName();
+public class HistoricActivity extends AppCompatActivity {
+    private static final String TAG = HistoricActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_historic);
         // Setting action bar
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Estado bluetooth");
+
+        TabHost host = (TabHost)findViewById(R.id.tabHost);
+        host.setup();
+
+        //Tab 1
+        TabHost.TabSpec spec = host.newTabSpec("Viajes");
+        spec.setContent(R.id.tab1);
+        spec.setIndicator("Viajes");
+        host.addTab(spec);
+
+        //Tab 2
+        spec = host.newTabSpec("Estadisticas");
+        spec.setContent(R.id.tab2);
+        spec.setIndicator("Estadisticas");
+        host.addTab(spec);
     }
 
     @Override
@@ -46,10 +61,6 @@ public class HomeActivity extends AppCompatActivity {
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
-
-                //Sobreescrito para pasar al menú ajustes
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
                 return true;
 
             default:
@@ -58,6 +69,21 @@ public class HomeActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    /** Called when the user taps the "health" menu button */
+    public void home(View view) {
+        Log.d(TAG, "clicked button home");
+
+        Context context = getApplicationContext();
+        CharSequence text = "clicked button home";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
 
     public void drive(View view) {
@@ -104,25 +130,6 @@ public class HomeActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
-
-        //TODO esto deberia llevar a la activity del boton grande de diagnostico que actualmente no esta creada
-        Intent intent = new Intent(this, HealthResultsActivity.class);
-        startActivity(intent);
-    }
-
-    /** Called when the user taps the "historic" menu button */
-    public void historic(View view) {
-        Log.d(TAG, "clicked button historic");
-
-        Context context = getApplicationContext();
-        CharSequence text = "clicked button historic";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-
-        Intent intent = new Intent(this, HistoricActivity.class);
-        startActivity(intent);
     }
 
     /** Called when the user taps the "profile" menu button */

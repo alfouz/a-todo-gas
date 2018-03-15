@@ -95,7 +95,6 @@ public class HealthResultsActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-        //TODO esto deberia llevar a la activity del boton grande de diagnostico que actualmente no esta creada
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
@@ -144,6 +143,9 @@ public class HealthResultsActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+
+        Intent intent = new Intent(this, HistoricActivity.class);
+        startActivity(intent);
     }
 
     /** Called when the user taps the "profile" menu button */
@@ -156,6 +158,9 @@ public class HealthResultsActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
     }
 
     public void restartHealth(View view){

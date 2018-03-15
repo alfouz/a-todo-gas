@@ -78,6 +78,21 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    /** Called when the user taps the "health" menu button */
+    public void home(View view) {
+        Log.d(TAG, "clicked button home");
+
+        Context context = getApplicationContext();
+        CharSequence text = "clicked button home";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
     /** Called when the user taps the "location" menu button */
     public void location(View view) {
         Log.d(TAG, "clicked button location");
@@ -131,7 +146,5 @@ public class ProfileActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-        Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent);
     }
 }

@@ -61,6 +61,9 @@ public class HistoricActivity extends AppCompatActivity {
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 return true;
 
             default:
@@ -130,6 +133,10 @@ public class HistoricActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+
+        //TODO esto deberia llevar a la activity del boton grande de diagnostico que actualmente no esta creada
+        Intent intent = new Intent(this, HealthResultsActivity.class);
+        startActivity(intent);
     }
 
     /** Called when the user taps the "profile" menu button */
@@ -142,5 +149,8 @@ public class HistoricActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
     }
 }

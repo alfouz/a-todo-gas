@@ -26,20 +26,26 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
-        <activity android:name=".HealthResultsActivity"></activity>
-        <activity android:name=".HistoricActivity"
-            android:parentActivityName=".HomeActivity" >
+        <activity android:name=".HealthResultsActivity" />
+        <activity
+            android:name=".HistoricActivity"
+            android:parentActivityName=".HomeActivity">
+
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
-        <activity android:name=".ProfileActivity"
-            android:parentActivityName=".HomeActivity" >
+        <activity
+            android:name=".ProfileActivity"
+            android:parentActivityName=".HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"></activity>
     </application>
 
 </manifest>

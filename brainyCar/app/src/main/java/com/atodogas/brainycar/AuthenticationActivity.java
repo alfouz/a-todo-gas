@@ -29,7 +29,7 @@ public class AuthenticationActivity extends AppCompatActivity {
         toast.show();
 
         //TODO De manera temporal pasamos a la actividad Home
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

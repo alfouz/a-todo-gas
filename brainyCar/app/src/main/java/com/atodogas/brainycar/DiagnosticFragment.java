@@ -23,7 +23,7 @@ import android.widget.Toast;
  * A simple {@link Fragment} subclass.
  */
 public class DiagnosticFragment extends Fragment implements View.OnClickListener {
-    private static final String TAG = HomeActivity.class.getSimpleName();
+    private static final String TAG = DiagnosticFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,

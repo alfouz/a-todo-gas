@@ -18,7 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class HealthResultsActivity extends AppCompatActivity {
-    private static final String TAG = HomeActivity.class.getSimpleName();
+    private static final String TAG = HealthResultsActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +95,7 @@ public class HealthResultsActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, HomeFragment.class);
         startActivity(intent);
     }
 

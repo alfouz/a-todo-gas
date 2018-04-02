@@ -13,15 +13,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/my_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/Toolbar"
-            android:visibility="visible"
-            app:popupTheme="@style/OverflowToolbar"
-            app:title="@string/historicMenu" />
-
         <TabHost
             android:id="@+id/tabHost"
             android:layout_width="match_parent"

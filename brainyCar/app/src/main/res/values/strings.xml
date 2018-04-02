@@ -1,6 +1,16 @@
 <resources>
-    <!-- ACTIONS MENU -->
+    <!-- ACTIONS AND BOTTOM NAVIGATION MENU -->
     <string name="action_settings">Configuración</string>
+    <string name="home">Inicio</string>
+    <string name="location">Ubicación</string>
+    <string name="diagnostic">Diagnóstico</string>
+    <string name="historic">Histórico</string>
+    <string name="profile">Perfil</string>
+    <string name="homeButtonDescription">Este botón da acceso al apartado home</string>
+    <string name="locationButtonDescription">Este botón da acceso al apartado de localización</string>
+    <string name="healthButtonDescription">Este botón da acceso al apartado de diagnóstico</string>
+    <string name="historicButtonDescription">Este botón da acceso al apartado de historial</string>
+    <string name="profileButtonDescription">Este botón da acceso al apartado de perfil de usuario</string>
     <!--AUTHENTICATION ACTIVITY -->
     <string name="app_name">brainyCar</string>
     <string name="welcomeSubtitle">Empieza a sacar partido \na tu OBD</string>
@@ -8,11 +18,8 @@
     <string name="login">Inicia Sesión con Google</string>
     <string name="loginButtonDescription">Este botón permite al usuario autenticarse con google</string>
     <string name="roadPictureDescription">Imagen de fondo de la pantalla de inicio, contiene una carretera con árboles a los lados</string>
-    <string name="homeButtonDescription">Este botón da acceso al apartado home</string>
-    <string name="locationButtonDescription">Este botón da acceso al apartado de localización</string>
-    <string name="healthButtonDescription">Este botón da acceso al apartado de diagnóstico</string>
-    <string name="historicButtonDescription">Este botón da acceso al apartado de historial</string>
-    <string name="profileButtonDescription">Este botón da acceso al apartado de perfil de usuario</string>
+
+    <!--HOME FRAGMENT -->
     <string name="driveButtonText">Conducir</string>
     <string name="lastTripTitle">Último Viaje</string>
     <string name="carDataTitle">Datos Generales</string>

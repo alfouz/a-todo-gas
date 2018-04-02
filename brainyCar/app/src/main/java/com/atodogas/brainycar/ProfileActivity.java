@@ -89,7 +89,7 @@ public class ProfileActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, HomeFragment.class);
         startActivity(intent);
     }
 

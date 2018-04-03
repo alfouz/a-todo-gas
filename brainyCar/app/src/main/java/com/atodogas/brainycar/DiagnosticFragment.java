@@ -51,6 +51,9 @@ public class DiagnosticFragment extends Fragment implements View.OnClickListener
         Button reiniciarButton = view.findViewById(R.id.reiniciarButton);
         reiniciarButton.setOnClickListener(this);
 
+        MainActivity activity = (MainActivity) getActivity();
+        activity.changeActionBarTitle(getResources().getString(R.string.diagnostic));
+
         return view;
     }
 

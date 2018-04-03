@@ -37,8 +37,8 @@
     <string name="lineDescription">Línea horizontal que divide visualmente la pantalla</string>
     <string name="slidesDescription">Icono que indica que se puede deslizar a la derecha y/o izquierda para ver más info</string>
 
-    <!-- HEALTH RESULTS ACTIVITY -->
-    <string name="healthResultsTitle">Diágnostico</string>
+    <!-- DIAGNOSTIC FRAGMENT -->
+    <string name="healthResultsTitle">Diagnóstico</string>
     <string name="reiniciarTitle">Reiniciar</string>
     <string name="resumenTitle">Resumen</string>
     <string name="tiempoTranscurridoTitle">Tiempo Transcurrido:</string>

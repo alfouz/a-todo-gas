@@ -30,6 +30,7 @@ public class ProfileFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         activity.changeActionBarTitle("Perfil");
 
+
         root = inflater.inflate(R.layout.fragment_profile, container, false);
 
         Resources res = getResources();

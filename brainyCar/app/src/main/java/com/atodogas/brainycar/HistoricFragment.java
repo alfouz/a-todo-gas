@@ -30,6 +30,7 @@ public class HistoricFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         activity.changeActionBarTitle("Histórico");
 
+
         root = inflater.inflate(R.layout.fragment_historic, container, false);
 
         TabHost host = (TabHost) root.findViewById(R.id.tabHost);

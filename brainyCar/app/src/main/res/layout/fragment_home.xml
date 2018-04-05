@@ -132,9 +132,8 @@
             android:id="@+id/tripDashboardIcon"
             android:layout_width="15sp"
             android:layout_height="15sp"
-            android:layout_above="@+id/secondPlace"
-            android:layout_marginBottom="16sp"
-            android:layout_toEndOf="@+id/lastTripTitle"
+            android:layout_below="@id/firstPlace"
+            android:layout_above="@id/secondPlace"
             android:layout_toRightOf="@+id/lastTripTitle"
             android:contentDescription="@string/dashboardIconDescription"
             app:srcCompat="@drawable/ic_dashboard" />
@@ -144,11 +143,13 @@
             android:id="@+id/tripDashboardValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tripDashboardIcon"
             android:layout_marginLeft="5dp"
             android:layout_marginStart="5dp"
             android:layout_toEndOf="@+id/tripDashboardIcon"
             android:layout_toRightOf="@+id/tripDashboardIcon"
+            android:layout_below="@id/firstPlace"
+            android:layout_above="@id/secondPlace"
+            android:gravity="center"
             android:text="591km"
             android:textColor="@color/colorPrimary"
             android:textSize="12sp"
@@ -183,11 +184,11 @@
             android:layout_width="13sp"
             android:layout_height="13sp"
             android:layout_alignBottom="@+id/tripDashboardIcon"
-            android:layout_alignTop="@+id/tripHourglassIcon"
-            android:layout_marginEnd="39dp"
-            android:layout_marginRight="39dp"
-            android:layout_toLeftOf="@+id/lasTripDate"
-            android:layout_toStartOf="@+id/lasTripDate"
+            android:layout_alignTop="@+id/tripDashboardIcon"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_toLeftOf="@+id/tripHourglassIcon"
+            android:layout_toStartOf="@+id/tripHourglassIcon"
             android:contentDescription="@string/gasolineIconDescription"
             app:srcCompat="@drawable/ic_gasoline_pump" />
 
@@ -360,19 +361,13 @@
             android:rotation="90"
             app:srcCompat="@drawable/ic_menu" />
 
-        <FrameLayout
-            android:id="@+id/carDataRectangleLayout"
+        <ImageView
+            android:id="@+id/rectangleCarData"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp">
-
-            <ImageView
-                android:id="@+id/rectangleCarData"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/emptyRectangleDescription"
-                app:srcCompat="@drawable/empty_rectangle" />
-        </FrameLayout>
+            android:layout_below="@id/carDataTitle"
+            android:contentDescription="@string/emptyRectangleDescription"
+            app:srcCompat="@drawable/empty_rectangle" />
 
     </RelativeLayout>
 
@@ -383,8 +378,10 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:layout_marginLeft="100dp"
-        android:layout_marginRight="100dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/round_button_accent"
         android:text="@string/driveButtonText"
         android:textColor="@android:color/background_light" />

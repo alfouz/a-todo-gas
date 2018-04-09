@@ -54,7 +54,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     public void drive() {
         Log.d(TAG, "clicked button drive");
-        Toast.makeText(getActivity(),"clicked button drive",Toast.LENGTH_SHORT).show();
+
+        DashboardFragment dashboarFragment= new DashboardFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, dashboarFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     public void tripDetail() {

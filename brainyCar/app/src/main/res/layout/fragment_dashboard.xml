@@ -1,0 +1,244 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.atodogas.brainycar.DashboardFragment">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="88dp"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="306dp"
+            app:srcCompat="@drawable/ic_engine_accent" />
+
+        <ImageView
+            android:id="@+id/imageView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageView19"
+            android:layout_alignStart="@+id/imageView19"
+            android:layout_below="@+id/imageView19"
+            android:layout_marginTop="21dp"
+            app:srcCompat="@drawable/ic_battery_accent" />
+
+        <ImageView
+            android:id="@+id/imageView21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageView20"
+            android:layout_alignStart="@+id/imageView20"
+            android:layout_below="@+id/imageView20"
+            android:layout_marginTop="21dp"
+            app:srcCompat="@drawable/ic_gasoline_pump_accent" />
+
+        <ImageView
+            android:id="@+id/imageView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageView21"
+            android:layout_alignStart="@+id/imageView21"
+            android:layout_below="@+id/imageView21"
+            android:layout_marginTop="21dp"
+            app:srcCompat="@drawable/ic_dashboard_accent" />
+
+        <ImageView
+            android:id="@+id/imageView23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageView22"
+            android:layout_alignStart="@+id/imageView22"
+            android:layout_below="@+id/imageView22"
+            android:layout_marginTop="21dp"
+            app:srcCompat="@drawable/ic_hourglass_accent" />
+
+        <TextView
+            android:id="@+id/textView26"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView19"
+            android:layout_marginLeft="11dp"
+            android:layout_marginStart="11dp"
+            android:layout_toEndOf="@+id/imageView19"
+            android:layout_toRightOf="@+id/imageView19"
+            android:text="Temperatura motor: "
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/imageView21"
+            android:layout_alignLeft="@+id/textView26"
+            android:layout_alignStart="@+id/textView26"
+            android:text="Batería: "
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView21"
+            android:layout_alignLeft="@+id/textView27"
+            android:layout_alignStart="@+id/textView27"
+            android:text="@string/gasolineTitle"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView29"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/imageView23"
+            android:layout_alignLeft="@+id/textView28"
+            android:layout_alignStart="@+id/textView28"
+            android:text="Km recorridos: "
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView23"
+            android:layout_alignLeft="@+id/textView29"
+            android:layout_alignStart="@+id/textView29"
+            android:text="Tiempo transcurrido: "
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/temperaturaTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView19"
+            android:layout_toEndOf="@+id/textView26"
+            android:layout_toRightOf="@+id/textView26"
+            android:text="0 ºC"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/bateriaTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView27"
+            android:layout_toEndOf="@+id/textView27"
+            android:layout_toRightOf="@+id/textView27"
+            android:text="0 V"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/gasolinaTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView28"
+            android:layout_alignBottom="@+id/textView28"
+            android:layout_toEndOf="@+id/textView28"
+            android:layout_toRightOf="@+id/textView28"
+            android:text="0 L"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/kmRecorridosTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/imageView23"
+            android:layout_toEndOf="@+id/textView29"
+            android:layout_toRightOf="@+id/textView29"
+            android:text="0 Km"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tiempoTranscurridoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView30"
+            android:layout_toEndOf="@+id/textView30"
+            android:layout_toRightOf="@+id/textView30"
+            android:text="0 h 0 m 0 s"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/pausarButton"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignEnd="@+id/textView27"
+            android:layout_alignRight="@+id/textView27"
+            android:layout_below="@+id/imageView23"
+            android:layout_marginTop="54dp"
+            android:background="@drawable/round_button"
+            android:text="PAUSAR"
+            android:textColor="@color/ap_white" />
+
+        <Button
+            android:id="@+id/detenerButton"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignBottom="@+id/pausarButton"
+            android:layout_toEndOf="@+id/textView29"
+            android:layout_toRightOf="@+id/textView29"
+            android:background="@drawable/round_button_accent"
+            android:text="DETENER"
+            android:textColor="@color/ap_white" />
+
+        <TextView
+            android:id="@+id/velocidadTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/temperaturaTextView"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/temperaturaTextView"
+            android:layout_marginEnd="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="95dp"
+            android:text="0"
+            android:textSize="50sp" />
+
+        <TextView
+            android:id="@+id/textView37"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/temperaturaTextView"
+            android:layout_alignRight="@+id/temperaturaTextView"
+            android:layout_below="@+id/velocidadTextView"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:text="km/h"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/revolucionesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView39"
+            android:layout_alignLeft="@+id/pausarButton"
+            android:layout_alignStart="@+id/pausarButton"
+            android:text="0"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView39"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView37"
+            android:layout_alignLeft="@+id/revolucionesTextView"
+            android:layout_alignStart="@+id/revolucionesTextView"
+            android:text="RPM"
+            android:textSize="14sp" />
+
+
+    </RelativeLayout>
+
+</FrameLayout>

@@ -7,13 +7,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TabHost;
+
+import android.content.Intent;
+import android.net.Uri;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     private View root;
 
@@ -49,8 +55,22 @@ public class ProfileFragment extends Fragment {
                 res.getDrawable(android.R.drawable.ic_dialog_map));
         tabs.addTab(spec);
 
+        // Botón de share
+
+        Button btnCompartir = root.findViewById(R.id.share_button);
+        btnCompartir.setOnClickListener(this);
+
         // Inflate the layout for this fragment
         return root;
     }
 
+    @Override
+    public void onClick(View v) {
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+        startActivity(sharingIntent);
+
+    }
 }

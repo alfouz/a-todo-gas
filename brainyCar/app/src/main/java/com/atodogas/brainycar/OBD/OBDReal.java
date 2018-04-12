@@ -64,8 +64,8 @@ public class OBDReal extends OBDAdapter {
         this.output = output;
 
         this.echoOffCommand = new EchoOffCommand();
-        this.lineFeedOffCommand = new LineFeedOffCommand();
         this.timeoutCommand = new TimeoutCommand(30);
+        this.lineFeedOffCommand = new LineFeedOffCommand();
         this.selectProtocolCommand = new SelectProtocolCommand(ObdProtocols.AUTO);
         this.speedCommand = new SpeedCommand();
         this.rpmCommand = new RPMCommand();
@@ -205,7 +205,30 @@ public class OBDReal extends OBDAdapter {
             return new ArrayList<>(Arrays.asList(troubleCodesString.split("\n")));
         }
         catch (ResponseException ex) {
-            return new ArrayList<>();
+            return new ArrayList<String>();
         }
+    }
+
+    public ArrayList<String> getPIDsSupported() {
+        ArrayList<String> supported = new ArrayList<>();
+        try {
+            AvailablePidsCommand av = new AvailablePidsCommand_01_20();
+            av.run(input, output);
+            supported.add(av.getCalculatedResult());
+
+            av = new AvailablePidsCommand_21_40();
+            av.run(input, output);
+            supported.add(av.getCalculatedResult());
+
+            av = new AvailablePidsCommand_41_60();
+            av.run(input, output);
+            supported.add(av.getCalculatedResult());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return supported;
     }
 }

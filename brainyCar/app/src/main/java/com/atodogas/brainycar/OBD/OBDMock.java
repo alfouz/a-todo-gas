@@ -18,7 +18,7 @@ public class OBDMock extends OBDAdapter {
 
     @Override
     public OBDDTO getRealTimeData() throws IOException, InterruptedException {
-        Thread.sleep(350);
+        Thread.sleep(1000);
         OBDDTO obddto = new OBDDTO();
 
         if(obdData.size() > 0){
@@ -30,7 +30,6 @@ public class OBDMock extends OBDAdapter {
 
         return obddto;
     }
-
     @Override
     public String getFuelType() throws IOException, InterruptedException {
         return "Gasoline";

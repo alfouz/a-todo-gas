@@ -4,9 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="16dp"
-    tools:context="com.atodogas.brainycar.DashboardFragment">
+    tools:context="com.atodogas.brainycar.DashboardActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Toolbar"
+        app:popupTheme="@style/OverflowToolbar" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -21,9 +26,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="75dp"
-            android:layout_marginRight="75dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="57dp"
+            android:layout_marginRight="57dp"
+            android:layout_marginTop="33dp"
             android:text="0"
             android:textSize="50sp" />
 
@@ -75,7 +81,9 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="24dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="30dp"
             app:srcCompat="@drawable/ic_engine_accent" />
 
         <ImageView

@@ -154,11 +154,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     public void drive() {
         Log.d(TAG, "clicked button drive");
-        DashboardFragment dashboarFragment= new DashboardFragment();
-        mainActivity.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, dashboarFragment)
-                .addToBackStack(null)
-                .commit();
+        //Pasamos a la activity de dashboard
+        Intent intent = new Intent(getActivity(), DashboardActivity.class);
+        startActivity(intent);
     }
 
     public void tripDetail() {

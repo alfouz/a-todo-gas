@@ -1,6 +1,7 @@
 package com.atodogas.brainycar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -32,6 +33,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         //Actualizar pantalla
         updateDashboardInformation();
 
+        Intent trackingServiceIntent = new Intent(this, TrackingService.class);
+        startService(trackingServiceIntent);
+
     }
 
     @Override
@@ -62,6 +66,13 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         Log.d(TAG, "clicked button Detener");
         Toast.makeText(context, text, duration).show();
+
+
+        Intent trackingServiceIntent = new Intent(this, TrackingService.class);
+        stopService(trackingServiceIntent);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     ///TODO Obtener los valores a través de bluetooth

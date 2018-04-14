@@ -2,6 +2,7 @@ package com.atodogas.brainycar;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -44,6 +45,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         //Actualizar pantalla
         updateDashboardInformation(root);
 
+
+        Intent pepe = new Intent(getContext(),TrackingService.class);
+        pepe.setAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+        getActivity().startService(pepe);
+
         return root;
     }
 
@@ -62,11 +68,15 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     public void pausar() {
         Log.d(TAG, "clicked button Pausar");
         Toast.makeText(getActivity(),"clicked button Pausar",Toast.LENGTH_SHORT).show();
+
     }
 
     public void detener() {
         Log.d(TAG, "clicked button Detener");
         Toast.makeText(getActivity(),"clicked button Detener",Toast.LENGTH_SHORT).show();
+
+        Intent pepe = new Intent(getContext(),TrackingService.class);
+        getActivity().stopService(pepe);
     }
 
     ///TODO Obtener los valores a través de bluetooth

@@ -30,6 +30,7 @@
     <string name="gasolineIconDescription">Este icono representa el nivel de gasolina del coche</string>
     <string name="hourglassIconDescription">Este icono representa el tiempo realizado</string>
     <string name="dashboardIconDescription">Este icono representa los kilómetros recorridos</string>
+    <string name="pointsIconDescription">Este icono representa los puntos ganados por el viaje</string>
     <string name="infoIconDescription">Este icono representa que el elemento donde se encuentra puede ser seleccionado para más información</string>
     <string name="emptyRectangleDescription">Rectángulo gris sin relleno</string>
     <string name="solidCircleDescription">Círculo gris con relleno del mismo color</string>

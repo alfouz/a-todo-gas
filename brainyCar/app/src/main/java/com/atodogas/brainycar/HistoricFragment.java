@@ -4,13 +4,13 @@ package com.atodogas.brainycar;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TabHost;
 
 import com.androidplot.xy.BarFormatter;
@@ -19,6 +19,10 @@ import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.util.ArrayList;
 
 
 /**
@@ -52,6 +56,24 @@ public class HistoricFragment extends Fragment implements View.OnClickListener{
         spec.setContent(R.id.tab1);
         spec.setIndicator("Viajes");
         host.addTab(spec);
+
+        ArrayList<TripEntity> trips = new ArrayList<TripEntity>();
+        trips.add(new TripEntity(new Date(2017,07,11), new Time(18,00,00),
+                new Time(23,30,00),"Madrid", "A Coruña", 591, 72, 82));
+        trips.add(new TripEntity(new Date(2017,07,11), new Time(18,00,00),
+                new Time(23,00,00),"Madrid", "A Coruña", 591, 72, 82));
+        trips.add(new TripEntity(new Date(2017,07,11), new Time(18,00,00),
+                new Time(23,00,00),"Madrid", "A Coruña", 591, 72, 82));
+        trips.add(new TripEntity(new Date(2017,07,11), new Time(18,00,00),
+                new Time(23,00,00),"Madrid", "A Coruña", 591, 72, 82));
+
+        HistoricFragmentTripAdapter adapter = new HistoricFragmentTripAdapter(trips);
+        RecyclerView myView =  root.findViewById(R.id.tab1);
+        myView.setHasFixedSize(true);
+        myView.setAdapter(adapter);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        myView.setLayoutManager(llm);
 
         //Tab 2
         spec = host.newTabSpec("Estadisticas");

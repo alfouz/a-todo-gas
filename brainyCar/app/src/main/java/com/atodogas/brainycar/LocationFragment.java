@@ -12,20 +12,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LocationFragment extends Fragment implements SensorEventListener {
+public class LocationFragment extends Fragment {
 
-    private SensorManager sm;
-    private Sensor sAcc;
-    private Sensor sGir;
-    private Sensor sMag;
+    MapView mMapView;
+    private GoogleMap googleMap;
 
-    private TextView tacel;
-    private TextView tgir;
-    private TextView tmag;
 
     public LocationFragment() {
         // Required empty public constructor
@@ -38,69 +43,59 @@ public class LocationFragment extends Fragment implements SensorEventListener {
 
         View view = inflater.inflate(R.layout.fragment_location, container, false);
 
-        sm = (SensorManager)getActivity().getSystemService(getActivity().SENSOR_SERVICE);
-        sAcc = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sGir = sm.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        sMag = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        mMapView = (MapView) view.findViewById(R.id.mapView);
+        mMapView.onCreate(savedInstanceState);
 
+        mMapView.onResume(); // needed to get the map to display immediately
 
-        tacel = view.findViewById(R.id.tacel);
-        tgir = view.findViewById(R.id.tgir);
-        tmag = view.findViewById(R.id.tmag);
-        // Inflate the layout for this fragment
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mMapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap mMap) {
+                googleMap = mMap;
+
+                // For showing a move to my location button
+                //googleMap.setMyLocationEnabled(true);
+
+                // For dropping a marker at a point on the Map
+                LatLng aCientifica = new LatLng(43.333001, -8.40903);
+                googleMap.addMarker(new MarkerOptions().position(aCientifica).title("Marcador de prueba").snippet("La vida es un sueño de Resines"));
+
+                // For zooming automatically to the location of the marker
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(aCientifica).zoom(12).build();
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }
+        });
+
         return view;
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        sm.registerListener(this, sAcc, SensorManager.SENSOR_DELAY_NORMAL);
-        sm.registerListener(this, sGir, SensorManager.SENSOR_DELAY_NORMAL);
-        sm.registerListener(this, sMag, SensorManager.SENSOR_DELAY_NORMAL);
+        mMapView.onResume();
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
-        sm.unregisterListener(this);
-    }
-
-    private void setValues(){
-        if(sAcc!=null){
-            tacel.setText("Acelerómetro: " + sAcc.getName() + " " + 0);
-        }
-        else {
-            tacel.setText("Acelerómetro no disponible");
-        }
-        if(sGir!=null){
-            tgir.setText("Giroscopio: " + sGir.getName() + " " + 0);
-        }
-        else {
-            tgir.setText("Giroscopio no disponible");
-        }
-        if(sMag!=null){
-            tmag.setText("Magnetómetro: " + sMag.getName() + " " + 0);
-        }
-        else {
-            tmag.setText("Magnetómetro no disponible");
-        }
+        mMapView.onPause();
     }
 
     @Override
-    public void onSensorChanged(SensorEvent event) {
-        if(sAcc!=null)if(event.sensor.getName().equals(sAcc.getName())){
-            tacel.setText("Acelerómetro: " + sAcc.getName() + " " + event.values[0] + "," + event.values[1] + "," + event.values[2]);
-        }
-        if(sGir!=null)if(event.sensor.getName().equals(sGir.getName())){
-            tgir.setText("Giroscopio: " + sGir.getName() + " " + event.values[0] + "," + event.values[1] + "," + event.values[2]);
-        }
-        if(sMag!=null)if(event.sensor.getName().equals(sMag.getName())){
-            tmag.setText("Magnetómetro: " + sMag.getName() + " " + event.values[0] + "," + event.values[1] + "," + event.values[2]);
-        }
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
     }
 }

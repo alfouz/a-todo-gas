@@ -1,8 +1,11 @@
 package com.atodogas.brainycar;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -10,6 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.atodogas.brainycar.Services.Extra.DashboardDTO;
+import com.atodogas.brainycar.Services.TrackingService;
 
 public class DashboardActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -31,11 +37,23 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         detenerButton.setOnClickListener(this);
 
         //Actualizar pantalla
-        updateDashboardInformation();
+        //updateDashboardInformation();
 
         Intent trackingServiceIntent = new Intent(this, TrackingService.class);
         startService(trackingServiceIntent);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.DASHBOARD_DTO));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(dashboardDTOReceive);
     }
 
     @Override
@@ -77,22 +95,27 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     ///TODO Obtener los valores a través de bluetooth
     //Metodo para actualizar los valores de la pantalla
-    private void updateDashboardInformation() {
-        int temperaturaValue = 120;
-        int bateriaValue = 14;
+    private void updateDashboardInformation(DashboardDTO dashboardDTO) {
+        float temperaturaValue = dashboardDTO.temperature;
+        float bateriaValue = dashboardDTO.battery;
         int gasolinaValue = 23;
         int kmRecorridosValue = 175;
         int tiempoTranscurridoHorasValue = 2;
         int tiempoTranscurridoMinutosValue = 15;
         int tiempoTranscurridoSegundosValue = 12;
-        int revolucionesValue = 2500;
-        int velocidadValue = 80;
+        int revolucionesValue = dashboardDTO.rpm;
+        int velocidadValue = dashboardDTO.speed;
 
-        final TextView temperaturaTextView = (TextView) findViewById(R.id.temperaturaTextView);
-        temperaturaTextView.setText(temperaturaValue + " ºC");
+        if(dashboardDTO.temperature != -1){
+            final TextView temperaturaTextView = (TextView) findViewById(R.id.temperaturaTextView);
+            temperaturaTextView.setText(dashboardDTO.temperature + " ºC");
+        }
 
-        final TextView bateriaTextView = (TextView) findViewById(R.id.bateriaTextView);
-        bateriaTextView.setText(bateriaValue + " V");
+        if(dashboardDTO.battery != -1){
+            final TextView bateriaTextView = (TextView) findViewById(R.id.bateriaTextView);
+            bateriaTextView.setText(dashboardDTO.battery + " V");
+        }
+
 
         final TextView gasolinaTextView = (TextView) findViewById(R.id.gasolinaTextView);
         gasolinaTextView.setText(gasolinaValue + " L");
@@ -100,15 +123,31 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         final TextView kmRecorridosTextView = (TextView) findViewById(R.id.kmRecorridosTextView);
         kmRecorridosTextView.setText(kmRecorridosValue + " km");
 
-        final TextView tiempoTranscurridoTextView = (TextView) findViewById(R.id.tiempoTranscurridoTextView);
-        tiempoTranscurridoTextView.setText(tiempoTranscurridoHorasValue + " h" + tiempoTranscurridoMinutosValue + " m"
-                + tiempoTranscurridoSegundosValue + " s");
 
-        final TextView revolucionesTextView = (TextView) findViewById(R.id.revolucionesTextView);
-        revolucionesTextView.setText("" + revolucionesValue);
+        final TextView tiempoTranscurridoTextView = findViewById(R.id.tiempoTranscurridoTextView);
+        tiempoTranscurridoTextView.setText(dashboardDTO.hours + " h" + dashboardDTO.minutes + " m"
+                + dashboardDTO.seconds + " s");
 
-        final TextView velocidadTextView = (TextView) findViewById(R.id.velocidadTextView);
-        velocidadTextView.setText("" + velocidadValue);
+        if(dashboardDTO.rpm != -1){
+            final TextView revolucionesTextView = (TextView) findViewById(R.id.revolucionesTextView);
+            revolucionesTextView.setText("" + dashboardDTO.rpm);
+        }
+
+        if(dashboardDTO.speed != -1){
+            final TextView velocidadTextView = (TextView) findViewById(R.id.velocidadTextView);
+            velocidadTextView.setText("" + dashboardDTO.speed);
+        }
     }
 
+    private final BroadcastReceiver dashboardDTOReceive = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if(TrackingService.DASHBOARD_DTO.equals(action)) {
+                DashboardDTO dashboardDTO = intent.getParcelableExtra("DashboardDTO");
+                updateDashboardInformation(dashboardDTO);
+            }
+        }
+    };
 }

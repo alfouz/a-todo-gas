@@ -63,6 +63,24 @@ public class OBDReal extends OBDAdapter {
         this.input = input;
         this.output = output;
 
+        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+        HashMap<String, String> devices = new HashMap<>();
+
+        for (BluetoothDevice device : btAdapter.getBondedDevices()){
+            devices.put(device.getName(), device.getAddress());
+        }
+
+        String address = devices.get("OBDII");
+
+        BluetoothDevice device = btAdapter.getRemoteDevice(address);
+        UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+
+        BluetoothSocket socket = device.createRfcommSocketToServiceRecord(uuid);
+        socket.connect();
+
+        this.input = socket.getInputStream();
+        this.output = socket.getOutputStream();
+
         this.echoOffCommand = new EchoOffCommand();
         this.timeoutCommand = new TimeoutCommand(30);
         this.lineFeedOffCommand = new LineFeedOffCommand();
@@ -166,14 +184,6 @@ public class OBDReal extends OBDAdapter {
         try {
             intakeManifoldPressureCommand.run(input, output);
             dto.intakeManifoldPresure = intakeManifoldPressureCommand.getMetricUnit();
-        }
-        catch (ResponseException e){
-            e.printStackTrace();
-        }
-
-        try {
-            consumptionRateCommand.run(input, output);
-            dto.fuelRate = consumptionRateCommand.getLitersPerHour();
         }
         catch (ResponseException e){
             e.printStackTrace();

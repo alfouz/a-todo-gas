@@ -77,7 +77,7 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             personName = account.getDisplayName();
-            personPhotoUrl = account.getPhotoUrl().toString();
+            //personPhotoUrl = account.getPhotoUrl().toString();
             email = account.getEmail();
 
             Log.e(TAG, "Name: " + personName + ", email: " + email

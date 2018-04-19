@@ -1,2 +1,4 @@
 /build
 /src/main/res/values/api_keys.xml
+atodogas.keystore
+signing.properties

@@ -61,6 +61,9 @@
     <string name="numberRankingTitle">Puesto Ranking:</string>
     <string name="numberAchievementsTitle">Logros:</string>
 
+    <!-- LOCATION FRAGMENT -->
+    <string name="locationPermissionUnable">No se puede mostrar mi ubicación por falta de permisos</string>
+
     <!-- TRACKING SERVICE -->
     <string name="trackingNotificationTitle">Trayecto en curso</string>
     <string name="trackingNotificationSubtitle">El dispositivo está recopilando datos de conducción</string>

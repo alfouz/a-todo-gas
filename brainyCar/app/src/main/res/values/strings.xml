@@ -11,6 +11,7 @@
     <string name="healthButtonDescription">Este botón da acceso al apartado de diagnóstico</string>
     <string name="historicButtonDescription">Este botón da acceso al apartado de historial</string>
     <string name="profileButtonDescription">Este botón da acceso al apartado de perfil de usuario</string>
+
     <!--AUTHENTICATION ACTIVITY -->
     <string name="app_name">brainyCar</string>
     <string name="welcomeSubtitle">Empieza a sacar partido \na tu OBD</string>
@@ -30,6 +31,7 @@
     <string name="gasolineIconDescription">Este icono representa el nivel de gasolina del coche</string>
     <string name="hourglassIconDescription">Este icono representa el tiempo realizado</string>
     <string name="dashboardIconDescription">Este icono representa los kilómetros recorridos</string>
+    <string name="pointsIconDescription">Este icono representa los puntos ganados por el viaje</string>
     <string name="infoIconDescription">Este icono representa que el elemento donde se encuentra puede ser seleccionado para más información</string>
     <string name="emptyRectangleDescription">Rectángulo gris sin relleno</string>
     <string name="solidCircleDescription">Círculo gris con relleno del mismo color</string>
@@ -54,10 +56,12 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
+    <!-- PROFILE FRAGMENT -->
+    <string name="numberPointsTitle">Puntuación:</string>
+    <string name="numberRankingTitle">Puesto Ranking:</string>
+    <string name="numberAchievementsTitle">Logros:</string>
+
     <!-- TRACKING SERVICE -->
     <string name="trackingNotificationTitle">Trayecto en curso</string>
     <string name="trackingNotificationSubtitle">El dispositivo está recopilando datos de conducción</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

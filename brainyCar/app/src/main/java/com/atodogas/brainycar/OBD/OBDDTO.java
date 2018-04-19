@@ -17,8 +17,6 @@ public class OBDDTO implements Parcelable {
     public float airIntakeTemp;
     public float massAirFlow;
     public int intakeManifoldPresure;
-    public float l100;
-    public float l100avg;
 
     public OBDDTO(){
         this.speed = -1;
@@ -32,8 +30,6 @@ public class OBDDTO implements Parcelable {
         this.airIntakeTemp = -1;
         this.massAirFlow = -1;
         this.intakeManifoldPresure = -1;
-        this.l100 = -1;
-        this.l100avg = -1;
     }
 
     public OBDDTO(Parcel in) {
@@ -48,8 +44,6 @@ public class OBDDTO implements Parcelable {
         this.airIntakeTemp = in.readFloat();
         this.massAirFlow = in.readFloat();
         this.intakeManifoldPresure = in.readInt();
-        this.l100 = in.readFloat();
-        this.l100avg = in.readFloat();
     }
 
     public void toDebug(){
@@ -64,8 +58,6 @@ public class OBDDTO implements Parcelable {
         Log.d("TEMP AIRE ENTRADA", Float.toString(airIntakeTemp));
         Log.d("MASA FLUJO AIRE", Float.toString(massAirFlow));
         Log.d("MAP", Integer.toString(intakeManifoldPresure));
-        Log.d("L100km", Float.toString(l100));
-        Log.d("AVG L100km", Float.toString(l100avg));
     }
 
     @Override
@@ -86,8 +78,6 @@ public class OBDDTO implements Parcelable {
         dest.writeFloat(this.airIntakeTemp);
         dest.writeFloat(this.massAirFlow);
         dest.writeInt(this.intakeManifoldPresure);
-        dest.writeFloat(this.l100);
-        dest.writeFloat(this.l100avg);
     }
 
     public static final Parcelable.Creator<OBDDTO> CREATOR

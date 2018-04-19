@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="16dp"
+    android:layout_margin="10dp"
     tools:context="com.atodogas.brainycar.HomeFragment">
 
     <!-- MARCA DEL COCHE -->
@@ -19,341 +19,290 @@
         android:textSize="16sp"
         android:textStyle="bold"/>
 
-    <android.support.v7.widget.CardView
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
-    android:layout_gravity="center"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="5"
-    card_view:cardCornerRadius="10dp"
-    card_view:cardElevation="3dp"
-    card_view:cardUseCompatPadding="true"
-    card_view:cardBackgroundColor="@color/colorWhite">
+    <!-- ÚLTIMO VIAJE -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/lastTripTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:text="@string/lastTripTitle"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryExtraDark"
+            android:textSize="12sp" />
+
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/lastTripLayout"
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:layout_margin="16dp">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lastTripTitle"/>
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/lastTripTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:text="@string/lastTripTitle"
-                android:textAllCaps="true"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimaryExtraDark"
-                android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/lastTripDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_alignBottom="@id/lastTripTitle"
-                android:textColor="@color/colorPrimaryExtraDark"
-                android:textSize="12sp"/>
-
-            <TextView
-                android:id="@+id/firstTripTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginStart="25dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/firstPlace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/firstTripTime"
-                android:layout_toEndOf="@id/firstTripTime"
-                android:layout_alignBaseline="@id/firstTripTime"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:textAllCaps="true"
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/secondTripTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignLeft="@id/firstTripTime"
-                android:layout_alignStart="@id/firstTripTime"
-                android:layout_marginBottom="10dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/secondPlace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/firstPlace"
-                android:layout_alignStart="@id/firstPlace"
-                android:layout_alignBaseline="@id/secondTripTime"
-                android:layout_marginBottom="10dp"
-                android:textAllCaps="true"
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <FrameLayout
-                android:id="@+id/pointToPointLayout"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/firstTripTime"
-                android:layout_above="@id/secondTripTime"
-                android:layout_toLeftOf="@+id/firstPlace"
-                android:layout_toStartOf="@+id/firstPlace" >
-                <ImageView
-                    android:id="@+id/pointToPoint"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:contentDescription="@string/pointToPointDescription"
-                    app:srcCompat="@drawable/ic_point_to_point" />
-            </FrameLayout>
-
-            <ImageView
-                android:id="@+id/tripHourglassIcon"
-                android:layout_width="14sp"
-                android:layout_height="14sp"
-                android:layout_below="@id/firstPlace"
-                android:layout_above="@id/secondPlace"
-                android:layout_toRightOf="@id/tripDashboardValue"
-                android:layout_toEndOf="@id/tripDashboardValue"
-                android:layout_marginLeft="25dp"
-                android:layout_marginStart="25dp"
-                android:contentDescription="@string/hourglassIconDescription"
-                app:srcCompat="@drawable/ic_hourglass" />
-
-            <ImageView
-                android:id="@+id/tripDashboardIcon"
-                android:layout_width="15sp"
-                android:layout_height="15sp"
-                android:layout_alignLeft="@id/firstPlace"
-                android:layout_alignStart="@id/firstPlace"
-                android:layout_below="@id/firstPlace"
-                android:layout_above="@id/secondPlace"
-                android:contentDescription="@string/dashboardIconDescription"
-                app:srcCompat="@drawable/ic_dashboard" />
-
-            <ImageView
-                android:id="@+id/tripGasolineIcon"
-                android:layout_width="13sp"
-                android:layout_height="13sp"
-                android:layout_below="@id/firstPlace"
-                android:layout_above="@id/secondPlace"
-                android:layout_toRightOf="@id/tripHourglassValue"
-                android:layout_toEndOf="@id/tripHourglassValue"
-                android:layout_marginLeft="25dp"
-                android:layout_marginStart="25dp"
-                android:contentDescription="@string/gasolineIconDescription"
-                app:srcCompat="@drawable/ic_gasoline_pump" />
-
-            <ImageView
-                android:id="@+id/tripInfoIcon"
-                android:layout_width="15sp"
-                android:layout_height="15sp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:contentDescription="@string/infoIconDescription"
-                app:srcCompat="@drawable/ic_info" />
-
-            <TextView
-                android:id="@+id/tripDashboardValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/firstPlace"
-                android:layout_above="@id/secondPlace"
-                android:gravity="center"
-                android:layout_toRightOf="@id/tripDashboardIcon"
-                android:layout_toEndOf="@id/tripDashboardIcon"
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tripHourglassValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/firstPlace"
-                android:layout_above="@id/secondPlace"
-                android:gravity="center"
-                android:layout_toRightOf="@id/tripHourglassIcon"
-                android:layout_toEndOf="@id/tripHourglassIcon"
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tripGasolineValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/firstPlace"
-                android:layout_above="@id/secondPlace"
-                android:gravity="center"
-                android:layout_toRightOf="@id/tripGasolineIcon"
-                android:layout_toEndOf="@id/tripGasolineIcon"
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="12sp" />
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view2"
+    <!-- DATOS GENERALES -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
-        card_view:cardCornerRadius="10dp"
-        card_view:cardElevation="3dp"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardBackgroundColor="@color/colorWhite">
+        android:layout_weight="5">
 
-        <RelativeLayout
-            android:id="@+id/carDataLayout"
+        <TextView
+            android:id="@+id/carDataTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:text="@string/carDataTitle"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryExtraDark"
+            android:textSize="12sp" />
+
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="16dp">
+            android:layout_below="@id/carDataTitle"
+            android:scrollbars="none">
 
-            <TextView
-                android:id="@+id/carDataTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:text="@string/carDataTitle"
-                android:textAllCaps="true"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimaryExtraDark"
-                android:textSize="12sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/dashboardIcon"
-                android:layout_width="20sp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/carDataTitle"
-                android:layout_marginLeft="25dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="10dp"
-                android:contentDescription="@string/dashboardIconDescription"
-                app:srcCompat="@drawable/ic_dashboard_accent" />
+                <android.support.v7.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/card_view1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="15dp"
+                    card_view:cardElevation="2dp"
+                    card_view:cardUseCompatPadding="true"
+                    card_view:cardBackgroundColor="@color/colorWhite">
 
-            <TextView
-                android:id="@+id/dashboardText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/dashboardIcon"
-                android:layout_toEndOf="@id/dashboardIcon"
-                android:layout_alignBottom="@id/dashboardIcon"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:text="@string/kmTitle"
-                android:textColor="@color/colorPrimary" />
+                    <RelativeLayout
+                        android:id="@+id/carDataLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp">
 
-            <TextView
-                android:id="@+id/dashboardValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/dashboardText"
-                android:layout_toEndOf="@id/dashboardText"
-                android:layout_alignBottom="@id/dashboardText"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginEnd="25dp" />
+                        <ImageView
+                            android:id="@+id/dashboardIcon"
+                            android:layout_width="20sp"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/dashboardIconDescription"
+                            app:srcCompat="@drawable/ic_dashboard_accent" />
 
-            <ImageView
-                android:id="@+id/gasolineIcon"
-                android:layout_width="20sp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/dashboardIcon"
-                android:layout_above="@id/coolantIcon"
-                android:layout_alignStart="@id/dashboardIcon"
-                android:layout_alignLeft="@id/dashboardIcon"
-                android:contentDescription="@string/gasolineIconDescription"
-                app:srcCompat="@drawable/ic_gasoline_pump_accent" />
+                        <TextView
+                            android:id="@+id/dashboardText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/dashboardIcon"
+                            android:layout_toEndOf="@id/dashboardIcon"
+                            android:layout_alignBottom="@id/dashboardIcon"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/kmTitle"
+                            android:textColor="@color/colorPrimary" />
 
-            <TextView
-                android:id="@+id/gasolineText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/dashboardText"
-                android:layout_above="@id/coolantText"
-                android:gravity="center"
-                android:layout_alignStart="@id/dashboardText"
-                android:layout_alignLeft="@id/dashboardText"
-                android:text="@string/gasolineTitle"
-                android:textColor="@color/colorPrimary" />
+                        <TextView
+                            android:id="@+id/dashboardValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/dashboardText"
+                            android:layout_toEndOf="@id/dashboardText"
+                            android:layout_alignBottom="@id/dashboardText"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"/>
 
-            <TextView
-                android:id="@+id/gasolineValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/dashboardValue"
-                android:layout_above="@id/coolantValue"
-                android:gravity="center"
-                android:layout_toRightOf="@id/gasolineText"
-                android:layout_toEndOf="@id/gasolineText"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginEnd="25dp" />
+                        <ImageView
+                            android:id="@+id/gasolineIcon"
+                            android:layout_width="18sp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/dashboardIcon"
+                            android:layout_above="@id/coolantIcon"
+                            android:layout_alignEnd="@id/dashboardIcon"
+                            android:layout_alignRight="@id/dashboardIcon"
+                            android:contentDescription="@string/gasolineIconDescription"
+                            app:srcCompat="@drawable/ic_gasoline_pump_accent" />
 
-            <ImageView
-                android:id="@+id/coolantIcon"
-                android:layout_width="20sp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="10dp"
-                android:layout_alignLeft="@id/dashboardIcon"
-                android:layout_alignStart="@id/dashboardIcon"
-                android:contentDescription="@string/coolantIconDescription"
-                app:srcCompat="@drawable/ic_engine_coolant_accent" />
+                        <TextView
+                            android:id="@+id/gasolineText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/dashboardText"
+                            android:layout_above="@id/coolantText"
+                            android:gravity="center"
+                            android:layout_alignStart="@id/dashboardText"
+                            android:layout_alignLeft="@id/dashboardText"
+                            android:text="@string/gasolineTitle"
+                            android:textColor="@color/colorPrimary" />
 
-            <TextView
-                android:id="@+id/coolantText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/coolantIcon"
-                android:layout_alignLeft="@id/dashboardText"
-                android:layout_alignStart="@id/dashboardText"
-                android:text="@string/coolantTitle"
-                android:textColor="@color/colorPrimary" />
+                        <TextView
+                            android:id="@+id/gasolineValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/dashboardValue"
+                            android:layout_above="@id/coolantValue"
+                            android:gravity="center"
+                            android:layout_toRightOf="@id/gasolineText"
+                            android:layout_toEndOf="@id/gasolineText"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"/>
 
-            <TextView
-                android:id="@+id/coolantValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/coolantText"
-                android:layout_toEndOf="@id/coolantText"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginEnd="25dp"
-                android:layout_alignBottom="@id/coolantIcon" />
+                        <ImageView
+                            android:id="@+id/coolantIcon"
+                            android:layout_width="20sp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignLeft="@id/dashboardIcon"
+                            android:layout_alignStart="@id/dashboardIcon"
+                            android:contentDescription="@string/coolantIconDescription"
+                            app:srcCompat="@drawable/ic_engine_coolant_accent" />
 
-        </RelativeLayout>
+                        <TextView
+                            android:id="@+id/coolantText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/coolantIcon"
+                            android:layout_alignLeft="@id/dashboardText"
+                            android:layout_alignStart="@id/dashboardText"
+                            android:text="@string/coolantTitle"
+                            android:textColor="@color/colorPrimary" />
 
-    </android.support.v7.widget.CardView>
+                        <TextView
+                            android:id="@+id/coolantValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/coolantText"
+                            android:layout_toEndOf="@id/coolantText"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_alignBottom="@id/coolantIcon" />
+
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/card_view2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="15dp"
+                    card_view:cardElevation="2dp"
+                    card_view:cardUseCompatPadding="true"
+                    card_view:cardBackgroundColor="@color/colorWhite">
+
+                    <RelativeLayout
+                        android:id="@+id/carDataLayout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="15dp">
+
+                        <ImageView
+                            android:id="@+id/dashboardIcon2"
+                            android:layout_width="20sp"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/dashboardIconDescription"
+                            app:srcCompat="@drawable/ic_dashboard_accent" />
+
+                        <TextView
+                            android:id="@+id/dashboardText2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/dashboardIcon2"
+                            android:layout_toEndOf="@id/dashboardIcon2"
+                            android:layout_alignBottom="@id/dashboardIcon2"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/kmTitle"
+                            android:textColor="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/dashboardValue2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/dashboardText2"
+                            android:layout_toEndOf="@id/dashboardText2"
+                            android:layout_alignBottom="@id/dashboardText2"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"/>
+
+                        <ImageView
+                            android:id="@+id/gasolineIcon2"
+                            android:layout_width="18sp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/dashboardIcon2"
+                            android:layout_above="@id/coolantIcon2"
+                            android:layout_alignEnd="@id/dashboardIcon2"
+                            android:layout_alignRight="@id/dashboardIcon2"
+                            android:contentDescription="@string/gasolineIconDescription"
+                            app:srcCompat="@drawable/ic_gasoline_pump_accent" />
+
+                        <TextView
+                            android:id="@+id/gasolineText2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/dashboardText2"
+                            android:layout_above="@id/coolantText2"
+                            android:gravity="center"
+                            android:layout_alignStart="@id/dashboardText2"
+                            android:layout_alignLeft="@id/dashboardText2"
+                            android:text="@string/gasolineTitle"
+                            android:textColor="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/gasolineValue2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/dashboardValue2"
+                            android:layout_above="@id/coolantValue2"
+                            android:gravity="center"
+                            android:layout_toRightOf="@id/gasolineText2"
+                            android:layout_toEndOf="@id/gasolineText2"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"/>
+
+                        <ImageView
+                            android:id="@+id/coolantIcon2"
+                            android:layout_width="20sp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignLeft="@id/dashboardIcon2"
+                            android:layout_alignStart="@id/dashboardIcon2"
+                            android:contentDescription="@string/coolantIconDescription"
+                            app:srcCompat="@drawable/ic_engine_coolant_accent" />
+
+                        <TextView
+                            android:id="@+id/coolantText2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/coolantIcon2"
+                            android:layout_alignLeft="@id/dashboardText2"
+                            android:layout_alignStart="@id/dashboardText2"
+                            android:text="@string/coolantTitle"
+                            android:textColor="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/coolantValue2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/coolantText2"
+                            android:layout_toEndOf="@id/coolantText2"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_alignBottom="@id/coolantIcon2" />
+
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </HorizontalScrollView>
+    </RelativeLayout>
 
     <!-- BOTÓN "CONDUCIR" -->
     <FrameLayout

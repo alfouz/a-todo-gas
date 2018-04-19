@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view2"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardBackgroundColor="@color/colorWhite">
+
+    <RelativeLayout
+    android:id="@+id/lastTripLayout"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_margin="16dp">
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/startPlace"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/colorPrimaryExtraDark"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_alignTop="@id/startPlace"/>
+
+        <TextView
+            android:id="@+id/startTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/startPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/startTime"
+            android:layout_toEndOf="@id/startTime"
+            android:layout_alignBaseline="@id/startTime"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/endTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@id/startTime"
+            android:layout_alignStart="@id/startTime"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/endPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/startPlace"
+            android:layout_alignStart="@id/startPlace"
+            android:layout_alignBaseline="@id/endTime"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:id="@+id/pointToPointLayout"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/startTime"
+            android:layout_above="@id/endTime"
+            android:layout_toLeftOf="@+id/startPlace"
+            android:layout_toStartOf="@+id/startPlace" >
+            <ImageView
+                android:id="@+id/pointToPoint"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/pointToPointDescription"
+                card_view:srcCompat="@drawable/ic_point_to_point" />
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/tripHourglassIcon"
+            android:layout_width="14sp"
+            android:layout_height="14sp"
+            android:layout_below="@id/startPlace"
+            android:layout_above="@id/endPlace"
+            android:layout_toRightOf="@id/kmText"
+            android:layout_toEndOf="@id/kmText"
+            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
+            android:contentDescription="@string/hourglassIconDescription"
+            card_view:srcCompat="@drawable/ic_hourglass" />
+
+        <ImageView
+            android:id="@+id/tripDashboardIcon"
+            android:layout_width="15sp"
+            android:layout_height="15sp"
+            android:layout_alignLeft="@id/startPlace"
+            android:layout_alignStart="@id/startPlace"
+            android:layout_below="@id/startPlace"
+            android:layout_above="@id/endPlace"
+            android:contentDescription="@string/dashboardIconDescription"
+            card_view:srcCompat="@drawable/ic_dashboard" />
+
+        <ImageView
+            android:id="@+id/tripGasolineIcon"
+            android:layout_width="13sp"
+            android:layout_height="13sp"
+            android:layout_below="@id/startPlace"
+            android:layout_above="@id/endPlace"
+            android:layout_toRightOf="@id/durationText"
+            android:layout_toEndOf="@id/durationText"
+            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
+            android:contentDescription="@string/gasolineIconDescription"
+            card_view:srcCompat="@drawable/ic_gasoline_pump" />
+
+        <ImageView
+            android:id="@+id/tripPointsIcon"
+            android:layout_width="16sp"
+            android:layout_height="16sp"
+            android:layout_below="@id/startPlace"
+            android:layout_above="@id/endPlace"
+            android:layout_toRightOf="@id/gasolineText"
+            android:layout_toEndOf="@id/gasolineText"
+            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
+            android:contentDescription="@string/pointsIconDescription"
+            card_view:srcCompat="@drawable/ic_star" />
+
+        <ImageView
+            android:id="@+id/tripInfoIcon"
+            android:layout_width="15sp"
+            android:layout_height="15sp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@string/infoIconDescription"
+            card_view:srcCompat="@drawable/ic_info" />
+
+        <TextView
+            android:id="@+id/kmText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/startPlace"
+            android:layout_above="@id/endPlace"
+            android:gravity="center"
+            android:layout_toRightOf="@id/tripDashboardIcon"
+            android:layout_toEndOf="@id/tripDashboardIcon"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/durationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/startPlace"
+            android:layout_above="@id/endPlace"
+            android:gravity="center"
+            android:layout_toRightOf="@id/tripHourglassIcon"
+            android:layout_toEndOf="@id/tripHourglassIcon"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/gasolineText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/startPlace"
+            android:layout_above="@id/endPlace"
+            android:gravity="center"
+            android:layout_toRightOf="@id/tripGasolineIcon"
+            android:layout_toEndOf="@id/tripGasolineIcon"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/pointsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/startPlace"
+            android:layout_above="@id/endPlace"
+            android:gravity="center"
+            android:layout_toRightOf="@id/tripPointsIcon"
+            android:layout_toEndOf="@id/tripPointsIcon"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>

@@ -38,21 +38,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/loginButton"
-            android:layout_width="match_parent"
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="60dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/round_button_accent"
-            android:contentDescription="@string/loginButtonDescription"
-            android:onClick="logIn"
-            android:text="@string/login"
-            android:textColor="@android:color/background_light" />
+            android:layout_below="@+id/welcomeSubtitleText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp" />
 
         <TextView
             android:id="@+id/welcomeText"

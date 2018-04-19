@@ -12,6 +12,8 @@ import android.widget.TabHost;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.TextView;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 

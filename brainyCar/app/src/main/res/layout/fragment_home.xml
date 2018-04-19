@@ -239,8 +239,8 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/dashboardIcon2"
                             android:layout_above="@id/coolantIcon2"
-                            android:layout_alignEnd="@id/dashboardIcon2"
-                            android:layout_alignRight="@id/dashboardIcon2"
+                            android:layout_alignEnd="@id/dashboardIcon"
+                            android:layout_alignRight="@id/dashboardIcon"
                             android:contentDescription="@string/gasolineIconDescription"
                             app:srcCompat="@drawable/ic_gasoline_pump_accent" />
 

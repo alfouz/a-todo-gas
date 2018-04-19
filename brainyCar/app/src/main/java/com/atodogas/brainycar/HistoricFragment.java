@@ -48,12 +48,12 @@ public class HistoricFragment extends Fragment implements View.OnClickListener{
 
         root = inflater.inflate(R.layout.fragment_historic, container, false);
 
-        TabHost host = (TabHost) root.findViewById(R.id.tabHost);
+        TabHost host = (TabHost) root.findViewById(R.id.tabHostHistoric);
         host.setup();
 
         //Tab 1
         TabHost.TabSpec spec = host.newTabSpec("Viajes");
-        spec.setContent(R.id.tab1);
+        spec.setContent(R.id.viajes);
         spec.setIndicator("Viajes");
         host.addTab(spec);
 
@@ -68,7 +68,7 @@ public class HistoricFragment extends Fragment implements View.OnClickListener{
                 new Time(23,00,00),"Madrid", "A Coruña", 591, 72, 82));
 
         HistoricFragmentTripAdapter adapter = new HistoricFragmentTripAdapter(trips);
-        RecyclerView myView =  root.findViewById(R.id.tab1);
+        RecyclerView myView =  root.findViewById(R.id.viajes);
         myView.setHasFixedSize(true);
         myView.setAdapter(adapter);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
@@ -77,7 +77,7 @@ public class HistoricFragment extends Fragment implements View.OnClickListener{
 
         //Tab 2
         spec = host.newTabSpec("Estadisticas");
-        spec.setContent(R.id.tab2);
+        spec.setContent(R.id.estadisticas);
         spec.setIndicator("Estadisticas");
         host.addTab(spec);
 

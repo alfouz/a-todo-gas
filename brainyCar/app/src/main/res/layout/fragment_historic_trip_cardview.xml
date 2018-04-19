@@ -125,8 +125,8 @@
 
         <ImageView
             android:id="@+id/tripPointsIcon"
-            android:layout_width="15sp"
-            android:layout_height="15sp"
+            android:layout_width="16sp"
+            android:layout_height="16sp"
             android:layout_below="@id/startPlace"
             android:layout_above="@id/endPlace"
             android:layout_toRightOf="@id/gasolineText"
@@ -134,7 +134,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginStart="25dp"
             android:contentDescription="@string/pointsIconDescription"
-            card_view:srcCompat="@drawable/ic_crown" />
+            card_view:srcCompat="@drawable/ic_star" />
 
         <ImageView
             android:id="@+id/tripInfoIcon"

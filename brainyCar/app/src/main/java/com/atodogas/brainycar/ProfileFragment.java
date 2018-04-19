@@ -12,6 +12,8 @@ import android.widget.TabHost;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.TextView;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -41,13 +43,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         Resources res = getResources();
 
-        TabHost tabs= root.findViewById(R.id.my_host);
+        TabHost tabs= root.findViewById(R.id.tabHostProfile);
         tabs.setup();
         TabHost.TabSpec spec=tabs.newTabSpec("mitab1");
         spec.setContent(R.id.Resumen);
         spec.setIndicator("Resumen",
                 res.getDrawable(android.R.drawable.ic_dialog_map));
         tabs.addTab(spec);
+
+        TextView numberPointsText = root.findViewById(R.id.numberPointsText);
+        numberPointsText.setText("725 puntos");
+        TextView numberRankingText = root.findViewById(R.id.numberRankingText);
+        numberRankingText.setText("12 th");
+        TextView numberAchievementsText = root.findViewById(R.id.numberAchievementsText);
+        numberAchievementsText.setText("12 de 30");
 
         spec=tabs.newTabSpec("mitab2");
         spec.setContent(R.id.Logros);

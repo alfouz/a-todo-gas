@@ -21,10 +21,10 @@
             android:layout_alignBottom="@id/startPlace"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
             android:textColor="@color/colorPrimaryExtraDark"
-            android:textSize="14sp"/>
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_alignTop="@id/startPlace"/>
 
         <TextView
             android:id="@+id/startTime"
@@ -54,7 +54,6 @@
             android:layout_alignParentBottom="true"
             android:layout_alignLeft="@id/startTime"
             android:layout_alignStart="@id/startTime"
-            android:layout_marginBottom="10dp"
             android:textColor="@color/colorPrimary"
             android:textSize="12sp" />
 
@@ -65,7 +64,6 @@
             android:layout_alignLeft="@id/startPlace"
             android:layout_alignStart="@id/startPlace"
             android:layout_alignBaseline="@id/endTime"
-            android:layout_marginBottom="10dp"
             android:textAllCaps="true"
             android:textColor="@color/colorAccent"
             android:textSize="14sp"

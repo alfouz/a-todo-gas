@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Set;
 
 
@@ -80,31 +85,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         TextView cardBrandElement = view.findViewById(R.id.carBrand);
         cardBrandElement.setText("VW Golf TDI 2011");
 
+
         //LAST TRIP INFO
 
-        TextView lastTripDateElement = view.findViewById(R.id.lastTripDate);
-        lastTripDateElement.setText("17/01/18");
+        ArrayList<TripEntity> trips = new ArrayList<TripEntity>();
+        trips.add(new TripEntity(new Date(2017,07,11), new Time(18,00,00),
+                new Time(23,30,00),"Madrid", "A Coruña", 591, 72, 82));
 
-        TextView firstTripTimeElement = view.findViewById(R.id.firstTripTime);
-        firstTripTimeElement.setText("18:00h");
+        HistoricFragmentTripAdapter adapter = new HistoricFragmentTripAdapter(trips);
+        RecyclerView myView =  view.findViewById(R.id.lastTripLayout);
+        myView.setHasFixedSize(true);
+        myView.setAdapter(adapter);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        myView.setLayoutManager(llm);
 
-        TextView firstPlaceElement = view.findViewById(R.id.firstPlace);
-        firstPlaceElement.setText("Madrid");
-
-        TextView secondTripTimeElement = view.findViewById(R.id.secondTripTime);
-        secondTripTimeElement.setText("23:30h");
-
-        TextView secondPlaceElement = view.findViewById(R.id.secondPlace);
-        secondPlaceElement.setText("A Coruña");
-
-        TextView tripDashboardValueElement = view.findViewById(R.id.tripDashboardValue);
-        tripDashboardValueElement.setText("591km");
-
-        TextView tripHourglassValueElement = view.findViewById(R.id.tripHourglassValue);
-        tripHourglassValueElement.setText("5h 30m");
-
-        TextView tripGasolineValueElement = view.findViewById(R.id.tripGasolineValue);
-        tripGasolineValueElement.setText("72l");
 
         //GENERAL INFO
 
@@ -116,6 +116,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         TextView coolantValueElement = view.findViewById(R.id.coolantValue);
         coolantValueElement.setText("4l");
+
+        TextView dashboardValueElement2 = view.findViewById(R.id.dashboardValue2);
+        dashboardValueElement2.setText("2500km");
+
+        TextView gasolineValueElement2 = view.findViewById(R.id.gasolineValue2);
+        gasolineValueElement2.setText("25/50l");
+
+        TextView coolantValueElement2 = view.findViewById(R.id.coolantValue2);
+        coolantValueElement2.setText("4l");
 
         return view;
     }

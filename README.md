@@ -4,16 +4,18 @@
 
 ### Archivo api_keys.xml
 
-Dentro del apartado _values_ del proyecto, se debe crear un archivo api_keys que contenga dos strings del tipo:
+Dentro del apartado _values_ del proyecto, se debe crear un archivo api_keys.xml que contenga dos strings del tipo:
 <string name="general_key">clave-de-desarrollador-de-android</string>
 <string name="server_client_id">clave-de-claves-para-autenticación</string>
 
 ### Archivo atodogas.keystore
 
+Almacenado directamente en el directorio raiz _app_.
 Almacenará dentro las claves para la autenticación con Google
 
 ### Archivo signing.properties
 
+Almacenado directamente en el directorio raíz _app_.
 Será un archivo de propiedades que contendrá algo similar a:
 STORE_FILE=nombre-del-almacen-de-claves
 STORE_PASSWORD=clave-del-almacen

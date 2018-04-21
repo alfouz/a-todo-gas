@@ -21,8 +21,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -78,16 +80,8 @@ public class LocationFragment extends Fragment {
 
 
                 // For dropping a marker at a point on the Map
-                LatLng aCientifica = new LatLng(43.333001, -8.40903);
-                googleMap.addMarker(new MarkerOptions().position(aCientifica).title("Área científica").snippet("Clase del MUEI"));
-
-                Geocoder geoCoder = new Geocoder(getContext());
-                List<Address> matches = null;
-                try {
-                    matches = geoCoder.getFromLocation(43.333001, -8.40903, 1);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                //LatLng aCientifica = new LatLng(43.333001, -8.40903);
+                //googleMap.addMarker(new MarkerOptions().position(aCientifica).title("Área científica").snippet("Clase del MUEI"));
 
 
                 /*List<LatLng> sourcePoints = new ArrayList<>();
@@ -97,8 +91,11 @@ public class LocationFragment extends Fragment {
                 }
                 drawPathPolyline(sourcePoints);*/
 
+                LatLng car = new LatLng(43.333364,-8.4087363);
+                setLastCarPosition(car);
+
                 // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(aCientifica).zoom(12).build();
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(car).zoom(12).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
 
@@ -172,8 +169,18 @@ public class LocationFragment extends Fragment {
     }
 
 
+    //Set a car image on latlng indicated
+    private void setLastCarPosition(LatLng position){
+
+        Marker mCar = googleMap.addMarker(new MarkerOptions()
+                .position(position)
+                .title(getString(R.string.titleLastLocationCar))
+                .snippet(getString(R.string.snippetLastLocationCar) + " " + position.latitude + "," + position.longitude)
+                .icon(Util.getBitmapDescriptor(getContext(), R.drawable.ic_directions_car_black_24dp, Color.BLUE)));
+    }
+
     //TODO Need update this function
-    public int getSegmentColorFromMetric(float metric) {
+    private int getSegmentColorFromMetric(float metric) {
         int color;
         if (metric < 1) {
             color = Color.BLUE;

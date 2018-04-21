@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -68,7 +67,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.navigation_diagnostic:
-                fragment = new DiagnosticFragment();
+                fragment = new DiagnosticButtonFragment();
+                //fragment = new DiagnosticFragment();
                 changeActionBarTitle(getResources().getString(R.string.diagnostic));
                 break;
 

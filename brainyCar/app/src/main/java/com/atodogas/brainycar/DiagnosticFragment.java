@@ -3,6 +3,8 @@ package com.atodogas.brainycar;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -70,6 +72,10 @@ public class DiagnosticFragment extends Fragment implements View.OnClickListener
 
     public void reiniciarButton(){
         Log.d(TAG, "Click on Button Reiniciar");
-        Toast.makeText(getActivity(), "Click on Button Reiniciar", Toast.LENGTH_SHORT).show();
+        Fragment fragment = new DiagnosticButtonFragment();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
     }
 }

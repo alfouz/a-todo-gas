@@ -16,7 +16,6 @@
     <string name="app_name">brainyCar</string>
     <string name="welcomeSubtitle">Empieza a sacar partido \na tu OBD</string>
     <string name="welcome">¡Bienvenido!</string>
-    <string name="login">Inicia Sesión con Google</string>
     <string name="loginButtonDescription">Este botón permite al usuario autenticarse con google</string>
     <string name="roadPictureDescription">Imagen de fondo de la pantalla de inicio, contiene una carretera con árboles a los lados</string>
 
@@ -44,6 +43,7 @@
     <string name="bluetoothOff">Bluetooth desconectado</string>
 
     <!-- DIAGNOSTIC FRAGMENT -->
+    <string name="diagnosticButton">I N I C I A R</string>
     <string name="healthResultsTitle">Diagnóstico</string>
     <string name="reiniciarTitle">Reiniciar</string>
     <string name="resumenTitle">Resumen</string>

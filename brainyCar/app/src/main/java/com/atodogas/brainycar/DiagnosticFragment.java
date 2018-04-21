@@ -1,22 +1,19 @@
 package com.atodogas.brainycar;
 
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 /**
@@ -30,29 +27,34 @@ public class DiagnosticFragment extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_diagnostic, container, false);
 
-        ListView erroresListView = view.findViewById(R.id.erroresListView);
-        String[] errores = { "P0123", "B0523", "P1234", "C0983", "B0983", "P1983", "A1231"};
-        erroresListView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, errores));
-        erroresListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Get the selected item text from ListView
-                String selectedItem = (String) parent.getItemAtPosition(position);
-                ;
-                CharSequence text = "clicked on " + selectedItem;
-                int duration = Toast.LENGTH_SHORT;
 
-                Toast toast = Toast.makeText(getActivity(), text, duration);
-                toast.show();
-                Log.d(TAG, text.toString());
-            }
-        });
+        // Setting general info
+        TextView timeText = view.findViewById(R.id.timeText);
+        timeText.setText("2:33 minutos");
+        TextView bugText = view.findViewById(R.id.bugText);
+        bugText.setText("5");
 
+        // Setting errors list
+        ArrayList<BugEntity> bugs = new ArrayList<>();
+        for (int i=0; i <= 10; i++) {
+            bugs.add(new BugEntity("P0123", "Lorem ipsum dolor sit amet, consectetur " +
+                    "adipiscing elit. Etiam consectetur malesuada iaculis. Proin dictum mattis lorem. " +
+                    "Quisque vel facilisis nisi, id interdum nisl. Integer imperdiet lorem augue, " +
+                    "sit amet dapibus tortor consectetur ac. Cras vel leo at enim auctor laoreet non" +
+                    " in metus. In hac habitasse platea dictumst."));
+        }
+
+        DiagnosticFragmentBugAdapter adapter = new DiagnosticFragmentBugAdapter(bugs);
+        RecyclerView myView =  view.findViewById(R.id.bugsList);
+        myView.setHasFixedSize(true);
+        myView.setAdapter(adapter);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        myView.setLayoutManager(llm);
+
+        // Setting button restart
         Button reiniciarButton = view.findViewById(R.id.reiniciarButton);
         reiniciarButton.setOnClickListener(this);
-
-        MainActivity activity = (MainActivity) getActivity();
-        activity.changeActionBarTitle(getResources().getString(R.string.diagnostic));
 
         return view;
     }

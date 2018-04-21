@@ -56,10 +56,34 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
+    <!-- HISTORIC FRAGMENT -->
+    <string-array name="measure_array">
+        <item>km</item>
+        <item>velocidad</item>
+        <item>RPM</item>
+        <item>consumo</item>
+    </string-array>
+    <string-array name="period_array">
+        <item>día</item>
+        <item>semana</item>
+        <item>mes</item>
+        <item>año</item>
+    </string-array>
+    <string name="measure">Medida</string>
+    <string name="period">Periodo</string>
+    <string name="previous">Anterior</string>
+    <string name="next">Siguiente</string>
+    <string name="noChartData">Datos de la gráfica no disponibles</string>
+
+
     <!-- PROFILE FRAGMENT -->
     <string name="numberPointsTitle">Puntuación:</string>
     <string name="numberRankingTitle">Puesto Ranking:</string>
     <string name="numberAchievementsTitle">Logros:</string>
+    <string name="medal">Medalla:</string>
+    <string name="gold">Oro</string>
+    <string name="silver">Plata</string>
+    <string name="bronze">Bronce</string>
 
     <!-- LOCATION FRAGMENT -->
     <string name="locationPermissionUnable">No se puede mostrar mi ubicación por falta de permisos</string>

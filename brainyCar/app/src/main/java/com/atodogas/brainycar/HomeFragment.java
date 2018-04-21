@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         Button driveButton = view.findViewById(R.id.driveButton);
         driveButton.setOnClickListener(this);
-        View lastTripLayout = view.findViewById(R.id.lastTripLayout);
+        RecyclerView lastTripLayout = view.findViewById(R.id.lastTripLayout);
         lastTripLayout.setOnClickListener(this);
 
         //**************************************BLUETOOTH**************************************
@@ -93,9 +93,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 new Time(23,30,00),"Madrid", "A Coruña", 591, 72, 82));
 
         HistoricFragmentTripAdapter adapter = new HistoricFragmentTripAdapter(trips);
-        RecyclerView myView =  view.findViewById(R.id.lastTripLayout);
-        myView.setHasFixedSize(true);
-        myView.setAdapter(adapter);
+        lastTripLayout.setHasFixedSize(true);
+        lastTripLayout.setAdapter(adapter);
         LinearLayoutManager llm = new LinearLayoutManager(getContext()) {
             @Override
             public boolean canScrollVertically() {
@@ -103,7 +102,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         };
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-        myView.setLayoutManager(llm);
+        lastTripLayout.setLayoutManager(llm);
 
 
         //GENERAL INFO

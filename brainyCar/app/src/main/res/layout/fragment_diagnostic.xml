@@ -1,159 +1,157 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="16dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
     tools:context="com.atodogas.brainycar.DiagnosticFragment">
 
-    <Button
-        android:id="@+id/reiniciarButton"
-        android:layout_width="wrap_content"
-        android:layout_height="37dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/round_button_accent"
-        android:text="@string/reiniciarTitle"
-        android:textColor="@android:color/background_light"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/resumenTextView"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/resumenTitle"
-        android:textColor="@color/colorPrimary"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reiniciarButton"
-        android:layout_marginLeft="24dp" />
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/resumenConstraintLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/empty_rectangle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resumenTextView">
-
-        <ImageView
-            android:id="@+id/hourImageView"
-            android:layout_width="20sp"
-            android:layout_height="20sp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_hourglass"
-            android:layout_marginLeft="8dp" />
-
-        <TextView
-            android:id="@+id/tiempoTranscurridoTitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/tiempoTranscurridoTitle"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/hourImageView"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="8dp" />
-
-        <TextView
-            android:id="@+id/tiempoTranscurridoTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:text="2 min 30 seg"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tiempoTranscurridoTitleTextView"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginRight="8dp" />
-
-        <ImageView
-            android:id="@+id/errorImageView"
-            android:layout_width="20sp"
-            android:layout_height="20sp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hourImageView"
-            app:srcCompat="@drawable/ic_error"
-            android:layout_marginLeft="8dp" />
-
-        <TextView
-            android:id="@+id/erroresDetectadosTitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:text="@string/erroresDetectadosTitle"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/errorImageView"
-            android:layout_marginLeft="8dp" />
-
-        <TextView
-            android:id="@+id/erroresDetectadosTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:text="5"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/erroresDetectadosTitleTextView" />
-    </android.support.constraint.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/erroresTitleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/erroresTitle"
-        android:textColor="@color/colorPrimary"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resumenConstraintLayout"
-        android:layout_marginLeft="24dp" />
-
-    <LinearLayout
-        android:id="@+id/erroresLinearLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/empty_rectangle"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/erroresTitleTextView">
-
-        <ListView
-            android:id="@+id/erroresListView"
+        android:layout_weight="0">
+        <Button
+            android:id="@+id/reiniciarButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_gravity="center"
+            android:background="@drawable/round_button_accent"
+            android:text="@string/reiniciarTitle"
+            android:textColor="@android:color/background_light"/>
 
-</android.support.constraint.ConstraintLayout>
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:layout_marginTop="16dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/resumenTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:text="@string/resumenTitle"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryExtraDark"
+            android:textSize="12sp"/>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/resumenTextView"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@color/colorWhite">
+
+            <RelativeLayout
+                android:id="@+id/lastTripLayout"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp">
+
+                <ImageView
+                    android:id="@+id/timeIcon"
+                    android:layout_width="20sp"
+                    android:layout_height="20sp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    app:srcCompat="@drawable/ic_hourglass"/>
+
+                <TextView
+                    android:id="@+id/timeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/timeIcon"
+                    android:layout_alignBottom="@id/timeIcon"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/tiempoTranscurridoTitle"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/timeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/timeTitle"
+                    android:layout_alignBottom="@id/timeTitle"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:id="@+id/bugIcon"
+                    android:layout_width="20sp"
+                    android:layout_height="20sp"
+                    android:layout_alignLeft="@id/timeIcon"
+                    android:layout_alignStart="@id/timeIcon"
+                    android:layout_below="@id/timeIcon"
+                    android:layout_marginTop="16dp"
+                    app:srcCompat="@drawable/ic_error"/>
+
+                <TextView
+                    android:id="@+id/bugTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/bugIcon"
+                    android:layout_alignBottom="@id/bugIcon"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/erroresDetectadosTitle"
+                    android:textColor="@color/colorPrimary"/>
+
+                <TextView
+                    android:id="@+id/bugText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/bugTitle"
+                    android:layout_alignBottom="@id/bugTitle"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/colorPrimary"/>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:layout_marginTop="16dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/bugsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:text="@string/erroresTitle"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryExtraDark"
+            android:textSize="12sp"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/bugsList"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:paddingBottom="16dp"
+            android:layout_below="@id/bugsTitle"/>
+    </RelativeLayout>
+
+</LinearLayout>

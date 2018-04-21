@@ -259,7 +259,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/round_button"
                 android:text="PAUSAR"
-                android:textColor="@color/ap_white" />
+                android:textColor="@color/colorWhite" />
 
             <Button
                 android:id="@+id/detenerButton"
@@ -272,7 +272,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/round_button_accent"
                 android:text="DETENER"
-                android:textColor="@color/ap_white" />
+                android:textColor="@color/colorWhite" />
 
         </LinearLayout>
 

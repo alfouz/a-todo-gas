@@ -64,18 +64,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.navigation_location:
                 fragment = new LocationFragment();
+                changeActionBarTitle(getResources().getString(R.string.location));
                 break;
 
             case R.id.navigation_diagnostic:
                 fragment = new DiagnosticFragment();
+                changeActionBarTitle(getResources().getString(R.string.diagnostic));
                 break;
 
             case R.id.navigation_historic:
                 fragment = new HistoricFragment();
+                changeActionBarTitle(getResources().getString(R.string.historic));
                 break;
 
             case R.id.navigation_profile:
                 fragment = new ProfileFragment();
+                changeActionBarTitle(getResources().getString(R.string.profile));
                 break;
         }
 

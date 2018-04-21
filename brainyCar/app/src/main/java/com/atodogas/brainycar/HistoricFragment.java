@@ -1,7 +1,6 @@
 package com.atodogas.brainycar;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,27 +9,33 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TabHost;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.androidplot.xy.BarFormatter;
-import com.androidplot.xy.BarRenderer;
-import com.androidplot.xy.LineAndPointFormatter;
-import com.androidplot.xy.SimpleXYSeries;
-import com.androidplot.xy.XYPlot;
-import com.androidplot.xy.XYSeries;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HistoricFragment extends Fragment implements View.OnClickListener{
-
-    private View root;
+public class HistoricFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     public HistoricFragment() {
         // Required empty public constructor
@@ -41,14 +46,9 @@ public class HistoricFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        //change action bar title
-        MainActivity activity = (MainActivity) getActivity();
-        activity.changeActionBarTitle("Histórico");
+        View root = inflater.inflate(R.layout.fragment_historic, container, false);
 
-
-        root = inflater.inflate(R.layout.fragment_historic, container, false);
-
-        TabHost host = (TabHost) root.findViewById(R.id.tabHostHistoric);
+        TabHost host = root.findViewById(R.id.tabHostHistoric);
         host.setup();
 
         //Tab 1
@@ -58,14 +58,10 @@ public class HistoricFragment extends Fragment implements View.OnClickListener{
         host.addTab(spec);
 
         ArrayList<TripEntity> trips = new ArrayList<TripEntity>();
-        trips.add(new TripEntity(new Date(2017,07,11), new Time(18,00,00),
-                new Time(23,30,00),"Madrid", "A Coruña", 591, 72, 82));
-        trips.add(new TripEntity(new Date(2017,07,11), new Time(18,00,00),
-                new Time(23,00,00),"Madrid", "A Coruña", 591, 72, 82));
-        trips.add(new TripEntity(new Date(2017,07,11), new Time(18,00,00),
-                new Time(23,00,00),"Madrid", "A Coruña", 591, 72, 82));
-        trips.add(new TripEntity(new Date(2017,07,11), new Time(18,00,00),
-                new Time(23,00,00),"Madrid", "A Coruña", 591, 72, 82));
+        for (int i=0; i <= 10; i++) {
+            trips.add(new TripEntity(new Date(2017,07,11), new Time(18,00,00),
+                    new Time(23,30,00),"Madrid", "A Coruña", 591, 72, 82));
+        }
 
         HistoricFragmentTripAdapter adapter = new HistoricFragmentTripAdapter(trips);
         RecyclerView myView =  root.findViewById(R.id.viajes);
@@ -81,10 +77,88 @@ public class HistoricFragment extends Fragment implements View.OnClickListener{
         spec.setIndicator("Estadisticas");
         host.addTab(spec);
 
-        Button btnLineas = root.findViewById(R.id.btnLineas);
-        Button btnBarras = root.findViewById(R.id.btnBarras);
-        btnLineas.setOnClickListener(this);
-        btnBarras.setOnClickListener(this);
+
+        // Setting options for spinnerMeasure
+        Spinner spinnerMeasure = root.findViewById(R.id.spinnerMeasure);
+        ArrayAdapter<CharSequence> measureAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.measure_array, android.R.layout.simple_spinner_item);
+        measureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerMeasure.setAdapter(measureAdapter);
+        spinnerMeasure.setOnItemSelectedListener(this);
+
+        // Setting options for spinnerPeriod
+        Spinner spinnerPeriod = root.findViewById(R.id.spinnerPeriod);
+        ArrayAdapter<CharSequence> periodAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.period_array, android.R.layout.simple_spinner_item);
+        periodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPeriod.setAdapter(periodAdapter);
+        spinnerPeriod.setOnItemSelectedListener(this);
+
+        // Setting options for graph, default = km/day
+        LineChart lineChart = root.findViewById(R.id.lineChart);
+        TextView periodGraph = root.findViewById(R.id.periodGraph);
+        periodGraph.setText("21/04/2018");
+
+        // Defining values for a line
+        List<Entry> entries = new ArrayList<>();
+        for (int i=0;i<=10;i++) {
+            entries.add(new Entry(i,i));
+        }
+        // Defining the line with the previous values + styling line
+        LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
+        dataSet.setColor(getResources().getColor(R.color.colorAccent));
+        dataSet.setCircleColor(getResources().getColor(R.color.colorAccent));
+        dataSet.setCircleColorHole(getResources().getColor(R.color.colorAccent));
+        dataSet.setCircleRadius(5f);
+        dataSet.setLineWidth(3.0f);
+        dataSet.setValueTextColor(getResources().getColor(R.color.colorPrimaryExtraDark));
+        dataSet.setFillColor(getResources().getColor(R.color.colorAccent));
+        dataSet.setDrawFilled(true);
+        dataSet.setValueTextSize(12f);
+
+        // Defining data of chart
+        LineData lineData = new LineData(dataSet);
+        lineChart.setData(lineData);
+        // Styling description
+        Description description = lineChart.getDescription();
+        description.setEnabled(false);
+        // Styling legend
+        Legend legend = lineChart.getLegend();
+        legend.setEnabled(false);
+        // Styling xAxis
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setGranularity(1f);
+        xAxis.setDrawAxisLine(true);
+        xAxis.setAxisLineColor(getResources().getColor(R.color.colorPrimaryExtraDark));
+        xAxis.setAxisLineWidth(1f);
+        xAxis.setGridColor(getResources().getColor(R.color.colorPrimaryLigth2));
+        xAxis.setTextColor(getResources().getColor(R.color.colorPrimary));
+        // Styling yAxis
+        YAxis rightAxis = lineChart.getAxisRight();
+        rightAxis.setEnabled(false);
+        YAxis leftAxis = lineChart.getAxisLeft();
+        leftAxis.setAxisMinimum(0f);
+        leftAxis.setDrawAxisLine(true);
+        leftAxis.setAxisLineColor(getResources().getColor(R.color.colorPrimaryExtraDark));
+        leftAxis.setAxisLineWidth(1f);
+        leftAxis.setGridColor(getResources().getColor(R.color.colorPrimaryLigth2));
+        leftAxis.setTextColor(getResources().getColor(R.color.colorPrimary));
+        //Zooming
+        lineChart.setVisibleXRangeMinimum(entries.size()/2);
+        lineChart.setVisibleXRangeMaximum(entries.size()/2);
+        // Other styling
+        lineChart.setNoDataText(getResources().getString(R.string.noChartData));
+
+        // Refreshing chart
+        lineChart.invalidate();
+
+
+        // Setting buttons for graph
+        Button btnPrevious = root.findViewById(R.id.buttonPrevious);
+        Button btnNext = root.findViewById(R.id.buttonNext);
+        btnPrevious.setOnClickListener(this);
+        btnNext.setOnClickListener(this);
 
 
         // Inflate the layout for this fragment
@@ -93,39 +167,33 @@ public class HistoricFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        XYPlot plot;
         switch (v.getId()){
-            case R.id.btnLineas:
-                Log.d("button", "Button Lineas");
-                plot = root.findViewById(R.id.plot);
-                plot.clear();
-                plot.setVisibility(View.VISIBLE);
+            case R.id.buttonPrevious:
+                Log.d("button", "Button Previous");
+                Toast.makeText(getActivity(),"clicked button previous",Toast.LENGTH_SHORT).show();
 
-                Number[] series1Numbers = {1, 4, 2, 8, 4, 16, 8, 32, 16, 64};
-                Number[] series2Numbers = {5, 2, 10, 5, 20, 10, 40, 20, 80, 40};
-                XYSeries series1 = new SimpleXYSeries(SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series1", series1Numbers);
-                XYSeries series2 = new SimpleXYSeries(SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series2", series2Numbers);
-
-                plot.addSeries(series1, new LineAndPointFormatter(Color.GREEN, Color.GREEN, null, null));
-                plot.addSeries(series2, new LineAndPointFormatter(Color.BLUE, Color.BLUE, null, null));
-                plot.redraw();
                 break;
-            case R.id.btnBarras:
-                Log.d("button", "Button Barras");
-                plot = root.findViewById(R.id.plot);
-                plot.clear();
-                plot.setVisibility(View.VISIBLE);
-                XYSeries wins = new SimpleXYSeries(SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "wins", 3, 4, 5, 3, 2, 3, 5, 6, 2, 1, 3, 1);
-                XYSeries losses = new SimpleXYSeries(SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "losses", 0, 1, 1, 0, 1, 0, 0, 0, 2, 1, 0, 1);
+            case R.id.buttonNext:
+                Log.d("button", "Button Next");
+                Toast.makeText(getActivity(),"clicked button next",Toast.LENGTH_SHORT).show();
 
-                BarFormatter bf = new BarFormatter(Color.GREEN, Color.WHITE);
-                bf = new BarFormatter(Color.RED, Color.WHITE);
-                plot.addSeries(wins, bf);
-                plot.addSeries(losses, bf);
-                BarRenderer barRenderer = plot.getRenderer(BarRenderer.class);
-                barRenderer.setBarOrientation(BarRenderer.BarOrientation.SIDE_BY_SIDE);
-                plot.redraw();
                 break;
         }
     }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        switch(parent.getId()) {
+            case R.id.spinnerMeasure:
+                Toast.makeText(getActivity(),"Medida: " + parent.getItemAtPosition(pos),Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.spinnerPeriod:
+                Toast.makeText(getActivity(),"Periodo: " + parent.getItemAtPosition(pos),Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
+    }
+
 }

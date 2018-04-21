@@ -28,47 +28,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/viajes"
-                        android:layout_height="match_parent"
-                        android:layout_width="match_parent"/>
-
-                    <LinearLayout
-                        android:id="@+id/estadisticas"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <Button
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/btnBarras"
-                                android:text="Grafico Barras" />
-
-                            <Button
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/btnLineas"
-                                android:text="Grafico Lineas" />
-                        </LinearLayout>
-
-                        <com.androidplot.xy.XYPlot
-                            style="@style/APDefacto.Dark"
-                            android:id="@+id/plot"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:title="A Simple XY Plot"
-                            android:visibility="invisible"/>
-
-                    </LinearLayout>
+                    <include layout="@layout/fragment_historic_tab1" />
+                    <include layout="@layout/fragment_historic_tab2" />
 
                 </FrameLayout>
+
             </LinearLayout>
+
         </TabHost>
+
     </RelativeLayout>
+
 </FrameLayout>

@@ -4,11 +4,13 @@ package com.atodogas.brainycar;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -85,13 +88,14 @@ public class LocationFragment extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                /*Address bestMatch = (matches.isEmpty() ? null : matches.get(0));
-                Log.d("pepe", bestMatch.getPostalCode());
 
-                Polyline line = googleMap.addPolyline(new PolylineOptions()
-                        .add(new LatLng(43.333001, -8.40903), new LatLng(43.533001, -8.20903))
-                        .width(5)
-                        .color(Color.RED));*/
+
+                /*List<LatLng> sourcePoints = new ArrayList<>();
+                for(int i = 0; i<10000; i++){
+                    //sourcePoints.add(new ColoredPoint(new LatLng(43.333001 +(i*0.0001),-8.40903+(i*0.0001)), getSegmentColorFromMetric(i%5)));
+                    sourcePoints.add(new LatLng(43.333001 +(i*0.0001),-8.40903+(i*0.0001)));
+                }
+                drawPathPolyline(sourcePoints);*/
 
                 // For zooming automatically to the location of the marker
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(aCientifica).zoom(12).build();
@@ -103,8 +107,6 @@ public class LocationFragment extends Fragment {
                 }else{
                     askPermission();
                 }
-
-
 
             }
         });
@@ -168,4 +170,83 @@ public class LocationFragment extends Fragment {
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
+
+    //TODO Need update this function
+    public int getSegmentColorFromMetric(float metric) {
+        int color;
+        if (metric < 1) {
+            color = Color.BLUE;
+        } else if (metric < 2) {
+            color = Color.GREEN;
+        } else if (metric < 3) {
+            color = Color.YELLOW;
+        } else {
+            color = Color.RED;
+        }
+        return color;
+    }
+
+    //Prerrequisites: Ordered list of latlng without color
+    private void drawPathPolyline(List<LatLng> points){
+        if (points.size() < 2) {
+            return;
+        }
+        googleMap.addPolyline(new PolylineOptions()
+                .addAll(points)
+                .color(Color.GREEN)
+                .width(5));
+    }
+
+
+    //Prerrequisites: Ordered list of coloredPoints
+    private void drawPathPolylineColoured(List<ColoredPoint> points){
+        if (points.size() < 2) {
+            return;
+        }
+
+        int ix = 0;
+        ColoredPoint currentPoint  = points.get(ix);
+        int currentColor = currentPoint.color;
+        List<LatLng> currentSegment = new ArrayList<>();
+        currentSegment.add(currentPoint.coords);
+        ix++;
+
+        while (ix < points.size()) {
+            currentPoint = points.get(ix);
+
+            if (currentPoint.color == currentColor) {
+                currentSegment.add(currentPoint.coords);
+            } else {
+                currentSegment.add(currentPoint.coords);
+                googleMap.addPolyline(new PolylineOptions()
+                        .addAll(currentSegment)
+                        .color(currentColor)
+                        .width(5));
+                currentColor = currentPoint.color;
+                currentSegment.clear();
+                currentSegment.add(currentPoint.coords);
+            }
+
+            ix++;
+        }
+
+        googleMap.addPolyline(new PolylineOptions()
+                .addAll(currentSegment)
+                .color(currentColor)
+                .width(5));
+    }
+
+    //Auxiliar class to get points coloured
+    class ColoredPoint {
+        public LatLng coords;
+        public int color;
+
+        public ColoredPoint(LatLng coords, int color) {
+            this.coords = coords;
+            this.color = color;
+        }
+    }
+
 }
+

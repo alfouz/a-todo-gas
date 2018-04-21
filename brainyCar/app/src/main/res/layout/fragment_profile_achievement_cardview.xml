@@ -69,7 +69,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:srcCompat="@drawable/ic_share"/>
+            card_view:srcCompat="@drawable/ic_share" />
 
     </RelativeLayout>
 

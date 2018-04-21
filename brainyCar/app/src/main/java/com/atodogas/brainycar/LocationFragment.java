@@ -172,11 +172,11 @@ public class LocationFragment extends Fragment {
     //Set a car image on latlng indicated
     private void setLastCarPosition(LatLng position){
 
-        Marker mCar = googleMap.addMarker(new MarkerOptions()
+       /* Marker mCar = googleMap.addMarker(new MarkerOptions()
                 .position(position)
                 .title(getString(R.string.titleLastLocationCar))
                 .snippet(getString(R.string.snippetLastLocationCar) + " " + position.latitude + "," + position.longitude)
-                .icon(Util.getBitmapDescriptor(getContext(), R.drawable.ic_directions_car_black_24dp, Color.BLUE)));
+                .icon(Util.getBitmapDescriptor(getContext(), R.drawable.ic_directions_car_black_24dp, Color.BLUE)));*/
     }
 
     //TODO Need update this function

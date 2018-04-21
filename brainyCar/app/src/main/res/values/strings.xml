@@ -87,6 +87,8 @@
 
     <!-- LOCATION FRAGMENT -->
     <string name="locationPermissionUnable">No se puede mostrar mi ubicación por falta de permisos</string>
+    <string name="titleLastLocationCar">Aparcamiento</string>
+    <string name="snippetLastLocationCar">Último lugar de aparcamiento conocido: </string>
 
     <!-- TRACKING SERVICE -->
     <string name="trackingNotificationTitle">Trayecto en curso</string>

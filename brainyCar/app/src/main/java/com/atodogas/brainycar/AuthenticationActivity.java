@@ -1,5 +1,6 @@
 package com.atodogas.brainycar;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,13 +10,18 @@ import android.view.View;
 import android.widget.Toast;
 
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.common.api.Status;
 
 
 public class AuthenticationActivity extends AppCompatActivity implements View.OnClickListener{
@@ -25,6 +31,7 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
     public String personName;
     public String personPhotoUrl;
     public String email;
+    public ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +49,15 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
+
+        Task<GoogleSignInAccount> silentSignIn = mGoogleSignInClient.silentSignIn();
+
+        if (silentSignIn.isSuccessful()) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        } else {
+
+        }
     }
 
     public void onClick(View v) {
@@ -93,8 +109,20 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
         }
     }
 
-    /** Called when the user taps the "log with Google" button */
+    private void showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Silent SignI-In");
+            progressDialog.setIndeterminate(true);
+        }
 
+        progressDialog.show();
+    }
 
+    private void hideProgressDialog(){
 
+        if (progressDialog !=null){
+            progressDialog.cancel();
+        }
+    }
 }

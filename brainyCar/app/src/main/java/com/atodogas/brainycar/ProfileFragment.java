@@ -84,8 +84,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
 
         // TODO hay que adaptar el botón de share a cada logro
-        Button btnCompartir = root.findViewById(R.id.share_button);
-        btnCompartir.setOnClickListener(this);
+        /*Button btnCompartir = root.findViewById(R.id.share_button);
+        btnCompartir.setOnClickListener(this);*/
 
         // Inflate the layout for this fragment
         return root;

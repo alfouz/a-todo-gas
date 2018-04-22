@@ -13,5 +13,5 @@
         android:background="@drawable/completely_round_button"
         android:text="@string/diagnosticButton"
         android:textSize="20sp"
-        android:textColor="@color/colorWhite"/>
+        android:textColor="@android:color/background_light"/>
 </FrameLayout>

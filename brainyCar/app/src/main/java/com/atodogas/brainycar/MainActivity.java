@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = MainActivity.class.getSimpleName();
+    private Fragment actualFragmentMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
+            actualFragmentMenu = fragment;
             return true;
         }
         return false;
@@ -81,6 +83,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 fragment = new ProfileFragment();
                 changeActionBarTitle(getResources().getString(R.string.profile));
                 break;
+        }
+
+        if (actualFragmentMenu.getClass().equals(fragment.getClass())) {
+            return false;
         }
 
         return loadFragment(fragment);

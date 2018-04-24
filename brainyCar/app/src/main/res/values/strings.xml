@@ -90,6 +90,21 @@
     <string name="titleLastLocationCar">Aparcamiento</string>
     <string name="snippetLastLocationCar">Último lugar de aparcamiento conocido: </string>
 
+    <!-- SETTINGS ACTIVITY -->
+    <string name="settingsTitle">Ajustes</string>
+    <string name="permissionCategory">Permisos</string>
+    <string name="bluetoothSetting">Bluetooth</string>
+    <string name="locationSetting">Ubicación</string>
+    <string name="carCategory">Preferencias del vehículo</string>
+    <string name="fuelSetting">Combustible</string>
+    <string-array name="fuelType">
+        <item>Gasoil</item>
+        <item>Gasolina 95</item>
+        <item>Gasolina 98</item>
+        <item>Otros</item>
+    </string-array>
+    <string name="obdSetting">Dispositivo OBD2</string>
+
     <!-- TRACKING SERVICE -->
     <string name="trackingNotificationTitle">Trayecto en curso</string>
     <string name="trackingNotificationSubtitle">El dispositivo está recopilando datos de conducción</string>

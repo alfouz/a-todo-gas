@@ -27,9 +27,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String imgSett = prefs.getString("fuelType", "");
-        Log.d("pepe", imgSett);
 
         //loading the default fragment
         loadFragment(new HomeFragment());

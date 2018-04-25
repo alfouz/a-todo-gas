@@ -16,9 +16,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = MainActivity.class.getSimpleName();
     private Fragment actualFragmentMenu;
+    GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +131,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.action_logout:
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .build();
 
+                mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+                Task<GoogleSignInAccount> silentSignIn = mGoogleSignInClient.silentSignIn();
+
+                if (silentSignIn.isSuccessful()) {
+                    mGoogleSignInClient.signOut();
+                    Intent intent2 = new Intent(this, AuthenticationActivity.class);
+                    startActivity(intent2);
+                }
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

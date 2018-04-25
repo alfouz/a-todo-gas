@@ -4,7 +4,9 @@ package com.atodogas.brainycar;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -78,20 +81,20 @@ public class LocationFragment extends Fragment {
                 googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
 
-
                 // For dropping a marker at a point on the Map
                 //LatLng aCientifica = new LatLng(43.333001, -8.40903);
                 //googleMap.addMarker(new MarkerOptions().position(aCientifica).title("Área científica").snippet("Clase del MUEI"));
 
 
-                /*List<LatLng> sourcePoints = new ArrayList<>();
-                for(int i = 0; i<10000; i++){
-                    //sourcePoints.add(new ColoredPoint(new LatLng(43.333001 +(i*0.0001),-8.40903+(i*0.0001)), getSegmentColorFromMetric(i%5)));
-                    sourcePoints.add(new LatLng(43.333001 +(i*0.0001),-8.40903+(i*0.0001)));
+                //Example usage draw path
+                /*List<ColoredPoint> sourcePoints = new ArrayList<>();
+                for(int i = 0; i<50000; i++){
+                    sourcePoints.add(new ColoredPoint(new LatLng(43.333001 +(i*0.0001),-8.40903+(i*0.0001)), getSegmentColorFromMetric(i%10000)));
+                    //sourcePoints.add(new LatLng(43.333001 +(i*0.0001),-8.40903+(i*0.0001)));
                 }
-                drawPathPolyline(sourcePoints);*/
+                drawPathPolylineColoured(sourcePoints);*/
 
-                LatLng car = new LatLng(43.333364,-8.4087363);
+                LatLng car = new LatLng(43.333364, -8.4087363);
                 setLastCarPosition(car);
 
                 // For zooming automatically to the location of the marker
@@ -99,9 +102,9 @@ public class LocationFragment extends Fragment {
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
 
-                if(checkPermissionLocation()){
+                if (checkPermissionLocation()) {
                     googleMap.setMyLocationEnabled(true);
-                }else{
+                } else {
                     askPermission();
                 }
 
@@ -139,11 +142,12 @@ public class LocationFragment extends Fragment {
     private boolean checkPermissionLocation() {
         // Ask for permission if it wasn't granted yet
         return (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED );
+                == PackageManager.PERMISSION_GRANTED);
     }
+
     // Asks for permission
     private void askPermission() {
-        requestPermissions(new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
+        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 MY_PERMISSION_LOCATION_FINE
         );
     }
@@ -151,7 +155,7 @@ public class LocationFragment extends Fragment {
     @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch ( requestCode ) {
+        switch (requestCode) {
             case MY_PERMISSION_LOCATION_FINE: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -170,23 +174,32 @@ public class LocationFragment extends Fragment {
 
 
     //Set a car image on latlng indicated
-    private void setLastCarPosition(LatLng position){
+    private void setLastCarPosition(LatLng position) {
 
-       Marker mCar = googleMap.addMarker(new MarkerOptions()
+        int height = 200;
+        int width = 200;
+        BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.mipmap.ic_map_marker_foreground);
+        Bitmap b = bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+
+
+        BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(smallMarker);
+
+        Marker mCar = googleMap.addMarker(new MarkerOptions()
                 .position(position)
                 .title(getString(R.string.titleLastLocationCar))
                 .snippet(getString(R.string.snippetLastLocationCar) + " " + position.latitude + "," + position.longitude)
-                .icon(Util.getBitmapDescriptor(getContext(), R.drawable.ic_directions_car_black_24dp, Color.BLUE)));
+                .icon(icon));
     }
 
     //TODO Need update this function
     private int getSegmentColorFromMetric(float metric) {
         int color;
-        if (metric < 1) {
+        if (metric < 2000) {
             color = Color.BLUE;
-        } else if (metric < 2) {
+        } else if (metric < 5000) {
             color = Color.GREEN;
-        } else if (metric < 3) {
+        } else if (metric < 7500) {
             color = Color.YELLOW;
         } else {
             color = Color.RED;
@@ -195,7 +208,7 @@ public class LocationFragment extends Fragment {
     }
 
     //Prerrequisites: Ordered list of latlng without color
-    private void drawPathPolyline(List<LatLng> points){
+    private void drawPathPolyline(List<LatLng> points) {
         if (points.size() < 2) {
             return;
         }
@@ -207,13 +220,13 @@ public class LocationFragment extends Fragment {
 
 
     //Prerrequisites: Ordered list of coloredPoints
-    private void drawPathPolylineColoured(List<ColoredPoint> points){
+    private void drawPathPolylineColoured(List<ColoredPoint> points) {
         if (points.size() < 2) {
             return;
         }
 
         int ix = 0;
-        ColoredPoint currentPoint  = points.get(ix);
+        ColoredPoint currentPoint = points.get(ix);
         int currentColor = currentPoint.color;
         List<LatLng> currentSegment = new ArrayList<>();
         currentSegment.add(currentPoint.coords);

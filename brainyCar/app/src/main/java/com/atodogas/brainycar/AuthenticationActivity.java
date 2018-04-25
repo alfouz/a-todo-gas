@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.Toast;
 
 
+import com.atodogas.brainycar.AsyncTasks.CallbackInterface;
+import com.atodogas.brainycar.AsyncTasks.CheckUserAndInsertBD;
+import com.atodogas.brainycar.Database.Entities.UserEntity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -25,7 +28,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.common.api.Status;
 
 
-public class AuthenticationActivity extends AppCompatActivity implements View.OnClickListener{
+public class AuthenticationActivity extends AppCompatActivity implements View.OnClickListener, CallbackInterface<UserEntity>{
     private static final String TAG = AuthenticationActivity.class.getSimpleName();
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
@@ -97,11 +100,7 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
             //personPhotoUrl = account.getPhotoUrl().toString();
             email = account.getEmail();
 
-            Log.e(TAG, "Name: " + personName + ", email: " + email
-                    + ", Image: " + personPhotoUrl);
-            // Signed in successfully, show authenticated UI.
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            new CheckUserAndInsertBD(this, getApplicationContext()).execute(account.getId());
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -124,6 +123,18 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
 
         if (progressDialog !=null){
             progressDialog.cancel();
+        }
+    }
+
+    @Override
+    public void doCallback(UserEntity user) {
+        if(user.getId() > 0){
+            Log.e(TAG, "Name: " + personName + ", email: " + email
+                    + ", Image: " + personPhotoUrl);
+            // Signed in successfully, show authenticated UI.
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("idUser", user.getId());
+            startActivity(intent);
         }
     }
 }

@@ -2,13 +2,11 @@ package com.atodogas.brainycar.Services.Extra;
 
 import android.util.Log;
 
+import com.atodogas.brainycar.Database.AppDatabase;
+import com.atodogas.brainycar.Database.Entities.TripDataEntity;
 import com.atodogas.brainycar.OBD.OBDDTO;
 
 import java.util.ArrayList;
-
-/**
- * Created by xurxo on 14/04/18.
- */
 
 public class DashboardServiceHelper {
     private ArrayList<OBDDTO> obddtosCola;
@@ -47,6 +45,7 @@ public class DashboardServiceHelper {
         if(obddtosCola.size() > 0) {
             OBDDTO obddto = obddtosCola.get(0);
             obddtosCola.remove(0);
+            lastObdDTO = obddto;
 
             float mpg = calculateMpg(obddto);
             if (obddto.speed > 0 && mpg > 0) {

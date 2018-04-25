@@ -57,10 +57,7 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
         Task<GoogleSignInAccount> silentSignIn = mGoogleSignInClient.silentSignIn();
 
         if (silentSignIn.isSuccessful()) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        } else {
-
+            new CheckUserAndInsertBD(this, getApplicationContext()).execute(silentSignIn.getResult().getId());
         }
     }
 

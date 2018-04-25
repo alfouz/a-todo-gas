@@ -91,6 +91,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         stopService(trackingServiceIntent);
 
         Intent intent = new Intent(this, MainActivity.class);
+        int idUser = getIntent().getIntExtra("idUser", - 1);
+        intent.putExtra("idUser", idUser);
         startActivity(intent);
     }
 

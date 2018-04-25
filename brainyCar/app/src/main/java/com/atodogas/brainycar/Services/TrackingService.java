@@ -10,6 +10,10 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
@@ -26,8 +30,9 @@ import com.atodogas.brainycar.Services.Extra.DashboardDTO;
 import com.atodogas.brainycar.Services.Extra.DashboardServiceHelper;
 
 
-public class TrackingService extends Service {
+public class TrackingService extends Service implements SensorEventListener {
 
+    public static final String TAG = "TrackingService";
     public static final String NOTIFICATION_CHANNEL_ID_SERVICE = "com.atodogas.brainycar.SERVICE";
     public static final String DASHBOARD_DTO = "com.atodogas.brainycar.SEND_DASBHOARD_DTO";
 
@@ -37,6 +42,17 @@ public class TrackingService extends Service {
     private DashboardServiceHelper dashboardServiceHelper;
     private LocalBroadcastManager localBroadcastManager;
     private Intent intent;
+
+    //Gestión sensores
+    private SensorManager sm;
+    private Sensor sAcc;
+    private Sensor sGir;
+    private Sensor sMag;
+    private Sensor sBar;
+    private float [] vAcc;
+    private float [] vGir;
+    private float [] vMag;
+    private float [] vBar;
 
     public void initChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -81,7 +97,55 @@ public class TrackingService extends Service {
         startService(intent2);
         dashboardCalcsThread.start();
 
+        //Inicialización de sensores
+        sm = (SensorManager)getApplicationContext().getSystemService(Context.SENSOR_SERVICE);
+        sAcc = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sGir = sm.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        sMag = sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        sBar = sm.getDefaultSensor(Sensor.TYPE_PRESSURE);
+        sm.registerListener(this, sAcc, SensorManager.SENSOR_DELAY_NORMAL);
+        sm.registerListener(this, sGir, SensorManager.SENSOR_DELAY_NORMAL);
+        sm.registerListener(this, sMag, SensorManager.SENSOR_DELAY_NORMAL);
+        sm.registerListener(this, sBar, SensorManager.SENSOR_DELAY_NORMAL);
+
         return Service.START_STICKY;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if(sAcc!=null && event.sensor.getName().equals(sAcc.getName())){
+            vAcc = event.values;
+        }
+        if(sGir!=null && event.sensor.getName().equals(sGir.getName())){
+            vGir = event.values;
+        }
+        if(sMag!=null && event.sensor.getName().equals(sMag.getName())){
+            vMag = event.values;
+        }
+        if(sBar!=null && event.sensor.getName().equals(sBar.getName())){
+            vBar = event.values;
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    public float [] getValorGiroscopio () {
+        return vGir;
+    }
+
+    public float [] getValorAcelerometro () {
+        return vAcc;
+    }
+
+    public float [] getValorMagnetometro () {
+        return vMag;
+    }
+
+    public float [] getValorBarometro () {
+        return vBar;
     }
 
 
@@ -98,6 +162,8 @@ public class TrackingService extends Service {
         Intent intent = new Intent(this, OBDService.class);
         stopService(intent);
         localBroadcastManager.unregisterReceiver(OBDDTOReceibe);
+        //Unregister de los sensores
+        sm.unregisterListener(this);
     }
 
     private final BroadcastReceiver OBDDTOReceibe = new BroadcastReceiver() {
@@ -128,6 +194,24 @@ public class TrackingService extends Service {
 
                     localBroadcastManager.sendBroadcast(intent);
                 }
+
+                ///TODO Eliminar logs de prueba de obtención de valores de sensores
+                if (getValorAcelerometro() != null)
+                    Log.i(TAG, "Acelerómetro (Valor x):" + getValorAcelerometro()[0]);
+                else
+                    Log.i(TAG, "No se encuentra valor para el acelerómetro");
+                if (getValorGiroscopio() != null)
+                    Log.i(TAG, "Giroscopio (Valor x):" + getValorGiroscopio()[0]);
+                else
+                    Log.i(TAG, "No se encuentra valor para el giroscopio");
+                if (getValorMagnetometro() != null)
+                    Log.i(TAG, "Magnetómetro (Valor x):" + getValorMagnetometro()[0]);
+                else
+                    Log.i(TAG, "No se encuentra valor para el magnetómetro");
+                if (getValorBarometro() != null)
+                    Log.i(TAG, "Barómetro (Valor x):" + getValorBarometro()[0]);
+                else
+                    Log.i(TAG, "No se encuentra valor para el barómetro");
 
                 try {
                     Thread.sleep(50);

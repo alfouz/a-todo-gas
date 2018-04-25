@@ -1,4 +1,4 @@
-# a-todo-gas
+# BrainyCar - Grupo A Todo Gas
 
 ## Método de compilación
 

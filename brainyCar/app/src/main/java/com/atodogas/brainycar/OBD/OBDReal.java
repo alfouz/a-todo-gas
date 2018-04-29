@@ -20,6 +20,7 @@ import com.github.pires.obd.commands.protocol.AvailablePidsCommand_21_40;
 import com.github.pires.obd.commands.protocol.AvailablePidsCommand_41_60;
 import com.github.pires.obd.commands.protocol.EchoOffCommand;
 import com.github.pires.obd.commands.protocol.LineFeedOffCommand;
+import com.github.pires.obd.commands.protocol.ReadInputVoltageCommand;
 import com.github.pires.obd.commands.protocol.SelectProtocolCommand;
 import com.github.pires.obd.commands.protocol.TimeoutCommand;
 import com.github.pires.obd.commands.temperature.AirIntakeTemperatureCommand;
@@ -48,38 +49,15 @@ public class OBDReal extends OBDAdapter {
     private RPMCommand rpmCommand;
     private FuelLevelCommand fuelLevelCommand;
     private ModuleVoltageCommand moduleVoltageCommand;
-    private ThrottlePositionCommand throttlePositionCommand;
-    private AmbientAirTemperatureCommand ambientAirTemperatureCommand;
     private EngineCoolantTemperatureCommand engineCoolantTemperatureCommand;
-    private AirIntakeTemperatureCommand airIntakeTemperatureCommand;
-    private FindFuelTypeCommand findFuelTypeCommand;
     private TroubleCodesCommand troubleCodesCommand;
-    private ConsumptionRateCommand consumptionRateCommand;
     private MassAirFlowCommand massAirFlowCommand;
-    private IntakeManifoldPressureCommand intakeManifoldPressureCommand;
+    private ReadInputVoltageCommand readInputVoltageCommand;
 
 
     public OBDReal(InputStream input, OutputStream output) throws IOException, InterruptedException {
         this.input = input;
         this.output = output;
-
-        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-        HashMap<String, String> devices = new HashMap<>();
-
-        for (BluetoothDevice device : btAdapter.getBondedDevices()){
-            devices.put(device.getName(), device.getAddress());
-        }
-
-        String address = devices.get("OBDII");
-
-        BluetoothDevice device = btAdapter.getRemoteDevice(address);
-        UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
-
-        BluetoothSocket socket = device.createRfcommSocketToServiceRecord(uuid);
-        socket.connect();
-
-        this.input = socket.getInputStream();
-        this.output = socket.getOutputStream();
 
         this.echoOffCommand = new EchoOffCommand();
         this.timeoutCommand = new TimeoutCommand(30);
@@ -89,15 +67,10 @@ public class OBDReal extends OBDAdapter {
         this.rpmCommand = new RPMCommand();
         this.fuelLevelCommand = new FuelLevelCommand();
         this.moduleVoltageCommand = new ModuleVoltageCommand();
-        this.throttlePositionCommand = new ThrottlePositionCommand();
-        this.ambientAirTemperatureCommand = new AmbientAirTemperatureCommand();
         this.engineCoolantTemperatureCommand = new EngineCoolantTemperatureCommand();
-        this.airIntakeTemperatureCommand = new AirIntakeTemperatureCommand();
-        this.findFuelTypeCommand = new FindFuelTypeCommand();
         this.troubleCodesCommand = new TroubleCodesCommand();
-        this.consumptionRateCommand = new ConsumptionRateCommand();
         this.massAirFlowCommand = new MassAirFlowCommand();
-        this.intakeManifoldPressureCommand = new IntakeManifoldPressureCommand();
+        this.readInputVoltageCommand = new ReadInputVoltageCommand();
 
         this.echoOffCommand.run(this.input, this.output);
         this.lineFeedOffCommand.run(this.input, this.output);
@@ -142,32 +115,8 @@ public class OBDReal extends OBDAdapter {
         }
 
         try {
-            throttlePositionCommand.run(input, output);
-            dto.throttlePos = throttlePositionCommand.getPercentage();
-        }
-        catch (ResponseException e){
-            e.printStackTrace();
-        }
-
-        try {
-            ambientAirTemperatureCommand.run(input, output);
-            dto.ambientTemp = ambientAirTemperatureCommand.getTemperature();
-        }
-        catch (ResponseException e){
-            e.printStackTrace();
-        }
-
-        try {
             engineCoolantTemperatureCommand.run(input, output);
             dto.engineCoolantTemp = engineCoolantTemperatureCommand.getTemperature();
-        }
-        catch (ResponseException e){
-            e.printStackTrace();
-        }
-
-        try {
-            airIntakeTemperatureCommand.run(input, output);
-            dto.airIntakeTemp = airIntakeTemperatureCommand.getTemperature();
         }
         catch (ResponseException e){
             e.printStackTrace();
@@ -181,29 +130,25 @@ public class OBDReal extends OBDAdapter {
             e.printStackTrace();
         }
 
-        try {
-            intakeManifoldPressureCommand.run(input, output);
-            dto.intakeManifoldPresure = intakeManifoldPressureCommand.getMetricUnit();
-        }
-        catch (ResponseException e){
-            e.printStackTrace();
-        }
-
         return dto;
     }
 
     @Override
-    public String getFuelType() throws IOException, InterruptedException {
-        String fuelType = "-";
+    public boolean isConnected(){
         try {
-            findFuelTypeCommand.run(input, output);
-            fuelType = findFuelTypeCommand.getFormattedResult();
-        }
-        catch (ResponseException e){
+            readInputVoltageCommand.run(input, output);
+            float voltage = readInputVoltageCommand.getVoltage();
+
+            if(voltage > 0){
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        return fuelType;
+        return false;
     }
 
     @Override

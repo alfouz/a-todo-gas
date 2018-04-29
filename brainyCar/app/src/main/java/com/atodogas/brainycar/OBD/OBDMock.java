@@ -30,9 +30,10 @@ public class OBDMock extends OBDAdapter {
 
         return obddto;
     }
+
     @Override
-    public String getFuelType() throws IOException, InterruptedException {
-        return "Gasoline";
+    public boolean isConnected() throws IOException, InterruptedException {
+        return true;
     }
 
     @Override

@@ -332,6 +332,7 @@ public class TrackingService extends Service implements SensorEventListener,
                 }
 
                 getLocation();
+
                 ///TODO Eliminar logs de prueba de obtención de valores de localizacion
                 Log.i(TAG, "Latitud:" + getLatitud());
                 Log.i(TAG, "Longitud:" + getLongitud());

@@ -19,6 +19,7 @@ public class OBDService extends Service implements CallbackInterface<OBDAdapter>
     private OBDAdapter adapter;
     private OBDThread obdThread;
     private OBDDatabase obdDatabase;
+    private ConnectOBD connectOBD;
     private LocalBroadcastManager localBroadcastManager;
     private Intent intent;
     public static final String OBD_DTO = "com.atodogas.brainycar.OBDService.SEND_OBD_DTO";
@@ -32,7 +33,8 @@ public class OBDService extends Service implements CallbackInterface<OBDAdapter>
         super.onCreate();
 
         obdDatabase = new OBDDatabase(getApplication());
-        new ConnectOBD(this).execute();
+        connectOBD = new ConnectOBD(this);
+        connectOBD.execute();
         localBroadcastManager = LocalBroadcastManager.getInstance(getApplicationContext());
         obdThread = new OBDThread();
         intent = new Intent();
@@ -49,6 +51,8 @@ public class OBDService extends Service implements CallbackInterface<OBDAdapter>
         super.onDestroy();
 
         obdThread.terminate();
+        adapter.close();
+        connectOBD.close();
     }
 
     @Override
@@ -62,7 +66,9 @@ public class OBDService extends Service implements CallbackInterface<OBDAdapter>
         adapter = obdAdapter;
 
         // TODO: Borrar/Comentar mockup cuando no se necesite
-        adapter = new OBDMock(obdDatabase);
+        if(obdAdapter == null){
+            adapter = new OBDMock(obdDatabase);
+        }
 
         if(adapter != null){
             obdThread.start();
@@ -92,9 +98,9 @@ public class OBDService extends Service implements CallbackInterface<OBDAdapter>
                     intent.putExtra("OBDDTO", dto);
                     localBroadcastManager.sendBroadcast(intent);
 
-                    if(adapter instanceof OBDReal) {
+                    /*if(adapter instanceof OBDReal) {
                         obdDatabase.insertRow(dto);
-                    }
+                    }*/
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {

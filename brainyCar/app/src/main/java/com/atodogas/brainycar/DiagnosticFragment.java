@@ -24,29 +24,25 @@ import java.util.ArrayList;
 public class DiagnosticFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = DiagnosticFragment.class.getSimpleName();
 
+    private ArrayList<BugEntity> bugEntityArrayList;
+    private String time;
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_diagnostic, container, false);
 
+        Bundle arguments  = getArguments();
+        String time = arguments.getString("time");
+        ArrayList<BugEntity> bugEntities = arguments.getParcelableArrayList("bugEntities");
 
         // Setting general info
         TextView timeText = view.findViewById(R.id.timeText);
-        timeText.setText("2:33 minutos");
+        timeText.setText(time);
         TextView bugText = view.findViewById(R.id.bugText);
-        bugText.setText("5");
+        bugText.setText(Integer.toString(bugEntities.size()));
 
-        // Setting errors list
-        ArrayList<BugEntity> bugs = new ArrayList<>();
-        for (int i=0; i <= 10; i++) {
-            bugs.add(new BugEntity("P0123", "Lorem ipsum dolor sit amet, consectetur " +
-                    "adipiscing elit. Etiam consectetur malesuada iaculis. Proin dictum mattis lorem. " +
-                    "Quisque vel facilisis nisi, id interdum nisl. Integer imperdiet lorem augue, " +
-                    "sit amet dapibus tortor consectetur ac. Cras vel leo at enim auctor laoreet non" +
-                    " in metus. In hac habitasse platea dictumst."));
-        }
-
-        DiagnosticFragmentBugAdapter adapter = new DiagnosticFragmentBugAdapter(bugs);
+        DiagnosticFragmentBugAdapter adapter = new DiagnosticFragmentBugAdapter(bugEntities);
         RecyclerView myView =  view.findViewById(R.id.bugsList);
         myView.setHasFixedSize(true);
         myView.setAdapter(adapter);

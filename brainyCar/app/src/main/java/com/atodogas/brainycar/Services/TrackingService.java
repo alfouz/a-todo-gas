@@ -250,10 +250,12 @@ public class TrackingService extends Service implements SensorEventListener, Cal
                             tripData.setAcelY(getValorAcelerometro()[1]);
                             tripData.setAcelZ(getValorAcelerometro()[2]);
                         }
+
+                        db.tripDataDao().insertTripData(tripData);
                     }
                 }
 
-                ///TODO Eliminar logs de prueba de obtención de valores de sensores
+               /* ///TODO Eliminar logs de prueba de obtención de valores de sensores
                 if (getValorAcelerometro() != null)
                     Log.i(TAG, "Acelerómetro (Valor x):" + getValorAcelerometro()[0]);
                 else
@@ -269,10 +271,10 @@ public class TrackingService extends Service implements SensorEventListener, Cal
                 if (getValorBarometro() != null)
                     Log.i(TAG, "Barómetro (Valor x):" + getValorBarometro()[0]);
                 else
-                    Log.i(TAG, "No se encuentra valor para el barómetro");
+                    Log.i(TAG, "No se encuentra valor para el barómetro");*/
 
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

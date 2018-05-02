@@ -12,7 +12,8 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class ConnectOBD extends AsyncTask<Void, Void, OBDAdapter> {
-    CallbackInterface callback;
+    private CallbackInterface callback;
+    private BluetoothSocket socket;
 
     public ConnectOBD(CallbackInterface callback) {
         this.callback = callback;
@@ -25,7 +26,7 @@ public class ConnectOBD extends AsyncTask<Void, Void, OBDAdapter> {
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
         UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
         for (BluetoothDevice device : btAdapter.getBondedDevices()){
-            BluetoothSocket socket = null;
+            socket = null;
             try {
                 socket = device.createRfcommSocketToServiceRecord(uuid);
                 socket.connect();
@@ -52,5 +53,14 @@ public class ConnectOBD extends AsyncTask<Void, Void, OBDAdapter> {
     protected void onPostExecute(OBDAdapter obdAdapter) {
         super.onPostExecute(obdAdapter);
         callback.doCallback(obdAdapter);
+    }
+
+    public void close(){
+        try {
+            socket.close();
+            socket = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -157,7 +157,26 @@ public class OBDReal extends OBDAdapter {
             troubleCodesCommand.run(input, output);
             String troubleCodesString = troubleCodesCommand.getFormattedResult();
 
-            return new ArrayList<>(Arrays.asList(troubleCodesString.split("\n")));
+            ArrayList<String> troubleCodes = new ArrayList<>(Arrays.asList(troubleCodesString.split("\n")));
+            ArrayList<String> validTroubleCodes = new ArrayList<>();
+
+            for (String code : troubleCodes){
+                if(code.length() > 0 && code.length() <= 5){
+                    if(code.charAt(0) != 'P' && code.charAt(0) != 'B' && code.charAt(0) != 'U' && code.charAt(0) != 'C'){
+                        continue;
+                    }
+
+                    try{
+                        Integer.parseInt(code.substring(1,5));
+                        validTroubleCodes.add(code);
+                    }
+                    catch (NumberFormatException ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }
+
+            return validTroubleCodes;
         }
         catch (ResponseException ex) {
             return new ArrayList<String>();
@@ -185,5 +204,21 @@ public class OBDReal extends OBDAdapter {
         }
 
         return supported;
+    }
+
+
+    @Override
+    public void close() {
+        try {
+            input.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -40,6 +40,12 @@ public class TripDataEntity {
     @NonNull
     private float Battery;
 
+    private Float AcelX;
+
+    private Float AcelY;
+
+    private Float AcelZ;
+
     @NonNull
     private long Time;
 
@@ -84,6 +90,18 @@ public class TripDataEntity {
         Battery = battery;
     }
 
+    public void setAcelX(Float acelX) {
+        this.AcelX = acelX;
+    }
+
+    public void setAcelY(Float acelY) {
+        this.AcelY = acelY;
+    }
+
+    public void setAcelZ(Float acelZ) {
+        this.AcelZ = acelZ;
+    }
+
     public void setTime(long time) {
         Time = time;
     }
@@ -126,6 +144,18 @@ public class TripDataEntity {
 
     public float getBattery() {
         return Battery;
+    }
+
+    public Float getAcelX() {
+        return AcelX;
+    }
+
+    public Float getAcelY() {
+        return AcelY;
+    }
+
+    public Float getAcelZ() {
+        return AcelZ;
     }
 
     public long getTime() {

@@ -6,6 +6,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.arch.persistence.room.Room;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.Context;
@@ -23,18 +24,26 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.atodogas.brainycar.AsyncTasks.CallbackInterface;
+import com.atodogas.brainycar.AsyncTasks.CreateTripBD;
 import com.atodogas.brainycar.DashboardActivity;
+import com.atodogas.brainycar.Database.AppDatabase;
+import com.atodogas.brainycar.Database.Entities.TripDataEntity;
 import com.atodogas.brainycar.OBD.OBDDTO;
 import com.atodogas.brainycar.R;
 import com.atodogas.brainycar.Services.Extra.DashboardDTO;
 import com.atodogas.brainycar.Services.Extra.DashboardServiceHelper;
+import com.atodogas.brainycar.TripEntity;
+
+import java.util.List;
 
 
-public class TrackingService extends Service implements SensorEventListener {
+public class TrackingService extends Service implements SensorEventListener, CallbackInterface<com.atodogas.brainycar.Database.Entities.TripEntity> {
 
     public static final String TAG = "TrackingService";
-    public static final String NOTIFICATION_CHANNEL_ID_SERVICE = "com.atodogas.brainycar.SERVICE";
-    public static final String DASHBOARD_DTO = "com.atodogas.brainycar.SEND_DASBHOARD_DTO";
+    public static final String NOTIFICATION_CHANNEL_ID_SERVICE = "com.atodogas.brainycar.TrackingService.SERVICE";
+    public static final String DASHBOARD_DTO = "com.atodogas.brainycar.TrackingService.SEND_DASBHOARD_DTO";
+    public static final String OBD_NOT_CONNECTED = "com.atodogas.brainycar.TrackingService.OBD_NOT_CONNECTED";
 
     public static final int SERVICE_ID = 9201;
 
@@ -42,6 +51,8 @@ public class TrackingService extends Service implements SensorEventListener {
     private DashboardServiceHelper dashboardServiceHelper;
     private LocalBroadcastManager localBroadcastManager;
     private Intent intent;
+    private AppDatabase db;
+    private com.atodogas.brainycar.Database.Entities.TripEntity trip;
 
     //Gestión sensores
     private SensorManager sm;
@@ -88,14 +99,13 @@ public class TrackingService extends Service implements SensorEventListener {
         notification.flags |= Notification.FLAG_ONGOING_EVENT;
 
         dashboardServiceHelper = new DashboardServiceHelper();
-        dashboardCalcsThread = new DashboardCalcsThread();
 
         startForeground(SERVICE_ID, notification);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(OBDDTOReceibe, new IntentFilter(OBDService.OBD_DTO));
+        localBroadcastManager.registerReceiver(OBDDTOReceibe, new IntentFilter(OBDService.OBD_DTO));
+        localBroadcastManager.registerReceiver(OBDDTOReceibe, new IntentFilter(OBDService.OBD_NOT_CONNECTED));
         Intent intent2 = new Intent(this, OBDService.class);
         startService(intent2);
-        dashboardCalcsThread.start();
 
         //Inicialización de sensores
         sm = (SensorManager)getApplicationContext().getSystemService(Context.SENSOR_SERVICE);
@@ -107,6 +117,10 @@ public class TrackingService extends Service implements SensorEventListener {
         sm.registerListener(this, sGir, SensorManager.SENSOR_DELAY_NORMAL);
         sm.registerListener(this, sMag, SensorManager.SENSOR_DELAY_NORMAL);
         sm.registerListener(this, sBar, SensorManager.SENSOR_DELAY_NORMAL);
+
+        int idUser = intent.getIntExtra("idUser", -1);
+        new CreateTripBD(this, getApplicationContext()).execute(idUser);
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "brainyCar").build();
 
         return Service.START_STICKY;
     }
@@ -158,7 +172,10 @@ public class TrackingService extends Service implements SensorEventListener {
 
     @Override
     public void onDestroy() {
-        dashboardCalcsThread.terminate();
+        if(dashboardCalcsThread != null){
+            dashboardCalcsThread.terminate();
+        }
+
         Intent intent = new Intent(this, OBDService.class);
         stopService(intent);
         localBroadcastManager.unregisterReceiver(OBDDTOReceibe);
@@ -173,9 +190,29 @@ public class TrackingService extends Service implements SensorEventListener {
             if(OBDService.OBD_DTO.equals(action)) {
                 OBDDTO obdDTO = intent.getParcelableExtra("OBDDTO");
                 dashboardServiceHelper.insertOBDDTO(obdDTO);
+
+                if(dashboardCalcsThread == null){
+                    dashboardCalcsThread = new DashboardCalcsThread();
+                    dashboardCalcsThread.start();
+                }
+            }
+            else if(OBDService.OBD_NOT_CONNECTED.equals(action)) {
+                intent = new Intent();
+                intent.setAction(TrackingService.OBD_NOT_CONNECTED);
+                localBroadcastManager.sendBroadcast(intent);
+                stopSelf();
             }
         }
     };
+
+    @Override
+    public void doCallback(com.atodogas.brainycar.Database.Entities.TripEntity trip) {
+        this.trip = trip;
+
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(OBDDTOReceibe, new IntentFilter(OBDService.OBD_DTO));
+        Intent intent2 = new Intent(getApplicationContext(), OBDService.class);
+        startService(intent2);
+    }
 
     public class DashboardCalcsThread  extends Thread{
         public volatile boolean running = true;
@@ -193,6 +230,27 @@ public class TrackingService extends Service implements SensorEventListener {
                     intent.putExtra("DashboardDTO", dashboardDTO);
 
                     localBroadcastManager.sendBroadcast(intent);
+
+                    if(dashboardDTO.speed != -1){
+                        OBDDTO obddto = dashboardServiceHelper.getLastObdDTO();
+                        TripDataEntity tripData = new TripDataEntity();
+                        tripData.setIdTrip(trip.getId());
+                        tripData.setBattery(obddto.moduleVoltage);
+                        tripData.setEngineTemp(obddto.engineCoolantTemp);
+                        tripData.setFuelTankLevel(obddto.fuelTankLevel);
+                        tripData.setSpeed(obddto.speed);
+                        tripData.setRPM(obddto.rpm);
+                        tripData.setLatitude(0);
+                        tripData.setLongitude(0);
+                        tripData.setMAF(obddto.massAirFlow);
+                        tripData.setTime(System.currentTimeMillis());
+
+                        if (getValorAcelerometro() != null){
+                            tripData.setAcelX(getValorAcelerometro()[0]);
+                            tripData.setAcelY(getValorAcelerometro()[1]);
+                            tripData.setAcelZ(getValorAcelerometro()[2]);
+                        }
+                    }
                 }
 
                 ///TODO Eliminar logs de prueba de obtención de valores de sensores
@@ -214,7 +272,7 @@ public class TrackingService extends Service implements SensorEventListener {
                     Log.i(TAG, "No se encuentra valor para el barómetro");
 
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

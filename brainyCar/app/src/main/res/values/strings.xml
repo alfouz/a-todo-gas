@@ -55,6 +55,28 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="loading_obteniendo_codigos_error">Obteniendo Códigos de Error</string>
+    <string name="error_conectar_obd">Error al conectar con OBD</string>
+    <string name="error_obtener_datos_obd">Error al obtener los datos</string>
+
+    <!-- CODIGOS DE ERROR: REF: https://codigosdtc.com/codigos-dtc/ -->
+    <string name="FIRST_CHAR_P">Problema en el tren motriz</string>
+    <string name="FIRST_CHAR_B">Problema en la carroceria</string>
+    <string name="FIRST_CHAR_U">Problema de Red</string>
+    <string name="FIRST_CHAR_C">Problema en el chasis</string>
+    <string name="SECOND_CHAR_0">Código de error generico</string>
+    <string name="SECOND_CHAR_1">Código de error determinado por el fabricante</string>
+    <string name="SECOND_CHAR_2">Código de error determinado por el fabricante</string>
+    <string name="SECOND_CHAR_3">Código de error determinado por el fabricante</string>
+    <string name="THIRD_CHAR_1">Fallo de algún sensor que controla la relación Aire-Combustible</string>
+    <string name="THIRD_CHAR_2">Fallo en el sistema de alimentación</string>
+    <string name="THIRD_CHAR_3">Fallo en el sistema de encendido</string>
+    <string name="THIRD_CHAR_4">Fallo en el sistema de anticontaminación</string>
+    <string name="THIRD_CHAR_5">Fallo en el sistema de marcha mínima y velocidad</string>
+    <string name="THIRD_CHAR_6">Fallo en el Módulo de control del motor (ECM) y salidas auxiliares</string>
+    <string name="THIRD_CHAR_7">Fallo en la transmisión automtica o sistema de control de tracción </string>
+    <string name="THIRD_CHAR_8">Fallo en la transmisión automtica o sistema de control de tracción </string>
+
 
     <!-- HISTORIC FRAGMENT -->
     <string-array name="measure_array">

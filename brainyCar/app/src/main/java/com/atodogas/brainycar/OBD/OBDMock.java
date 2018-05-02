@@ -13,7 +13,9 @@ public class OBDMock extends OBDAdapter {
         this.obdDatabase = database;
         this.index = 0;
 
-        this.obdData = this.obdDatabase.getAllData();
+        if(this.obdDatabase != null){
+            this.obdData = this.obdDatabase.getAllData();
+        }
     }
 
     @Override
@@ -46,5 +48,10 @@ public class OBDMock extends OBDAdapter {
         troubleCodes.add("B1103");
 
         return troubleCodes;
+    }
+
+    @Override
+    public void close() {
+
     }
 }

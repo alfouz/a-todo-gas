@@ -1,12 +1,12 @@
 package com.atodogas.brainycar.Services;
 
 import android.app.Service;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.atodogas.brainycar.AsyncTasks.CallbackInterface;
+import com.atodogas.brainycar.AsyncTasks.ConnectOBD;
 import com.atodogas.brainycar.OBD.OBDAdapter;
 import com.atodogas.brainycar.OBD.OBDDTO;
 import com.atodogas.brainycar.OBD.OBDDatabase;
@@ -15,13 +15,14 @@ import com.atodogas.brainycar.OBD.OBDReal;
 
 import java.io.IOException;
 
-public class OBDService extends Service {
+public class OBDService extends Service implements CallbackInterface<OBDAdapter> {
     private OBDAdapter adapter;
     private OBDThread obdThread;
     private OBDDatabase obdDatabase;
     private LocalBroadcastManager localBroadcastManager;
     private Intent intent;
-    public static final String OBD_DTO = "com.atodogas.brainycar.SEND_OBD_DTO";
+    public static final String OBD_DTO = "com.atodogas.brainycar.OBDService.SEND_OBD_DTO";
+    public static final String OBD_NOT_CONNECTED = "com.atodogas.brainycar.OBDService.OBD_NOT_CONNECTED";
 
     public OBDService() {
     }
@@ -30,33 +31,23 @@ public class OBDService extends Service {
     public void onCreate() {
         super.onCreate();
 
-
-
-        //try {
-            obdDatabase = new OBDDatabase(getApplication());
-            //adapter = new OBDReal(null, null);
-            adapter = new OBDMock(obdDatabase);
-            localBroadcastManager = LocalBroadcastManager.getInstance(getApplicationContext());
-            intent = new Intent();
-            intent.setAction(OBD_DTO);
-            obdThread = new OBDThread();
-        /*} catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
+        obdDatabase = new OBDDatabase(getApplication());
+        new ConnectOBD(this).execute();
+        localBroadcastManager = LocalBroadcastManager.getInstance(getApplicationContext());
+        obdThread = new OBDThread();
+        intent = new Intent();
+        intent.setAction(OBD_DTO);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        obdThread.start();
-
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+
         obdThread.terminate();
     }
 
@@ -64,6 +55,24 @@ public class OBDService extends Service {
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public void doCallback(OBDAdapter obdAdapter) {
+        adapter = obdAdapter;
+
+        // TODO: Borrar/Comentar mockup cuando no se necesite
+        adapter = new OBDMock(obdDatabase);
+
+        if(adapter != null){
+            obdThread.start();
+        }
+        else {
+            Intent intentErrorBT = new Intent();
+            intentErrorBT.setAction(OBD_NOT_CONNECTED);
+            localBroadcastManager.sendBroadcast(intentErrorBT);
+            stopSelf();
+        }
     }
 
 

@@ -1,9 +1,5 @@
 package com.atodogas.brainycar.Services.Extra;
 
-import android.util.Log;
-
-import com.atodogas.brainycar.Database.AppDatabase;
-import com.atodogas.brainycar.Database.Entities.TripDataEntity;
 import com.atodogas.brainycar.OBD.OBDDTO;
 
 import java.util.ArrayList;
@@ -61,9 +57,9 @@ public class DashboardServiceHelper {
         }
 
         dashboardDTO.l100kmavg = calculateL100kmAvg();
-        dashboardDTO.hours = (int) Math.floor((secondsTrip / 3600.0));
-        dashboardDTO.minutes = (int) Math.floor((secondsTrip/3600.0 - dashboardDTO.hours) * 60.0);
-        dashboardDTO.seconds = (int) Math.floor((((secondsTrip/3600.0 - dashboardDTO.hours) * 60.0) - dashboardDTO.minutes) * 60.0);
+        dashboardDTO.hours = (secondsTrip / 3600);
+        dashboardDTO.minutes = (secondsTrip - (dashboardDTO.hours*3600))/60;
+        dashboardDTO.seconds = secondsTrip - ((dashboardDTO.hours*3600) + (dashboardDTO.minutes*60));
 
         return dashboardDTO;
     }
@@ -91,10 +87,11 @@ public class DashboardServiceHelper {
         }
 
         long nowMillis = System.currentTimeMillis();
-        int seconds = (int) ((nowMillis - lastUpdateTimeMilis) / 1000);
+        int seconds = (int) (nowMillis - lastUpdateTimeMilis)/1000;
         if(seconds > 0){
             lastUpdateTimeMilis = nowMillis;
         }
+
         return seconds;
     }
 }

@@ -14,7 +14,7 @@ public class CreateTripBD extends AsyncTask<Integer, Void, TripEntity> {
 
     public CreateTripBD(CallbackInterface callback, Context context) {
         this.callback = callback;
-        this.db = this.db = Room.databaseBuilder(context, AppDatabase.class, "brainyCar").build();
+        this.db = Room.databaseBuilder(context, AppDatabase.class, "brainyCar").build();
     }
 
     @Override

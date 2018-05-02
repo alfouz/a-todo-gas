@@ -1,5 +1,6 @@
 package com.atodogas.brainycar;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,16 +11,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atodogas.brainycar.Services.Extra.DashboardDTO;
+import com.atodogas.brainycar.Services.OBDService;
 import com.atodogas.brainycar.Services.TrackingService;
 
 public class DashboardActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = DashboardActivity.class.getSimpleName();
+    private LocalBroadcastManager localBroadcastManager;
+    private LinearLayout loadingLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +37,15 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Dashboard");
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        loadingLayout = findViewById(R.id.loadingLayout);
+        loadingLayout.setVisibility(View.VISIBLE);
+
         Button pausarButton = findViewById(R.id.pausarButton);
         pausarButton.setOnClickListener(this);
         View detenerButton = findViewById(R.id.detenerButton);
         detenerButton.setOnClickListener(this);
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
 
         //Actualizar pantalla
         //updateDashboardInformation();
@@ -42,19 +53,19 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         Intent trackingServiceIntent = new Intent(this, TrackingService.class);
         trackingServiceIntent.putExtra("idUser", idUser);
         startService(trackingServiceIntent);
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        LocalBroadcastManager.getInstance(this).registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.DASHBOARD_DTO));
+        localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.DASHBOARD_DTO));
+        localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.OBD_NOT_CONNECTED));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(dashboardDTOReceive);
+        localBroadcastManager.unregisterReceiver(dashboardDTOReceive);
     }
 
     @Override
@@ -128,7 +139,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
 
         final TextView tiempoTranscurridoTextView = findViewById(R.id.tiempoTranscurridoTextView);
-        tiempoTranscurridoTextView.setText(dashboardDTO.hours + " h" + dashboardDTO.minutes + " m"
+        tiempoTranscurridoTextView.setText(dashboardDTO.hours + " h " + dashboardDTO.minutes + " m "
                 + dashboardDTO.seconds + " s");
 
         if(dashboardDTO.rpm != -1){
@@ -150,6 +161,18 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             if(TrackingService.DASHBOARD_DTO.equals(action)) {
                 DashboardDTO dashboardDTO = intent.getParcelableExtra("DashboardDTO");
                 updateDashboardInformation(dashboardDTO);
+            }
+            else if (TrackingService.OBD_NOT_CONNECTED.equals(action)){
+                CharSequence text = "OBD no conectado";
+                int duration = Toast.LENGTH_SHORT;
+
+                Log.d(TAG, "OBD no conectado");
+                Toast.makeText(context, text, duration).show();
+            }
+
+            if(loadingLayout.getVisibility() == View.VISIBLE){
+                loadingLayout.setVisibility(View.INVISIBLE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             }
         }
     };

@@ -70,6 +70,16 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Task<GoogleSignInAccount> silentSignIn = mGoogleSignInClient.silentSignIn();
+
+        if (silentSignIn.isSuccessful()) {
+            new CheckUserAndInsertBD(this, getApplicationContext()).execute(silentSignIn.getResult().getId());
+        }
+    }
+
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -106,22 +116,6 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
         }
     }
 
-    private void showProgressDialog() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage("Silent SignI-In");
-            progressDialog.setIndeterminate(true);
-        }
-
-        progressDialog.show();
-    }
-
-    private void hideProgressDialog(){
-
-        if (progressDialog !=null){
-            progressDialog.cancel();
-        }
-    }
 
     @Override
     public void doCallback(UserEntity user) {
@@ -131,6 +125,9 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
             // Signed in successfully, show authenticated UI.
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("idUser", user.getId());
+            intent.putExtra("userName", personName);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
     }

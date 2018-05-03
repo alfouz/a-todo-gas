@@ -58,6 +58,7 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
 
         if (silentSignIn.isSuccessful()) {
             new CheckUserAndInsertBD(this, getApplicationContext()).execute(silentSignIn.getResult().getId());
+            personName = silentSignIn.getResult().getDisplayName();
         }
     }
 

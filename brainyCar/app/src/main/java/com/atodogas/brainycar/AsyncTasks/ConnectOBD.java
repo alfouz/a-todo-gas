@@ -22,29 +22,36 @@ public class ConnectOBD extends AsyncTask<Void, Void, OBDAdapter> {
     @Override
     protected OBDAdapter doInBackground(Void... voids) {
         OBDAdapter adapter = null;
+        socket = null;
 
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-        UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
-        for (BluetoothDevice device : btAdapter.getBondedDevices()){
-            socket = null;
-            try {
-                socket = device.createRfcommSocketToServiceRecord(uuid);
-                socket.connect();
-                adapter = new OBDReal(socket.getInputStream(), socket.getOutputStream());
+        if(btAdapter.isEnabled()){
+            UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+            for (BluetoothDevice device : btAdapter.getBondedDevices()){
+                socket = null;
+                try {
+                    socket = device.createRfcommSocketToServiceRecord(uuid);
+                    socket.connect();
+                    adapter = new OBDReal(socket.getInputStream(), socket.getOutputStream());
 
-                if(adapter.isConnected()){
-                    break;
+                    if(adapter.isConnected()){
+                        break;
+                    }
+
+                    socket.close();
+                    adapter = null;
+                } catch (IOException e) {
+                    socket = null;
+                    adapter = null;
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    socket = null;
+                    adapter = null;
+                    e.printStackTrace();
                 }
-
-                adapter = null;
-            } catch (IOException e) {
-                adapter = null;
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                adapter = null;
-                e.printStackTrace();
             }
         }
+
 
         return adapter;
     }
@@ -56,11 +63,14 @@ public class ConnectOBD extends AsyncTask<Void, Void, OBDAdapter> {
     }
 
     public void close(){
-        try {
-            socket.close();
-            socket = null;
-        } catch (IOException e) {
-            e.printStackTrace();
+        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+        if(btAdapter.isEnabled() && socket != null){
+            try {
+                socket.close();
+                socket = null;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

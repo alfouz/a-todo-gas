@@ -32,10 +32,10 @@ public class TripDataEntity {
     private float MAF;
 
     @NonNull
-    private float Latitude;
+    private double Latitude;
 
     @NonNull
-    private float Longitude;
+    private double Longitude;
 
     @NonNull
     private float Battery;
@@ -78,11 +78,11 @@ public class TripDataEntity {
         this.MAF = MAF;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         Latitude = latitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         Longitude = longitude;
     }
 
@@ -134,11 +134,11 @@ public class TripDataEntity {
         return MAF;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return Latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return Longitude;
     }
 

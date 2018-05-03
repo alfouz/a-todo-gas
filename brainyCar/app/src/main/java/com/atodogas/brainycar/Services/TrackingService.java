@@ -308,6 +308,7 @@ public class TrackingService extends Service implements SensorEventListener,
                     localBroadcastManager.sendBroadcast(intent);
 
                     if(dashboardDTO.speed != -1){
+                        getLocation();
                         OBDDTO obddto = dashboardServiceHelper.getLastObdDTO();
                         TripDataEntity tripData = new TripDataEntity();
                         tripData.setIdTrip(trip.getId());
@@ -316,8 +317,8 @@ public class TrackingService extends Service implements SensorEventListener,
                         tripData.setFuelTankLevel(obddto.fuelTankLevel);
                         tripData.setSpeed(obddto.speed);
                         tripData.setRPM(obddto.rpm);
-                        tripData.setLatitude(0);
-                        tripData.setLongitude(0);
+                        tripData.setLatitude(getLatitud());
+                        tripData.setLongitude(getLongitud());
                         tripData.setMAF(obddto.massAirFlow);
                         tripData.setTime(System.currentTimeMillis());
 
@@ -330,8 +331,6 @@ public class TrackingService extends Service implements SensorEventListener,
                         db.tripDataDao().insertTripData(tripData);
                     }
                 }
-
-                getLocation();
 
                 ///TODO Eliminar logs de prueba de obtención de valores de localizacion
                 Log.i(TAG, "Latitud:" + getLatitud());

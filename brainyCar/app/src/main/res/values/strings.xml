@@ -19,6 +19,33 @@
     <string name="loginButtonDescription">Este botón permite al usuario autenticarse con google</string>
     <string name="roadPictureDescription">Imagen de fondo de la pantalla de inicio, contiene una carretera con árboles a los lados</string>
 
+    <!--ONBOARDING SLIDES-->
+    <string name="slide_1_title">Términos y condiciones</string>
+    <string name="slide_1_desc"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+        vitae justo a libero luctus sagittis. Donec vehicula sapien nec nulla faucibus convallis.
+        Cras volutpat suscipit tortor, sit amet dignissim nunc consequat et. Fusce dignissim, turpis
+        eu convallis posuere, leo lacus consequat purus, quis sollicitudin neque felis eget mauris.
+        Sed semper placerat tortor ac viverra. Phasellus lacinia elit sed bibendum porta. Ut in
+        dolor efficitur, semper orci accumsan, laoreet odio. Mauris iaculis sem sodales erat
+        accumsan sodales.\In sed volutpat nisi, eget dictum felis. Aliquam sodales justo sed odio
+        aliquet, ac feugiat turpis interdum. Cras sed ante id lacus efficitur fermentum. Vivamus
+        vestibulum ante id pulvinar rutrum. Aliquam justo nisi, vulputate ac commodo eget, faucibus
+        at tortor. Vestibulum aliquet commodo dignissim. Nulla et varius sem. Donec gravida
+        facilisis sem, vitae tempus ligula. Nam ac congue elit. Sed sit amet ante odio. Donec vel
+        magna a nisl lobortis malesuada. Donec tempus malesuada orci et scelerisque. Pellentesque
+        est libero, vehicula scelerisque vestibulum luctus, sollicitudin sed mi. Sed pretium ipsum
+        nec ultricies bibendum. Proin ac diam est.\Curabitur accumsan purus massa, at dictum nibh
+        pretium a. Sed ligula leo, tempor eget urna a, placerat tempus orci. Quisque augue nisl,
+        mattis sit amet lobortis id, maximus non neque. In in libero ullamcorper, tempor ipsum
+        sit amet, hendrerit nibh. Pellentesque ornare dolor tellus. Curabitur bibendum massa vel
+        augue tempor imperdiet. Ut congue, dui id finibus faucibus, turpis nisi finibus dui, at
+        venenatis odio eros nec quam. </string>
+    <string name="slide_2_title">Indícanos la marca de tu coche</string>
+    <string name="slide_3_title">Indícanos el modelo de tu coche</string>
+    <string name="slide_2_3_desc">Con ello podremos ofrecerte una experiencia más personalizada</string>
+    <string name="skip">Saltar</string>
+    <string name="end">Terminar</string>
+
     <!--HOME FRAGMENT -->
     <string name="driveButtonText">Conducir</string>
     <string name="lastTripTitle">Último Viaje</string>

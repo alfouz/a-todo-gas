@@ -41,8 +41,9 @@
         augue tempor imperdiet. Ut congue, dui id finibus faucibus, turpis nisi finibus dui, at
         venenatis odio eros nec quam. </string>
     <string name="slide_2_title">Indícanos la marca de tu coche</string>
+    <string name="slide_2_desc">Con ello podremos ofrecerte una experiencia más personalizada</string>
     <string name="slide_3_title">Indícanos el modelo de tu coche</string>
-    <string name="slide_2_3_desc">Con ello podremos ofrecerte una experiencia más personalizada</string>
+    <string name="slide_3_desc">Tras este paso, ¡ya podremos empezar!</string>
     <string name="skip">Saltar</string>
     <string name="end">Terminar</string>
 

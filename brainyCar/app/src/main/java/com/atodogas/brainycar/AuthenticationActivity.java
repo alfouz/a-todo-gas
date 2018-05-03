@@ -58,6 +58,7 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
 
         if (silentSignIn.isSuccessful()) {
             new CheckUserAndInsertBD(this, getApplicationContext()).execute(silentSignIn.getResult().getId());
+            personName = silentSignIn.getResult().getDisplayName();
         }
     }
 
@@ -67,6 +68,16 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
                 signIn();
                 break;
             // ...
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Task<GoogleSignInAccount> silentSignIn = mGoogleSignInClient.silentSignIn();
+
+        if (silentSignIn.isSuccessful()) {
+            new CheckUserAndInsertBD(this, getApplicationContext()).execute(silentSignIn.getResult().getId());
         }
     }
 
@@ -106,22 +117,6 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
         }
     }
 
-    private void showProgressDialog() {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage("Silent SignI-In");
-            progressDialog.setIndeterminate(true);
-        }
-
-        progressDialog.show();
-    }
-
-    private void hideProgressDialog(){
-
-        if (progressDialog !=null){
-            progressDialog.cancel();
-        }
-    }
 
     @Override
     public void doCallback(UserEntity user) {
@@ -131,6 +126,9 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
             // Signed in successfully, show authenticated UI.
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("idUser", user.getId());
+            intent.putExtra("userName", personName);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
     }

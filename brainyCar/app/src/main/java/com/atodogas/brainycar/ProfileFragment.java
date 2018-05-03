@@ -53,6 +53,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         TextView numberAchievementsText = root.findViewById(R.id.numberAchievementsText);
         numberAchievementsText.setText("12 de 30");
 
+        // Nombre de perfil obtenido de la cuenta del usuario
+        String name = this.getArguments().getString("userName");
+        TextView accountName = root.findViewById(R.id.accountName);
+        accountName.setText(name);
+
         //Tab 2
         spec=tabs.newTabSpec("mitab2");
         spec.setContent(R.id.Logros);

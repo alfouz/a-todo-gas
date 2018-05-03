@@ -1,9 +1,12 @@
 package com.atodogas.brainycar;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -95,6 +98,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.navigation_profile:
                 fragment = new ProfileFragment();
                 changeActionBarTitle(getResources().getString(R.string.profile));
+                // Recibimos el nombre de usuario
+                Intent myIntent = getIntent();
+                String userName = myIntent.getStringExtra("userName");
+
+                // Enviamos el nombre de usuario al fragment de perfil
+                // Ampliable a cualquier dato obtenido de la cuenta del usuario
+                Bundle bundle = new Bundle();
+                String name = userName;
+                bundle.putString("userName", name );
+                fragment.setArguments(bundle);
+
                 break;
         }
 
@@ -111,6 +125,29 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.overflow_actions, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    // Check botón de atrás
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Pulse de nuevo atrás para salir", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 
     @Override
@@ -143,6 +180,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 if (silentSignIn.isSuccessful()) {
                     mGoogleSignInClient.signOut();
                     Intent intent2 = new Intent(this, AuthenticationActivity.class);
+                    intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent2);
                 }
             default:

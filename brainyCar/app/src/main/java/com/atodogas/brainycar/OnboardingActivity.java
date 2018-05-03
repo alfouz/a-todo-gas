@@ -123,6 +123,7 @@ public class OnboardingActivity extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
             addBottomDots(position);
+            ListView simpleListView = findViewById(R.id.simpleListView);
 
             switch (position) {
                 case 0:
@@ -132,19 +133,17 @@ public class OnboardingActivity extends AppCompatActivity {
                 case 1:
                     btnNext.setText(getString(R.string.next));
                     btnSkip.setVisibility(View.VISIBLE);
-                    String carBrands[] = {"India", "China", "australia", "Portugle", "America", "NewZealand"};
-
-
-                    ListView simpleListView = findViewById(R.id.simpleListView);
-                    simpleListView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, carBrands));
+                    String carBrands[] = {"Brand1", "Brand2", "Brand3", "Brand4", "Brand5", "Brand6"};
+                    simpleListView.setAdapter(new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, carBrands));
                     simpleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             // Get the selected item text from ListView
                             String selectedItem = (String) parent.getItemAtPosition(position);
                             CharSequence text = "clicked on " + selectedItem;
+                            int duration = Toast.LENGTH_SHORT;
 
-                            Toast toast = Toast.makeText(getActivity(), text);
+                            Toast toast = Toast.makeText(getApplicationContext(), text, duration);
                             toast.show();
                         }
                     });
@@ -153,6 +152,21 @@ public class OnboardingActivity extends AppCompatActivity {
                 case 2:
                     btnNext.setText(getString(R.string.end));
                     btnSkip.setVisibility(View.GONE);
+
+                    String brandModels[] = {"Model1", "Model2", "Model3", "Model4", "Model5", "Model6"};
+                    simpleListView.setAdapter(new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, brandModels));
+                    simpleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            // Get the selected item text from ListView
+                            String selectedItem = (String) parent.getItemAtPosition(position);
+                            CharSequence text = "clicked on " + selectedItem;
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+                            toast.show();
+                        }
+                    });
                     break;
             }
         }

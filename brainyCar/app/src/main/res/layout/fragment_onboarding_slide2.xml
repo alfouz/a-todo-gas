@@ -27,7 +27,7 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/slide_desc" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/slide_2_desc"
@@ -39,11 +39,11 @@
         <ListView
             android:id="@+id/simpleListView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/colorWhite"
             android:divider="@color/colorPrimaryExtraDark"
             android:dividerHeight="1dp"
             android:listSelector="@color/colorPrimaryLigth2">
         </ListView>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

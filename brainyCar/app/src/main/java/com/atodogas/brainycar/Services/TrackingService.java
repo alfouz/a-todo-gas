@@ -1,5 +1,6 @@
 package com.atodogas.brainycar.Services;
 
+import android.Manifest;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -11,14 +12,19 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
 import android.os.Binder;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -34,11 +40,18 @@ import com.atodogas.brainycar.R;
 import com.atodogas.brainycar.Services.Extra.DashboardDTO;
 import com.atodogas.brainycar.Services.Extra.DashboardServiceHelper;
 import com.atodogas.brainycar.TripEntity;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
 
 
-public class TrackingService extends Service implements SensorEventListener, CallbackInterface<com.atodogas.brainycar.Database.Entities.TripEntity> {
+public class TrackingService extends Service implements SensorEventListener,
+        CallbackInterface<com.atodogas.brainycar.Database.Entities.TripEntity>,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
     public static final String TAG = "TrackingService";
     public static final String NOTIFICATION_CHANNEL_ID_SERVICE = "com.atodogas.brainycar.TrackingService.SERVICE";
@@ -55,6 +68,11 @@ public class TrackingService extends Service implements SensorEventListener, Cal
     private com.atodogas.brainycar.Database.Entities.TripEntity trip;
 
     //Gestión sensores
+    private GoogleApiClient mGoogleApiClient;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private double lat;
+    private double lng;
+    private double alt;
     private SensorManager sm;
     private Sensor sAcc;
     private Sensor sGir;
@@ -108,6 +126,7 @@ public class TrackingService extends Service implements SensorEventListener, Cal
         startService(intent2);
 
         //Inicialización de sensores
+        buildGoogleApiClient();
         sm = (SensorManager)getApplicationContext().getSystemService(Context.SENSOR_SERVICE);
         sAcc = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sGir = sm.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
@@ -146,6 +165,18 @@ public class TrackingService extends Service implements SensorEventListener, Cal
 
     }
 
+    public double getLatitud() {
+        return lat;
+    }
+
+    public double getLongitud() {
+        return lng;
+    }
+
+    public double getAltitud() {
+        return alt;
+    }
+
     public float [] getValorGiroscopio () {
         return vGir;
     }
@@ -162,7 +193,37 @@ public class TrackingService extends Service implements SensorEventListener, Cal
         return vBar;
     }
 
+    protected  synchronized  void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
 
+    private void getLocation() {
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.w(TAG, "Sin permisos para acceso a localización");
+            return;
+        }
+
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+                            lat = location.getLatitude();
+                            lng = location.getLongitude();
+                            alt = location.getAltitude();
+                        } else {
+                            Log.w(TAG, "No hay conexión GPS");
+                        }
+                    }
+                });
+    }
 
     @Override
     public IBinder onBind(Intent arg0) {
@@ -181,6 +242,21 @@ public class TrackingService extends Service implements SensorEventListener, Cal
         localBroadcastManager.unregisterReceiver(OBDDTOReceibe);
         //Unregister de los sensores
         sm.unregisterListener(this);
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 
     private final BroadcastReceiver OBDDTOReceibe = new BroadcastReceiver() {
@@ -232,6 +308,7 @@ public class TrackingService extends Service implements SensorEventListener, Cal
                     localBroadcastManager.sendBroadcast(intent);
 
                     if(dashboardDTO.speed != -1){
+                        getLocation();
                         OBDDTO obddto = dashboardServiceHelper.getLastObdDTO();
                         TripDataEntity tripData = new TripDataEntity();
                         tripData.setIdTrip(trip.getId());
@@ -240,8 +317,8 @@ public class TrackingService extends Service implements SensorEventListener, Cal
                         tripData.setFuelTankLevel(obddto.fuelTankLevel);
                         tripData.setSpeed(obddto.speed);
                         tripData.setRPM(obddto.rpm);
-                        tripData.setLatitude(0);
-                        tripData.setLongitude(0);
+                        tripData.setLatitude(getLatitud());
+                        tripData.setLongitude(getLongitud());
                         tripData.setMAF(obddto.massAirFlow);
                         tripData.setTime(System.currentTimeMillis());
 
@@ -255,6 +332,10 @@ public class TrackingService extends Service implements SensorEventListener, Cal
                     }
                 }
 
+                ///TODO Eliminar logs de prueba de obtención de valores de localizacion
+                Log.i(TAG, "Latitud:" + getLatitud());
+                Log.i(TAG, "Longitud:" + getLongitud());
+                Log.i(TAG, "Altitud:" + getAltitud());
                /* ///TODO Eliminar logs de prueba de obtención de valores de sensores
                 if (getValorAcelerometro() != null)
                     Log.i(TAG, "Acelerómetro (Valor x):" + getValorAcelerometro()[0]);

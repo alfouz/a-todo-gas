@@ -105,6 +105,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         Intent intent = new Intent(this, MainActivity.class);
         int idUser = getIntent().getIntExtra("idUser", - 1);
         intent.putExtra("idUser", idUser);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 

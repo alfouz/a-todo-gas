@@ -50,10 +50,13 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         //Actualizar pantalla
         //updateDashboardInformation();
-        int idUser = getIntent().getIntExtra("idUser", - 1);
-        Intent trackingServiceIntent = new Intent(this, TrackingService.class);
-        trackingServiceIntent.putExtra("idUser", idUser);
-        startService(trackingServiceIntent);
+        boolean isRunningServices = getIntent().getBooleanExtra("isRunningServices", false);
+        if(!isRunningServices){
+            int idUser = getIntent().getIntExtra("idUser", - 1);
+            Intent trackingServiceIntent = new Intent(this, TrackingService.class);
+            trackingServiceIntent.putExtra("idUser", idUser);
+            startService(trackingServiceIntent);
+        }
     }
 
     @Override

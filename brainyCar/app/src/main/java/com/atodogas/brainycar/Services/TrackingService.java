@@ -101,6 +101,7 @@ public class TrackingService extends Service implements SensorEventListener,
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Intent notificationIntent = new Intent(getApplicationContext(), DashboardActivity.class);
+        notificationIntent.putExtra("isRunningServices", true);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,

@@ -1,6 +1,7 @@
 package com.atodogas.brainycar.Services.Extra;
 
 import com.atodogas.brainycar.OBD.OBDDTO;
+import com.atodogas.brainycar.Utils.Distances;
 
 import java.util.ArrayList;
 
@@ -11,7 +12,9 @@ public class DashboardServiceHelper {
     private int elemsWithSpeedAndMafDistint0;
     private int secondsTrip;
     private long lastUpdateTimeMilis;
-
+    private double lastLatitude;
+    private double lastLongitude;
+    private float totalKms;
 
     public DashboardServiceHelper(){
         obddtosCola = new ArrayList<>();
@@ -19,6 +22,10 @@ public class DashboardServiceHelper {
         elemsWithSpeedAndMafDistint0 = 0;
         secondsTrip = 0;
         lastUpdateTimeMilis = -1;
+
+        lastLatitude = 200;
+        lastLongitude = 200;
+        totalKms = 0;
     }
 
     public void setLastUpdateTimeMilis(long lastUpdateTimeMilis) {
@@ -33,7 +40,7 @@ public class DashboardServiceHelper {
         obddtosCola.add(obddto);
     }
 
-    public DashboardDTO getLastDashBoardData(){
+    public DashboardDTO getLastDashBoardData(double lat, double lon){
         secondsTrip += getAgeSeconds();
 
         DashboardDTO dashboardDTO = new DashboardDTO();
@@ -49,6 +56,16 @@ public class DashboardServiceHelper {
                 mpgTotal += mpg;
             }
 
+            if(lastLatitude == 200 && lastLongitude == 200){
+                lastLatitude = lat;
+                lastLongitude = lon;
+            }
+            else if(Math.abs(Math.abs(lastLatitude) - Math.abs(lat)) > 0.0001 || Math.abs(Math.abs(lastLongitude) - Math.abs(lastLongitude)) > 0.0001){
+                totalKms += Distances.calculateDistance(lastLatitude, lastLongitude, lat, lon);
+                lastLatitude = lat;
+                lastLongitude = lon;
+            }
+
             dashboardDTO.speed = obddto.speed;
             dashboardDTO.rpm = obddto.rpm;
             dashboardDTO.battery = obddto.moduleVoltage;
@@ -56,6 +73,7 @@ public class DashboardServiceHelper {
             dashboardDTO.temperature = obddto.engineCoolantTemp;
         }
 
+        dashboardDTO.km = totalKms;
         dashboardDTO.l100kmavg = calculateL100kmAvg();
         dashboardDTO.hours = (secondsTrip / 3600);
         dashboardDTO.minutes = (secondsTrip - (dashboardDTO.hours*3600))/60;
@@ -93,5 +111,13 @@ public class DashboardServiceHelper {
         }
 
         return seconds;
+    }
+
+    public double getLastLatitude() {
+        return lastLatitude;
+    }
+
+    public double getLastLongitude() {
+        return lastLongitude;
     }
 }

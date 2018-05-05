@@ -24,7 +24,7 @@ public class CarEntity {
     private int FuelType;
 
     @NonNull
-    private int Kms;
+    private float Kms;
 
     @NonNull
     private float AVGFuelConsumption;
@@ -49,7 +49,7 @@ public class CarEntity {
         FuelType = fuelType;
     }
 
-    public void setKms(int kms) {
+    public void setKms(float kms) {
         Kms = kms;
     }
 
@@ -77,7 +77,7 @@ public class CarEntity {
         return FuelType;
     }
 
-    public int getKms() {
+    public float getKms() {
         return Kms;
     }
 

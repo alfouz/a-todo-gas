@@ -271,7 +271,7 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/textView28"
             android:layout_toRightOf="@+id/textView28"
-            android:text="0 L"
+            android:text="-"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView28"
             app:layout_constraintStart_toEndOf="@+id/textView28"

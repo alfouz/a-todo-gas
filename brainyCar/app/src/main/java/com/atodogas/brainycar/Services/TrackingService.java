@@ -179,6 +179,9 @@ public class TrackingService extends Service implements SensorEventListener,
             dashboardCalcsThread.terminate();
         }
 
+        trip.setDuration(dashboardServiceHelper.getSecondsTrip());
+        new UpdateCarTripInfoBD(getApplicationContext()).execute(trip);
+
         Intent intent = new Intent(this, OBDService.class);
         stopService(intent);
         localBroadcastManager.unregisterReceiver(OBDDTOReceibe);

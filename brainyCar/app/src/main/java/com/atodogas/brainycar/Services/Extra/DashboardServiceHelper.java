@@ -120,4 +120,8 @@ public class DashboardServiceHelper {
     public double getLastLongitude() {
         return lastLongitude;
     }
+
+    public int getSecondsTrip(){
+        return secondsTrip;
+    }
 }

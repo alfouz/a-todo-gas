@@ -10,8 +10,11 @@ import com.atodogas.brainycar.Database.Entities.CarEntity;
 
 @Dao
 public interface CarDao {
-    @Query("SELECT * FROM Cars WHERE idUser = :idUser")
+    @Query("SELECT * FROM Cars WHERE idUser = :idUser LIMIT 1")
     CarEntity getCarByIdUser(int idUser);
+
+    @Query("SELECT * FROM Cars WHERE id = :idCar")
+    CarEntity getCarById(int idCar);
 
     @Insert
     long insertCar(CarEntity user);

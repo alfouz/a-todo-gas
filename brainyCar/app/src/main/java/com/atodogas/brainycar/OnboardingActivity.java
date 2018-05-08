@@ -10,16 +10,9 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by belenvb on 03/05/2018.
@@ -31,12 +24,8 @@ public class OnboardingActivity extends AppCompatActivity {
     private LinearLayout dotsLayout;
     private TextView[] dots;
     private int[] layouts;
-    private Button btnSkip, btnNext;
+    private Button btnNext;
     private PrefManager prefManager;
-    private String carBrand;
-    private Integer carBrandPosition;
-    private String brandModel;
-    private Integer brandModelPosition;
 
 
     @Override
@@ -54,15 +43,12 @@ public class OnboardingActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.view_pager);
         dotsLayout = findViewById(R.id.layoutDots);
-        btnSkip = findViewById(R.id.btn_skip);
         btnNext = findViewById(R.id.btn_next);
-        btnSkip.setVisibility(View.GONE);
 
         // layouts of all onboarding sliders
         layouts = new int[]{
                 R.layout.fragment_onboarding_slide1,
-                R.layout.fragment_onboarding_slide2,
-                R.layout.fragment_onboarding_slide3};
+                R.layout.fragment_onboarding_slide2};
 
         // adding bottom dots
         addBottomDots(0);
@@ -70,13 +56,6 @@ public class OnboardingActivity extends AppCompatActivity {
         myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
-
-        btnSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchHomeScreen();
-            }
-        });
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,8 +98,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("idUser", getIntent().getIntExtra("idUser", - 1));
+        startActivity( new Intent(this, MainActivity.class));
         finish();
     }
 
@@ -134,55 +112,9 @@ public class OnboardingActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     btnNext.setText(getString(R.string.next));
-                    btnSkip.setVisibility(View.GONE);
                     break;
                 case 1:
-                    btnNext.setText(getString(R.string.next));
-                    btnSkip.setVisibility(View.VISIBLE);
-
-                    String carBrands[] = {"Brand1", "Brand2", "Brand3", "Brand4", "Brand5", "Brand6", "Brand7", "Brand8"};
-                    ListView carBrandsListView = findViewById(R.id.carBrandsListView);
-                    carBrandsListView.setAdapter(new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, carBrands));
-                    if (carBrandPosition != null) {
-                        carBrandsListView.setItemChecked(carBrandPosition,true);
-                    }
-                    carBrandsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            // Get the selected item text from ListView
-                            carBrandPosition = position;
-                            carBrand = (String) parent.getItemAtPosition(position);
-
-                            CharSequence text = "clicked on " + carBrand;
-                            int duration = Toast.LENGTH_SHORT;
-                            Toast toast = Toast.makeText(getApplicationContext(), text, duration);
-                            toast.show();
-                        }
-                    });
-                    break;
-                case 2:
                     btnNext.setText(getString(R.string.end));
-                    btnSkip.setVisibility(View.GONE);
-
-                    String brandModels[] = {"Model1", "Model2", "Model3", "Model4", "Model5", "Model6"};
-                    ListView brandModelsListView = findViewById(R.id.brandModelsListView);
-                    brandModelsListView.setAdapter(new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, brandModels));
-                    if (brandModelPosition != null) {
-                        brandModelsListView.setItemChecked(brandModelPosition,true);
-                    }
-                    brandModelsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            // Get the selected item text from ListView
-                            brandModelPosition = position;
-                            brandModel = (String) parent.getItemAtPosition(position);
-
-                            CharSequence text = "clicked on " + brandModel;
-                            int duration = Toast.LENGTH_SHORT;
-                            Toast toast = Toast.makeText(getApplicationContext(), text, duration);
-                            toast.show();
-                        }
-                    });
                     break;
             }
         }

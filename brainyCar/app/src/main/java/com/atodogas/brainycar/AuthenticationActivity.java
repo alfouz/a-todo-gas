@@ -1,31 +1,23 @@
 package com.atodogas.brainycar;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 
 import com.atodogas.brainycar.AsyncTasks.CallbackInterface;
 import com.atodogas.brainycar.AsyncTasks.CheckUserAndInsertBD;
 import com.atodogas.brainycar.Database.Entities.UserEntity;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.OptionalPendingResult;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.common.api.Status;
 
 
 public class AuthenticationActivity extends AppCompatActivity implements View.OnClickListener, CallbackInterface<UserEntity>{
@@ -123,8 +115,8 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
         if(user.getId() > 0){
             Log.e(TAG, "Name: " + personName + ", email: " + email
                     + ", Image: " + personPhotoUrl);
-            // Signed in successfully, show authenticated UI.
-            Intent intent = new Intent(this, MainActivity.class);
+            // Signed in successfully, show next UI.
+            Intent intent = new Intent(this, OnboardingActivity.class);
             intent.putExtra("idUser", user.getId());
             intent.putExtra("userName", personName);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

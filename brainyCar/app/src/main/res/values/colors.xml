@@ -8,4 +8,17 @@
     <color name="colorBlack">#000000</color>
     <color name="colorPrimaryLigth">#f2f2f2</color>
     <color name="colorPrimaryLigth2">#e2e2e2</color>
+
+    <!-- ONBOARDING SLIDES -->
+    <array name="array_dot_active">
+        <item>@color/colorPrimaryDark</item>
+        <item>@color/colorPrimaryDark</item>
+        <item>@color/colorPrimaryDark</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/colorWhite</item>
+        <item>@color/colorWhite</item>
+        <item>@color/colorWhite</item>
+    </array>
 </resources>

@@ -19,6 +19,156 @@
     <string name="loginButtonDescription">Este botón permite al usuario autenticarse con google</string>
     <string name="roadPictureDescription">Imagen de fondo de la pantalla de inicio, contiene una carretera con árboles a los lados</string>
 
+    <!--ONBOARDING SLIDES-->
+    <string name="eula_title">Términos y condiciones</string>
+    <string name="eula_desc">LEA ESTE CONTRATO DE LICENCIA DE APLICACIÓN PARA MÓVIL DE ATodoGas
+        («CONTRATO») DETENIDAMENTE PARA COMPRENDER SUS DERECHOS Y OBLIGACIONES.\n\n
+
+        ESTE ES UN CONTRATO ENTRE USTED Y ATodoGas.  EL ACCESO O USO DEL SOFTWARE DE APLICACIÓN
+        DISTRIBUIDO POR ATodoGas PARA USAR EN DISPOSITIVOS ANDROID («SOFTWARE DE APLICACIÓN») ESTÁ
+        EXPRESAMENTE CONDICIONADO A LA ACEPTACIÓN DE LOS TÉRMINOS DE ESTE CONTRATO.  AL UTILIZAR EL
+        SOFTWARE DE APLICACIÓN, USTED DECLARA QUE ES APTO PARA FIRMAR UN CONTRATO SEGÚN LAS LEYES DE
+        SU JURISDICCIÓN Y ACEPTA RESPETAR LOS TÉRMINOS DE ESTE CONTRATO.\n\n
+
+        Usted acepta este Contrato
+        en su nombre y en nombre de otras personas que accedan o usen el
+        Software de aplicación en el dispositivo que posea o controle y que ejecute legalmente la
+        versión aplicable de Android OS («dispositivo»). Usted es responsable del uso de su Software
+        de aplicación por parte de otras personas y de su cumplimiento de los términos de este
+        Contrato.\n\n
+
+        Este contrato se aplica a cualquier al Software de aplicación y a los parches,
+        actualizaciones, mejoras o nuevas versiones del mismo.\n\n
+
+        <b>1. CONCESIÓN DE LICENCIA</b>\n
+
+        Sujeto a los términos de este Contrato, ATodoGas le concede el derecho no exclusivo,
+        intransferible, no comercial y limitado para utilizar el Software de aplicación únicamente
+        en el dispositivo. Sus derechos de uso de versiones anteriores del Software de aplicación
+        que no sean la versión actual del Software de aplicación terminan tan pronto como pueda
+        recibir o disponer de la versión más actual del Software de aplicación instalado en el
+        dispositivo.\n
+
+        Todos los derechos de uso del Software de aplicación se conceden bajo licencia solamente,
+        y no se le concede ningún derecho de propiedad de derechos, título o interés en el Software
+        de aplicación.  ATodoGas se reserva todos los derechos de propiedad intelectual sobre el
+        Software de aplicación. Todo uso o acceso al Software de aplicación está sujeto a los
+        términos de este Contrato y a las leyes de propiedad intelectual aplicables. A menos que
+        este Contrato lo conceda de forma expresa, ATodoGas se reserva todos los derechos sobre el
+        Software de aplicación.\n\n
+
+        <b>2. RESTRICCIONES</b>\n
+
+        Usted no puede (i) arrendar, alquilar, sublicenciar, publicar, modificar, parchear, adaptar
+        o traducir el Software de aplicación; (ii) realizar ingeniería inversa, descompilar o
+        desinstalar el Software de aplicación, crear trabajos derivados del Software de aplicación;
+        (iii) intentar crear el código fuente del Software de aplicación a partir de su código
+        objeto; (iv) utilizar cualquier hardware o software modificado, no autorizado, ilegal o
+        falsificado con el Software de aplicación; (v) volver a instalar versiones anteriores del
+        Software de aplicación; (vi) infringir cualquier ley, reglamento o estatutos o derechos de
+        ATodoGas o terceros en relación con su acceso o uso del Software de aplicación; (vii)
+        obtener el Software de aplicación de forma que no sea a través de métodos de distribución
+        autorizados por ATodoGas; o (vii) explotar el Software de aplicación de forma no autorizada.\n
+        Estas restricciones se interpretarán para aplicar en la mayor medida permitida por la ley
+        en su jurisdicción.\n\n
+
+        <b>3. SERVICIOS Y ACTUALIZACIONES; CONTRATOS Y CONTENIDO DE TERCEROS</b>\n
+
+        ATodoGas le puede proporcionar ciertas actualizaciones de Software de aplicación, mejoras
+        o servicios. Algunas actualizaciones, mejoras o servicios pueden cambiar su configuración,
+        causar una pérdida de datos o contenidos o provocar pérdidas de funciones o características.\n
+
+        El Software de aplicación puede hacer referencia, mostrar o proporcionar enlaces a sitios
+        web o contenidos gestionados o mantenidos por terceras partes de forma independiente o
+        («Contenido y Enlaces de Terceros»).\n
+
+        ATodoGas no controla ni dirige Contenido y Enlaces de Terceros, y ATodoGas no controla,
+        aprueba, avala, garantiza ni patrocina ningún Contenido y Enlaces de Terceros. ATodoGas no
+        tiene ninguna responsabilidad hacia usted por cualquier Contenido y Enlaces de Terceros.
+        Usted confía en cualquier Contenido y Enlaces de Terceros a su propio riesgo, y usted asume
+        todas las responsabilidades y consecuencias que se derivan de esa confianza.\n\n
+
+        <b>4. CONEXIÓN A INTERNET</b>\n
+
+        Algunas características del Software de aplicación pueden requerir conexión a internet.
+        Usted es responsable de todos los costes derivados en relación con el acceso o el uso de
+        internet.\n\n
+
+        <b>5. EXCLUSIÓN DE GARANTÍAS Y LIMITACIÓN DE RESPONSABILIDAD</b>\n
+
+        El Software de aplicación se proporciona «TAL CUAL», sin ninguna garantía expresa o
+        implícita. ATodoGas renuncia expresamente a cualquier garantía de comerciabilidad, garantía
+        de idoneidad para un propósito particular y garantía de no infracción.\n
+        EN NINGÚN CASO, ATodoGas SERÁ RESPONSABLE DE LA PÉRDIDA DE DATOS, PÉRDIDA DE GANANCIAS O
+        CUALQUIER PÉRDIDA O DAÑO, DIRECTO, INDIRECTO, INCIDENTAL, ESPECIAL O CONSECUENTE, SEA CUAL
+        SEA SU ORIGEN, COMO RESULTADO DEL ACCESO O USO DEL SOFTWARE DE APLICACIÓN.  SIEMPRE Y CUANDO
+        ESTA ESTIPULACIÓN SEA APLICABLE EN SU JURISDICCIÓN, LAS LIMITACIONES Y EXCLUSIONES SE
+        APLICAN EN EL ALCANCE PERMITIDO POR LA LEY INCLUSO SI ALGÚN RECURSO NO CUMPLE SUS FINES.\n\n
+
+        <b>6. INFRACCIÓN DEL CONTRATO; FINALIZACIÓN DE DERECHOS Y RECURSOS DE ATodoGas</b>\n
+
+        Si ATodoGas determina que usted ha infringido los términos de este Contrato, ATodoGas puede,
+        por sí mismo, o promover la toma de cualquier acción para proteger sus intereses, tales como
+        la inhabilitación del acceso o el uso de una parte o todo el Software de aplicación, poner
+        fin a su acceso, cesar cualquier servicio proporcionado en el Software de aplicación o
+        confiar en cualquier otro esfuerzo de recurso que sea razonablemente necesario para impedir
+        el uso modificado o no permitido del Software de aplicación.\n\n
+
+        <b>7. CONTROL DE EXPORTACIONES Y CUMPLIMIENTO DE LAS LEYES</b>\n
+
+        El Software de aplicación puede contener tecnología sujeta a ciertas restricciones en virtud
+        de las leyes y reglamentos de control de exportación. Como tal, el Software de aplicación
+        no podrá ser exportado o reexportado a personas y entidades que infrinjan estas leyes y
+        reglamentos.  Debe cumplir con estas leyes cuando utilice el Software de aplicación. Usted
+        declara y garantiza que (i) no se encuentra en un país que está sujeto a un embargo del
+        Gobierno de los Estados Unidos, o que ha sido designado por el Gobierno de los Estados Unidos
+        como un país «de apoyo al terrorismo»; y (ii) no está incluido en ninguna lista del Gobierno
+        de los Estados Unidos de partes prohibidas o restringidas.\n\n
+
+        <b>8. LEGISLACIÓN GENERAL</b>\n
+
+        Usted está sujeto a la versión más actualizada de este Contrato. ATodoGas podrá modificar
+        los términos de este Contrato en cualquier momento. Su uso continuo del Software de
+        aplicación significará su aceptación de la versión más reciente de este Contrato.\n
+        Si alguna disposición de este Contrato se considera no válida, ilegal o inaplicable,
+        la validez, legalidad y aplicabilidad de las restantes disposiciones de este Contrato no se
+        verán afectadas ni menoscabadas de ninguna manera.\n
+        Este Contrato constituye el único acuerdo sobre el Software de aplicación entre usted y
+        ATodoGas, y sustituye a cualquier otro acuerdo previo o actual en relación al objeto del
+        mismo. Ningún error en el ejercicio o retraso en el ejercicio de cualquier derecho en virtud
+        del presente Contrato constituirá una renuncia de ese derecho. ATodoGas puede ceder
+        cualquiera de sus derechos en virtud del presente Contrato, incluyendo sus derechos para
+        hacer cumplir los términos de este Contrato.\n\n
+
+        <b>9. EL PROPIETARIO DE LA TIENDA</b>\n
+
+        Este Contrato se realiza entre usted y ATodoGas, y no el Propietario de la tienda
+        («Propietario de la tienda») desde la cual descargó el Software de aplicación («App Store»),
+        y ATodoGas, y no el Propietario de la tienda, y usted es el único responsable del contenido
+        del Software de aplicación, salvo lo establecido en este Contrato.\n
+        Su uso del Software de aplicación también estará sujeto a los términos de uso de la App
+        Store.\n
+        El Propietario de la tienda no tiene obligación de proporcionar servicios de mantenimiento
+        o asistencia con respecto al Software de aplicación.\n
+        En la medida de lo posible permitida por la ley aplicable, el Propietario de la tienda no
+        tendrá ninguna obligación de garantía con respecto al Software de aplicación.\n
+        El Propietario de la tienda no es responsable de presentar ninguna reclamación por usted o
+        por cualquier tercero relacionada con el Software de aplicación o su posesión y uso del
+        Software de aplicación, incluyendo pero no limitado a: (i) reclamaciones de responsabilidad
+        del producto; (ii) cualquier reclamación de que el Software de aplicación no cumple con
+        algún requisito legal o regulatorio aplicable; (iii) las reclamaciones derivadas de la
+        protección del consumidor o de una legislación similar; y (iv) cualquier reclamación de que
+        el Software de aplicación infringe los derechos de propiedad intelectual de un tercero.\n\n
+
+        <b>10. CONTACTO</b>\n
+
+        Si tiene alguna pregunta o queja sobre el Software de aplicación, póngase en contacto con
+        el equipo de ATodoGas (por ejemplo, mediante algún comentario en la tienda).
+    </string>
+    <string name="slide_2_title">Listos para empezar</string>
+    <string name="slide_2_desc">Descubre una nueva forma de gestionar tu coche</string>
+    <string name="end">Terminar</string>
+
     <!--HOME FRAGMENT -->
     <string name="driveButtonText">Conducir</string>
     <string name="lastTripTitle">Último Viaje</string>

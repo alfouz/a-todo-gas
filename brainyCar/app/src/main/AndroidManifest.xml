@@ -43,7 +43,9 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" />
-
+        <activity
+            android:name=".OnboardingActivity">
+        </activity>
         <service
             android:name=".Services.TrackingService"
             android:exported="false"></service>

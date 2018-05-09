@@ -98,7 +98,9 @@ public class OnboardingActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
-        startActivity( new Intent(this, MainActivity.class));
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("idUser", getIntent().getIntExtra("idUser", - 1));
+        startActivity(intent);
         finish();
     }
 

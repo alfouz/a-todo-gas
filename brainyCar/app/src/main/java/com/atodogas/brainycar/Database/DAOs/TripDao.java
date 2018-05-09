@@ -18,6 +18,9 @@ public interface TripDao {
     @Query("SELECT * FROM Trips WHERE id = :id")
     TripEntity getTrip(int id);
 
+    @Query("SELECT * FROM Trips WHERE idCar = :idCar ORDER BY id DESC LIMIT 1")
+    TripEntity getLastTrip(int idCar);
+
     @Insert
     long insertTrip(TripEntity trip);
 

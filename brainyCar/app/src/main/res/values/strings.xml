@@ -174,7 +174,7 @@
     <string name="lastTripTitle">Último Viaje</string>
     <string name="carDataTitle">Datos Generales</string>
     <string name="kmTitle">Kilómetros recorridos:</string>
-    <string name="gasolineTitle">Gasolina:</string>string>
+    <string name="gasolineTitle">AVG:</string>string>
     <string name="coolantTitle">Líquido refrigerante:</string>
     <string name="coolantIconDescription">Este icono representa el nivel líquido refrigerante del coche</string>
     <string name="gasolineIconDescription">Este icono representa el nivel de gasolina del coche</string>

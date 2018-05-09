@@ -1,7 +1,5 @@
 package com.atodogas.brainycar.Services;
 
-import android.Manifest;
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -12,46 +10,32 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.Context;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.Location;
-import android.os.Binder;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.atodogas.brainycar.AsyncTasks.CallbackInterface;
 import com.atodogas.brainycar.AsyncTasks.CreateTripBD;
+import com.atodogas.brainycar.AsyncTasks.UpdateCarTripInfoBD;
 import com.atodogas.brainycar.DashboardActivity;
 import com.atodogas.brainycar.Database.AppDatabase;
 import com.atodogas.brainycar.Database.Entities.TripDataEntity;
+import com.atodogas.brainycar.Database.Entities.TripEntity;
 import com.atodogas.brainycar.OBD.OBDDTO;
 import com.atodogas.brainycar.R;
 import com.atodogas.brainycar.Services.Extra.DashboardDTO;
 import com.atodogas.brainycar.Services.Extra.DashboardServiceHelper;
-import com.atodogas.brainycar.TripEntity;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
-
-import java.util.List;
+import com.atodogas.brainycar.Services.Extra.LocationHelper;
 
 
 public class TrackingService extends Service implements SensorEventListener,
-        CallbackInterface<com.atodogas.brainycar.Database.Entities.TripEntity>,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+        CallbackInterface<com.atodogas.brainycar.Database.Entities.TripEntity> {
 
     public static final String TAG = "TrackingService";
     public static final String NOTIFICATION_CHANNEL_ID_SERVICE = "com.atodogas.brainycar.TrackingService.SERVICE";
@@ -65,11 +49,10 @@ public class TrackingService extends Service implements SensorEventListener,
     private LocalBroadcastManager localBroadcastManager;
     private Intent intent;
     private AppDatabase db;
-    private com.atodogas.brainycar.Database.Entities.TripEntity trip;
+    private TripEntity trip;
 
     //Gestión sensores
-    private GoogleApiClient mGoogleApiClient;
-    private FusedLocationProviderClient mFusedLocationClient;
+    LocationHelper mLocationHelper;
     private double lat;
     private double lng;
     private double alt;
@@ -101,6 +84,7 @@ public class TrackingService extends Service implements SensorEventListener,
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Intent notificationIntent = new Intent(getApplicationContext(), DashboardActivity.class);
+        notificationIntent.putExtra("isRunningServices", true);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
@@ -120,13 +104,15 @@ public class TrackingService extends Service implements SensorEventListener,
 
         startForeground(SERVICE_ID, notification);
 
+
+        mLocationHelper = new LocationHelper(getApplicationContext());
+        mLocationHelper.onStart();
         localBroadcastManager.registerReceiver(OBDDTOReceibe, new IntentFilter(OBDService.OBD_DTO));
         localBroadcastManager.registerReceiver(OBDDTOReceibe, new IntentFilter(OBDService.OBD_NOT_CONNECTED));
         Intent intent2 = new Intent(this, OBDService.class);
         startService(intent2);
 
         //Inicialización de sensores
-        buildGoogleApiClient();
         sm = (SensorManager)getApplicationContext().getSystemService(Context.SENSOR_SERVICE);
         sAcc = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sGir = sm.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
@@ -165,18 +151,6 @@ public class TrackingService extends Service implements SensorEventListener,
 
     }
 
-    public double getLatitud() {
-        return lat;
-    }
-
-    public double getLongitud() {
-        return lng;
-    }
-
-    public double getAltitud() {
-        return alt;
-    }
-
     public float [] getValorGiroscopio () {
         return vGir;
     }
@@ -193,38 +167,6 @@ public class TrackingService extends Service implements SensorEventListener,
         return vBar;
     }
 
-    protected  synchronized  void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-    }
-
-    private void getLocation() {
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.w(TAG, "Sin permisos para acceso a localización");
-            return;
-        }
-
-        mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            lat = location.getLatitude();
-                            lng = location.getLongitude();
-                            alt = location.getAltitude();
-                        } else {
-                            Log.w(TAG, "No hay conexión GPS");
-                        }
-                    }
-                });
-    }
-
     @Override
     public IBinder onBind(Intent arg0) {
         // TODO Auto-generated method stub
@@ -237,26 +179,15 @@ public class TrackingService extends Service implements SensorEventListener,
             dashboardCalcsThread.terminate();
         }
 
+        trip.setDuration(dashboardServiceHelper.getSecondsTrip());
+        new UpdateCarTripInfoBD(getApplicationContext()).execute(trip);
+
         Intent intent = new Intent(this, OBDService.class);
         stopService(intent);
         localBroadcastManager.unregisterReceiver(OBDDTOReceibe);
         //Unregister de los sensores
         sm.unregisterListener(this);
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        mLocationHelper.onStop();
     }
 
     private final BroadcastReceiver OBDDTOReceibe = new BroadcastReceiver() {
@@ -300,7 +231,11 @@ public class TrackingService extends Service implements SensorEventListener,
         @Override
         public void run() {
             while(running){
-                DashboardDTO dashboardDTO = dashboardServiceHelper.getLastDashBoardData();
+                double latitude = mLocationHelper.getLatitude();
+                double longitude = mLocationHelper.getLongitude();
+                double altitude = mLocationHelper.getAltitude();
+
+                DashboardDTO dashboardDTO = dashboardServiceHelper.getLastDashBoardData(latitude, longitude);
 
                 if(dashboardDTO != null){
                     intent.putExtra("DashboardDTO", dashboardDTO);
@@ -308,7 +243,6 @@ public class TrackingService extends Service implements SensorEventListener,
                     localBroadcastManager.sendBroadcast(intent);
 
                     if(dashboardDTO.speed != -1){
-                        getLocation();
                         OBDDTO obddto = dashboardServiceHelper.getLastObdDTO();
                         TripDataEntity tripData = new TripDataEntity();
                         tripData.setIdTrip(trip.getId());
@@ -317,8 +251,8 @@ public class TrackingService extends Service implements SensorEventListener,
                         tripData.setFuelTankLevel(obddto.fuelTankLevel);
                         tripData.setSpeed(obddto.speed);
                         tripData.setRPM(obddto.rpm);
-                        tripData.setLatitude(getLatitud());
-                        tripData.setLongitude(getLongitud());
+                        tripData.setLatitude(dashboardServiceHelper.getLastLatitude());
+                        tripData.setLongitude(dashboardServiceHelper.getLastLongitude());
                         tripData.setMAF(obddto.massAirFlow);
                         tripData.setTime(System.currentTimeMillis());
 
@@ -333,11 +267,11 @@ public class TrackingService extends Service implements SensorEventListener,
                 }
 
                 ///TODO Eliminar logs de prueba de obtención de valores de localizacion
-                Log.i(TAG, "Latitud:" + getLatitud());
-                Log.i(TAG, "Longitud:" + getLongitud());
-                Log.i(TAG, "Altitud:" + getAltitud());
-               /* ///TODO Eliminar logs de prueba de obtención de valores de sensores
-                if (getValorAcelerometro() != null)
+                Log.i(TAG, "Latitud:" + latitude);
+                Log.i(TAG, "Longitud:" + longitude);
+                Log.i(TAG, "Altitud:" + altitude);
+                ///TODO Eliminar logs de prueba de obtención de valores de sensores
+               /* if (getValorAcelerometro() != null)
                     Log.i(TAG, "Acelerómetro (Valor x):" + getValorAcelerometro()[0]);
                 else
                     Log.i(TAG, "No se encuentra valor para el acelerómetro");

@@ -29,6 +29,11 @@ public class UpdateCarTripInfoBD extends AsyncTask<TripEntity, Void, Void> {
     protected Void doInBackground(TripEntity... tripEntities) {
         TripEntity trip = tripEntities[0];
         List<TripDataEntity> tripDatas = db.tripDataDao().getAllTripData(trip.getId());
+        if(tripDatas.size() <= 0){
+            db.tripDao().deleteTrip(trip);
+            return null;
+        }
+        
         double latStart = tripDatas.get(0).getLatitude();
         double lonStart = tripDatas.get(0).getLongitude();
         double latEnd = tripDatas.get(tripDatas.size() - 1).getLatitude();

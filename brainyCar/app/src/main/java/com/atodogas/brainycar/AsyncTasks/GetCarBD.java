@@ -36,7 +36,9 @@ public class GetCarBD extends AsyncTask<Integer, Void, CarDTO> {
         carDTO.setKms(carEntity.getKms());
         carDTO.setFuelConsumptionAVG(carEntity.getAVGFuelConsumption());
         carDTO.setSpeedAVG(carEntity.getAVGSpeed());
-        carDTO.setFuelTankLevel(tripDataEntities.get(0).getFuelTankLevel());
+        carDTO.setFuelTankLevel(tripDataEntities.get(tripDataEntities.size() - 1).getFuelTankLevel());
+        carDTO.setLatitude(tripDataEntities.get(tripDataEntities.size() - 1).getLatitude());
+        carDTO.setLongitude(tripDataEntities.get(tripDataEntities.size() - 1).getLongitude());
 
         return carDTO;
     }

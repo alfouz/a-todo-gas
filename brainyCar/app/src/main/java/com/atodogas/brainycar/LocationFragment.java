@@ -176,14 +176,14 @@ public class LocationFragment extends Fragment {
     //Set a car image on latlng indicated
     private void setLastCarPosition(LatLng position) {
 
-        int height = 200;
-        int width = 200;
-        BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.mipmap.ic_map_marker_foreground);
+        //int height = 200;
+        //int width = 200;
+        BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.mipmap.ic_map_marker);
         Bitmap b = bitmapdraw.getBitmap();
-        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+        //Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
 
 
-        BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(smallMarker);
+        BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(b);
 
         Marker mCar = googleMap.addMarker(new MarkerOptions()
                 .position(position)

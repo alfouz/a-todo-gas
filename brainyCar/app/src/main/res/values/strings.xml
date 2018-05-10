@@ -277,6 +277,26 @@
     </string-array>
     <string name="obdSetting">Dispositivo OBD2</string>
 
+    <!-- ABOUT ACTIVITY -->
+    <string name="action_about">Acerca de</string>
+    <string name="authors">Autores</string>
+    <string name="authorsDesc">
+        CEO: Adrián López Fouz\n
+        UX: Belén Varela Barca\n
+        Social Media/APIs: David Lago Solla\n
+        Sensórica, geolocalización/herramientas externas: Jorge López Seijas\n
+        Sensórica, geolocalización/herramientas externas: Adrián López Martínez
+    </string>
+    <string name="version">Versión</string>
+    <string name="versioDesc">alpha 0.6</string>
+    <string name="generalInfo">Información general</string>
+    <string name="generalInfoDesc">Esta aplicación ha sido llevada a cabo como proyecto
+        universitario, los autores excluyen cualquier responsabilidad por los daños y perjuicios
+        de toda naturaleza que puedan derivarse de su uso.
+    </string>
+
+
+
     <!-- TRACKING SERVICE -->
     <string name="trackingNotificationTitle">Trayecto en curso</string>
     <string name="trackingNotificationSubtitle">El dispositivo está recopilando datos de conducción</string>

@@ -343,9 +343,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginStart="24dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginStart="14dp"
+            android:clipToPadding="false"
+            android:padding="10dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -362,7 +364,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/round_button"
                 android:text="PAUSAR"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:hapticFeedbackEnabled="true"/>
 
             <Button
                 android:id="@+id/detenerButton"
@@ -375,7 +378,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/round_button_accent"
                 android:text="DETENER"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:hapticFeedbackEnabled="true"/>
 
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>

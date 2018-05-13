@@ -35,5 +35,6 @@
         android:background="@drawable/completely_round_button"
         android:text="@string/diagnosticButton"
         android:textSize="20sp"
-        android:textColor="@android:color/background_light"/>
+        android:textColor="@android:color/background_light"
+        android:hapticFeedbackEnabled="true"/>
 </FrameLayout>

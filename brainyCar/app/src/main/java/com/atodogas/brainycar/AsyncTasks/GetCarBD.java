@@ -27,7 +27,11 @@ public class GetCarBD extends AsyncTask<Integer, Void, CarDTO> {
 
         CarEntity carEntity = db.carDao().getCarByIdUser(userId);
         TripEntity tripEntity = db.tripDao().getLastTrip(carEntity.getId());
-        List<TripDataEntity> tripDataEntities = db.tripDataDao().getAllTripData(tripEntity.getId());
+        List<TripDataEntity> tripDataEntities = null;
+
+        if(tripEntity != null){
+            tripDataEntities = db.tripDataDao().getAllTripData(tripEntity.getId());
+        }
 
         CarDTO carDTO  = new CarDTO();
         carDTO.setId(carEntity.getId());
@@ -36,7 +40,17 @@ public class GetCarBD extends AsyncTask<Integer, Void, CarDTO> {
         carDTO.setKms(carEntity.getKms());
         carDTO.setFuelConsumptionAVG(carEntity.getAVGFuelConsumption());
         carDTO.setSpeedAVG(carEntity.getAVGSpeed());
-        carDTO.setFuelTankLevel(tripDataEntities.get(0).getFuelTankLevel());
+
+        if(tripDataEntities != null && tripDataEntities.size() > 0){
+            carDTO.setFuelTankLevel(tripDataEntities.get(tripDataEntities.size() - 1).getFuelTankLevel());
+            carDTO.setLatitude(tripDataEntities.get(tripDataEntities.size() - 1).getLatitude());
+            carDTO.setLongitude(tripDataEntities.get(tripDataEntities.size() - 1).getLongitude());
+        }
+        else {
+            carDTO.setFuelTankLevel(-1);
+            carDTO.setLatitude(999);
+            carDTO.setLongitude(999);
+        }
 
         return carDTO;
     }

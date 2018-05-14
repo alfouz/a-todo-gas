@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,7 @@ public class DiagnosticButtonFragment extends Fragment implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
+        v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
         loadingLayout.setVisibility(View.VISIBLE);
         loadingTextView.setText(getString(R.string.loading_obteniendo_codigos_error));
         startMilis = System.currentTimeMillis();

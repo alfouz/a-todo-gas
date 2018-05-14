@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -169,11 +170,13 @@ public class HistoricFragment extends Fragment implements View.OnClickListener, 
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.buttonPrevious:
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 Log.d("button", "Button Previous");
                 Toast.makeText(getActivity(),"clicked button previous",Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.buttonNext:
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 Log.d("button", "Button Next");
                 Toast.makeText(getActivity(),"clicked button next",Toast.LENGTH_SHORT).show();
 
@@ -184,9 +187,11 @@ public class HistoricFragment extends Fragment implements View.OnClickListener, 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         switch(parent.getId()) {
             case R.id.spinnerMeasure:
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 Toast.makeText(getActivity(),"Medida: " + parent.getItemAtPosition(pos),Toast.LENGTH_SHORT).show();
                 break;
             case R.id.spinnerPeriod:
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 Toast.makeText(getActivity(),"Periodo: " + parent.getItemAtPosition(pos),Toast.LENGTH_SHORT).show();
                 break;
         }

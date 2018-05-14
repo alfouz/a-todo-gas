@@ -14,6 +14,8 @@ public class CarDTO {
     private float fuelConsumptionAVG;
     private float speedAVG;
     private float fuelTankLevel;
+    private double latitude;
+    private double longitude;
 
     public void setId(int id) {
         this.id = id;
@@ -43,6 +45,14 @@ public class CarDTO {
         this.fuelTankLevel = fuelTankLevel;
     }
 
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     public int getId() {
         return id;
     }
@@ -69,5 +79,13 @@ public class CarDTO {
 
     public float getFuelTankLevel() {
         return fuelTankLevel;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 }

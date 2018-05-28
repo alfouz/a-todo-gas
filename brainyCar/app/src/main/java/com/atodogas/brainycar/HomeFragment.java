@@ -18,22 +18,31 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.atodogas.brainycar.AsyncTasks.CallbackInterface;
+import com.atodogas.brainycar.AsyncTasks.GetAllTripsBD;
+import com.atodogas.brainycar.AsyncTasks.GetCarBD;
+import com.atodogas.brainycar.AsyncTasks.GetLastTripBD;
+import com.atodogas.brainycar.DTOs.CarDTO;
+import com.atodogas.brainycar.DTOs.TripDTO;
+
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Set;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends Fragment implements View.OnClickListener, CallbackInterface<TripDTO> {
 
     private static final String TAG = HomeFragment.class.getSimpleName();
     private static final int REQUEST_ENABLE_BT = 1;
     private MainActivity mainActivity;
     private String bluetoothState;
 
+    private RecyclerView lastTripLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,7 +53,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         Button driveButton = view.findViewById(R.id.driveButton);
         driveButton.setOnClickListener(this);
-        RecyclerView lastTripLayout = view.findViewById(R.id.lastTripLayout);
+        lastTripLayout = view.findViewById(R.id.lastTripLayout);
         lastTripLayout.setOnClickListener(this);
 
         //**************************************BLUETOOTH**************************************
@@ -83,24 +92,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         TextView cardBrandElement = view.findViewById(R.id.carBrand);
         cardBrandElement.setText("VW Golf TDI 2011");
 
-
+        int user = getActivity().getIntent().getIntExtra("idUser", -1);
         //LAST TRIP INFO
-
-        ArrayList<TripEntity> trips = new ArrayList<TripEntity>();
-        trips.add(new TripEntity(new Date(2017,07,11), new Time(18,00,00),
-                new Time(23,30,00),"Madrid", "A Coruña", 591, 72, 82));
-
-        HistoricFragmentTripAdapter adapter = new HistoricFragmentTripAdapter(trips);
-        lastTripLayout.setHasFixedSize(true);
-        lastTripLayout.setAdapter(adapter);
-        LinearLayoutManager llm = new LinearLayoutManager(getContext()) {
+        final CallbackInterface<TripDTO> scope = this;
+        new GetCarBD(new CallbackInterface<CarDTO>() {
             @Override
-            public boolean canScrollVertically() {
-                return false;
+            public void doCallback(CarDTO carDTO) {
+                if(carDTO!=null) {
+                    new GetLastTripBD(scope, getContext()).execute(carDTO.getId());
+                }else{
+                    new GetLastTripBD(scope, getContext()).execute(-1);
+                }
             }
-        };
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        lastTripLayout.setLayoutManager(llm);
+        }, getContext()).execute(user);
+
 
 
         //GENERAL INFO
@@ -177,4 +182,42 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Toast.makeText(mainActivity,"clicked to see details of last trip",Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void doCallback(TripDTO tripDTO) {
+        ArrayList<TripDTO> trips = new ArrayList<TripDTO>();
+        TripDTO trip = tripDTO;
+
+        if(trip==null){
+            TripDTO emptyTrip = new TripDTO();
+            emptyTrip.setStartDate(Calendar.getInstance().getTime());
+            emptyTrip.setEndDate(Calendar.getInstance().getTime());
+            emptyTrip.setEndPlace("Sin datos");
+            emptyTrip.setFuelConsumptionAVG(0);
+            emptyTrip.setHours(0);
+            emptyTrip.setMinutes(0);
+            emptyTrip.setId(-1);
+            emptyTrip.setKms(0);
+            emptyTrip.setSpeedAVG(0);
+            emptyTrip.setStartPlace("Sin datos");
+            trips.add(emptyTrip);
+        }else{
+            trips.add(trip);
+        }
+
+        HistoricFragmentTripAdapter adapter = new HistoricFragmentTripAdapter(trips, new HistoricFragmentTripAdapter.OnItemClickListener() {
+            @Override public void onItemClick(TripDTO item) {
+                Toast.makeText(getContext(), item.getStartPlace() + " - " + item.getEndPlace(), Toast.LENGTH_LONG).show();
+            }
+        });
+        lastTripLayout.setHasFixedSize(true);
+        lastTripLayout.setAdapter(adapter);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        lastTripLayout.setLayoutManager(llm);
+    }
 }

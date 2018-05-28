@@ -7,7 +7,8 @@
     android:layout_height="150dp"
     card_view:cardUseCompatPadding="true"
     card_view:cardBackgroundColor="@color/colorWhite"
-    android:hapticFeedbackEnabled="true">
+    android:hapticFeedbackEnabled="true"
+    android:clickable="true">
 
     <RelativeLayout
     android:id="@+id/lastTripLayout"

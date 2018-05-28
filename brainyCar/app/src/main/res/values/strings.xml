@@ -246,6 +246,7 @@
     <string name="previous">Anterior</string>
     <string name="next">Siguiente</string>
     <string name="noChartData">Datos de la gráfica no disponibles</string>
+    <string name="noData">Sin Datos</string>
 
 
     <!-- PROFILE FRAGMENT -->

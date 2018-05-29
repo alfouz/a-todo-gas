@@ -250,9 +250,10 @@ public class LocationFragment extends Fragment {
         LatLng position = new LatLng(car.getLatitude(), car.getLongitude());
         //int height = 200;
         //int width = 200;
+      
+      
         BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.mipmap.ic_map_marker);
         Bitmap b = bitmapdraw.getBitmap();
-        //Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
 
 
         BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(b);

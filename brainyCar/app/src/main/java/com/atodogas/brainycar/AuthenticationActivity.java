@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 
 
@@ -57,6 +58,7 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sign_in_button:
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 signIn();
                 break;
             // ...

@@ -12,6 +12,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:padding="10dp"
         android:layout_weight="0">
         <Button
             android:id="@+id/reiniciarButton"
@@ -22,7 +24,8 @@
             android:layout_gravity="center"
             android:background="@drawable/round_button_accent"
             android:text="@string/reiniciarTitle"
-            android:textColor="@android:color/background_light"/>
+            android:textColor="@android:color/background_light"
+            android:hapticFeedbackEnabled="true"/>
 
     </FrameLayout>
 

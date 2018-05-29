@@ -8,12 +8,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,9 +23,6 @@ import java.util.ArrayList;
  */
 public class DiagnosticFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = DiagnosticFragment.class.getSimpleName();
-
-    private ArrayList<BugEntity> bugEntityArrayList;
-    private String time;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -61,6 +58,7 @@ public class DiagnosticFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.reiniciarButton:
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 reiniciarButton();
                 break;
         }

@@ -69,7 +69,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            card_view:srcCompat="@drawable/ic_share" />
+            card_view:srcCompat="@drawable/ic_share"
+            android:hapticFeedbackEnabled="true"/>
 
     </RelativeLayout>
 

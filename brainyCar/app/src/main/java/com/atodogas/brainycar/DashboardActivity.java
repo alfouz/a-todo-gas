@@ -11,6 +11,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -97,9 +98,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.pausarButton:
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 pausar();
                 break;
             case R.id.detenerButton:
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 detener();
                 break;
         }

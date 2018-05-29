@@ -1,12 +1,8 @@
 package com.atodogas.brainycar;
 
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -23,7 +19,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -152,23 +147,28 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.action_settings:
                 // User chose the "Settings" item, show the app settings UI...
                 Log.d(TAG, "clicked on settings");
 
-                Context context = getApplicationContext();
-                CharSequence text = "clicked on settings";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-
                 //Pasamos a la activity de ajustes
-                Intent intent = new Intent(this, SettingsActivity.class);
+                intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_about:
+                // User chose the "About" item, show the app about UI...
+                Log.d(TAG, "clicked on about");
+
+                //Pasamos a la activity de acerca de
+                intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.action_logout:
+                // User chose the "Logout" item, show the authentication about UI...
+                Log.d(TAG, "clicked on logout");
+
                 GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestEmail()
                         .build();
@@ -179,10 +179,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 if (silentSignIn.isSuccessful()) {
                     mGoogleSignInClient.signOut();
-                    Intent intent2 = new Intent(this, AuthenticationActivity.class);
-                    intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent2);
+                    intent = new Intent(this, AuthenticationActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
                 }
             default:
                 // If we got here, the user's action was not recognized.

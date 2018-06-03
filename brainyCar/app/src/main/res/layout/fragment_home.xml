@@ -122,84 +122,81 @@
                             android:textColor="@color/colorPrimaryExtraDark"/>
 
                         <ImageView
-                            android:id="@+id/gasolineIcon"
+                            android:id="@+id/gasolineAVGIcon"
                             android:layout_width="18sp"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/dashboardIcon"
-                            android:layout_above="@id/coolantIcon"
+                            android:layout_above="@id/speedAVGIcon"
                             android:layout_alignEnd="@id/dashboardIcon"
                             android:layout_alignRight="@id/dashboardIcon"
                             android:contentDescription="@string/gasolineIconDescription"
                             app:srcCompat="@drawable/ic_gasoline_pump_accent" />
 
                         <TextView
-                            android:id="@+id/gasolineText"
+                            android:id="@+id/gasolineAVGText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/dashboardText"
-                            android:layout_above="@id/coolantText"
+                            android:layout_above="@id/speedAVGIcon"
                             android:gravity="center"
                             android:layout_alignStart="@id/dashboardText"
                             android:layout_alignLeft="@id/dashboardText"
-                            android:text="@string/gasolineTitle"
+                            android:text="@string/gasolineAVGTitle"
                             android:textColor="@color/colorPrimary" />
 
                         <TextView
-                            android:id="@+id/gasolineValue"
+                            android:id="@+id/gasolineAVGValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/dashboardValue"
-                            android:layout_above="@id/coolantValue"
                             android:gravity="center"
-                            android:layout_toRightOf="@id/gasolineText"
-                            android:layout_toEndOf="@id/gasolineText"
+                            android:layout_toRightOf="@id/dashboardText"
+                            android:layout_toEndOf="@id/dashboardText"
                             android:layout_marginLeft="10dp"
                             android:layout_marginStart="10dp"
                             android:textColor="@color/colorPrimaryExtraDark"/>
 
                         <ImageView
-                            android:id="@+id/coolantIcon"
+                            android:id="@+id/speedAVGIcon"
                             android:layout_width="20sp"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_alignLeft="@id/dashboardIcon"
                             android:layout_alignStart="@id/dashboardIcon"
-                            android:contentDescription="@string/coolantIconDescription"
-                            app:srcCompat="@drawable/ic_engine_coolant_accent" />
+                            app:srcCompat="@drawable/ic_dashboard_accent" />
 
                         <TextView
-                            android:id="@+id/coolantText"
+                            android:id="@+id/speedAVGText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@id/coolantIcon"
+                            android:layout_alignBottom="@id/speedAVGIcon"
                             android:layout_alignLeft="@id/dashboardText"
                             android:layout_alignStart="@id/dashboardText"
-                            android:text="@string/coolantTitle"
+                            android:text="@string/speedAVGTitle"
                             android:textColor="@color/colorPrimary" />
 
                         <TextView
-                            android:id="@+id/coolantValue"
+                            android:id="@+id/speedAVGValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toRightOf="@id/coolantText"
-                            android:layout_toEndOf="@id/coolantText"
+                            android:layout_toRightOf="@id/speedAVGText"
+                            android:layout_toEndOf="@id/speedAVGText"
                             android:layout_marginLeft="10dp"
                             android:layout_marginStart="10dp"
-                            android:layout_alignBottom="@id/coolantIcon"
+                            android:layout_alignBottom="@id/speedAVGIcon"
                             android:textColor="@color/colorPrimaryExtraDark" />
 
                     </RelativeLayout>
                 </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/card_view2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    card_view:cardBackgroundColor="@color/colorWhite"
                     card_view:cardCornerRadius="15dp"
                     card_view:cardElevation="2dp"
-                    card_view:cardUseCompatPadding="true"
-                    card_view:cardBackgroundColor="@color/colorWhite">
+                    card_view:cardUseCompatPadding="true">
 
                     <RelativeLayout
                         android:id="@+id/carDataLayout2"
@@ -208,102 +205,67 @@
                         android:layout_margin="15dp">
 
                         <ImageView
-                            android:id="@+id/dashboardIcon2"
+                            android:id="@+id/gasolineIcon"
                             android:layout_width="20sp"
                             android:layout_height="wrap_content"
-                            android:contentDescription="@string/dashboardIconDescription"
-                            app:srcCompat="@drawable/ic_dashboard_accent" />
-
-                        <TextView
-                            android:id="@+id/dashboardText2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toRightOf="@id/dashboardIcon2"
-                            android:layout_toEndOf="@id/dashboardIcon2"
-                            android:layout_alignBottom="@id/dashboardIcon2"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginStart="10dp"
-                            android:text="@string/kmTitle"
-                            android:textColor="@color/colorPrimary" />
-
-                        <TextView
-                            android:id="@+id/dashboardValue2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toRightOf="@id/dashboardText2"
-                            android:layout_toEndOf="@id/dashboardText2"
-                            android:layout_alignBottom="@id/dashboardText2"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginStart="10dp"
-                            android:textColor="@color/colorPrimaryExtraDark"/>
-
-                        <ImageView
-                            android:id="@+id/gasolineIcon2"
-                            android:layout_width="18sp"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/dashboardIcon2"
-                            android:layout_above="@id/coolantIcon2"
-                            android:layout_alignEnd="@id/dashboardIcon2"
-                            android:layout_alignRight="@id/dashboardIcon2"
-                            android:contentDescription="@string/gasolineIconDescription"
+                            android:contentDescription="@string/gasolineTitle"
                             app:srcCompat="@drawable/ic_gasoline_pump_accent" />
 
                         <TextView
-                            android:id="@+id/gasolineText2"
+                            android:id="@+id/gasolineText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/dashboardText2"
-                            android:layout_above="@id/coolantText2"
-                            android:gravity="center"
-                            android:layout_alignStart="@id/dashboardText2"
-                            android:layout_alignLeft="@id/dashboardText2"
+                            android:layout_alignBottom="@id/gasolineIcon"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@id/gasolineIcon"
+                            android:layout_toRightOf="@id/gasolineIcon"
                             android:text="@string/gasolineTitle"
                             android:textColor="@color/colorPrimary" />
 
                         <TextView
-                            android:id="@+id/gasolineValue2"
+                            android:id="@+id/gasolineValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/dashboardValue2"
-                            android:layout_above="@id/coolantValue2"
-                            android:gravity="center"
-                            android:layout_toRightOf="@id/gasolineText2"
-                            android:layout_toEndOf="@id/gasolineText2"
+                            android:layout_alignBottom="@id/gasolineText"
                             android:layout_marginLeft="10dp"
                             android:layout_marginStart="10dp"
-                            android:textColor="@color/colorPrimaryExtraDark"/>
+                            android:layout_toEndOf="@id/gasolineText"
+                            android:layout_toRightOf="@id/gasolineText"
+                            android:textColor="@color/colorPrimaryExtraDark" />
 
                         <ImageView
-                            android:id="@+id/coolantIcon2"
-                            android:layout_width="20sp"
+                            android:id="@+id/batteryIcon"
+                            android:layout_width="18sp"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_alignLeft="@id/dashboardIcon2"
-                            android:layout_alignStart="@id/dashboardIcon2"
-                            android:contentDescription="@string/coolantIconDescription"
-                            app:srcCompat="@drawable/ic_engine_coolant_accent" />
+                            android:layout_toLeftOf="@+id/gasolineText"
+                            android:layout_toStartOf="@+id/gasolineText"
+                            android:contentDescription="@string/batteryDescription"
+                            app:srcCompat="@drawable/ic_battery_accent" />
 
                         <TextView
-                            android:id="@+id/coolantText2"
+                            android:id="@+id/batteryText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@id/coolantIcon2"
-                            android:layout_alignLeft="@id/dashboardText2"
-                            android:layout_alignStart="@id/dashboardText2"
-                            android:text="@string/coolantTitle"
+                            android:layout_alignLeft="@+id/gasolineText"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignStart="@+id/gasolineText"
+                            android:gravity="center"
+                            android:text="@string/batteryTitle"
                             android:textColor="@color/colorPrimary" />
 
                         <TextView
-                            android:id="@+id/coolantValue2"
+                            android:id="@+id/batteryValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toRightOf="@id/coolantText2"
-                            android:layout_toEndOf="@id/coolantText2"
+                            android:layout_alignBottom="@id/batteryText"
                             android:layout_marginLeft="10dp"
                             android:layout_marginStart="10dp"
-                            android:layout_alignBottom="@id/coolantIcon2"
+                            android:layout_toEndOf="@id/gasolineText"
+                            android:layout_toRightOf="@id/gasolineText"
+                            android:gravity="center"
                             android:textColor="@color/colorPrimaryExtraDark" />
-
                     </RelativeLayout>
                 </android.support.v7.widget.CardView>
             </LinearLayout>

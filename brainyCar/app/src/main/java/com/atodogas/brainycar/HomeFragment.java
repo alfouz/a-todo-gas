@@ -27,6 +27,8 @@ import com.atodogas.brainycar.DTOs.TripDTO;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Set;
@@ -43,6 +45,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Call
     private String bluetoothState;
 
     private RecyclerView lastTripLayout;
+    
+    private TextView dashboardValueElement;
+    private TextView gasolineAVGValueElement;
+    private TextView speedAVGValueElement;
+    private TextView gasolineValueElement;
+    private TextView batteryValueElement;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -100,33 +109,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Call
             public void doCallback(CarDTO carDTO) {
                 if(carDTO!=null) {
                     new GetLastTripBD(scope, getContext()).execute(carDTO.getId());
+                    updateGeneralDataCar(carDTO);
                 }else{
                     new GetLastTripBD(scope, getContext()).execute(-1);
                 }
             }
         }, getContext()).execute(user);
 
-
-
         //GENERAL INFO
+        dashboardValueElement = view.findViewById(R.id.dashboardValue);
+        dashboardValueElement.setText("0 km");
 
-        TextView dashboardValueElement = view.findViewById(R.id.dashboardValue);
-        dashboardValueElement.setText("2500km");
+        gasolineAVGValueElement = view.findViewById(R.id.gasolineAVGValue);
+        gasolineAVGValueElement.setText("0 l/100km");
 
-        TextView gasolineValueElement = view.findViewById(R.id.gasolineValue);
-        gasolineValueElement.setText("25/50l");
+        speedAVGValueElement = view.findViewById(R.id.speedAVGValue);
+        speedAVGValueElement.setText("0 km/h");
 
-        TextView coolantValueElement = view.findViewById(R.id.coolantValue);
-        coolantValueElement.setText("4l");
+        gasolineValueElement = view.findViewById(R.id.gasolineValue);
+        gasolineValueElement.setText("0 l");
 
-        TextView dashboardValueElement2 = view.findViewById(R.id.dashboardValue2);
-        dashboardValueElement2.setText("2500km");
-
-        TextView gasolineValueElement2 = view.findViewById(R.id.gasolineValue2);
-        gasolineValueElement2.setText("25/50l");
-
-        TextView coolantValueElement2 = view.findViewById(R.id.coolantValue2);
-        coolantValueElement2.setText("4l");
+        batteryValueElement = view.findViewById(R.id.batteryValue);
+        batteryValueElement.setText("0 V");
 
         return view;
     }
@@ -219,5 +223,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Call
         };
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         lastTripLayout.setLayoutManager(llm);
+    }
+
+    public void updateGeneralDataCar(CarDTO carDTO){
+        NumberFormat formatter = new DecimalFormat("#0.0");
+        dashboardValueElement.setText( (int) carDTO.getKms() + " km");
+        gasolineAVGValueElement.setText( formatter.format(carDTO.getFuelConsumptionAVG()) + " l/100km");
+        speedAVGValueElement.setText( formatter.format(carDTO.getSpeedAVG()) + " km/h");
+        gasolineValueElement.setText( formatter.format(carDTO.getFuelTankLevel()) + " %");
+        batteryValueElement.setText( formatter.format(carDTO.getBattery()) + " V");
     }
 }

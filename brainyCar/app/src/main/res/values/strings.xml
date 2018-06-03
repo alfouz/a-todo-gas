@@ -174,9 +174,11 @@
     <string name="lastTripTitle">Último Viaje</string>
     <string name="carDataTitle">Datos Generales</string>
     <string name="kmTitle">Kilómetros recorridos:</string>
-    <string name="gasolineTitle">AVG:</string>string>
-    <string name="coolantTitle">Líquido refrigerante:</string>
-    <string name="coolantIconDescription">Este icono representa el nivel líquido refrigerante del coche</string>
+    <string name="speedAVGTitle">Velocidad Media:</string>
+    <string name="gasolineAVGTitle">Consumo Medio:</string>
+    <string name="gasolineTitle">Gasolina:</string>
+    <string name="batteryTitle">Batería:</string>
+    <string name="batteryDescription">Este icono representa el nivel de bateria del coche</string>
     <string name="gasolineIconDescription">Este icono representa el nivel de gasolina del coche</string>
     <string name="hourglassIconDescription">Este icono representa el tiempo realizado</string>
     <string name="dashboardIconDescription">Este icono representa los kilómetros recorridos</string>

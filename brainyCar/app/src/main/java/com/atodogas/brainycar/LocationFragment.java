@@ -398,6 +398,26 @@ public class LocationFragment extends Fragment {
                     .title(f.getTitle())
                     .snippet(snipet));
         }
+
+        LatLng position = null;
+        try {
+            position = new LatLng(googleMap.getMyLocation().getLatitude(), googleMap.getMyLocation().getLongitude());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(position == null){
+            try {
+                position = new LatLng(car.getLatitude(), car.getLongitude());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(position != null){
+            CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(12).build();
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        }
     }
 
     //Auxiliar class to get points coloured

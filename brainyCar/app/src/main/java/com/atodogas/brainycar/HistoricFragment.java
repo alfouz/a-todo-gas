@@ -203,53 +203,8 @@ public class HistoricFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void setContentViajes(View root){
-        /*ArrayList<TripEntity> trips = new ArrayList<TripEntity>();
-        for (int i=0; i <= 10; i++) {
-            trips.add(new TripEntity(new Date(2017,07,11), new Time(18,00,00),
-                    new Time(23,30,00),"Madrid", "A Coruña", 591, 72, 82));
-        }*/
 
         final View rootAux = root;
-        /*CallbackInterface callback = new CallbackInterface() {
-            @Override
-            public void doCallback(Object object) {
-                List<TripDTO> trips = (List<TripDTO>) object;
-
-                Log.d("pepe", Integer.toString(trips.size()));
-                if(trips.size()==0){
-                    TripDTO emptyTrip = new TripDTO();
-                    emptyTrip.setStartDate(Calendar.getInstance().getTime());
-                    emptyTrip.setEndDate(Calendar.getInstance().getTime());
-                    emptyTrip.setEndPlace("Sin localización");
-                    emptyTrip.setFuelConsumptionAVG(0);
-                    emptyTrip.setHours(0);
-                    emptyTrip.setMinutes(0);
-                    emptyTrip.setId(-1);
-                    emptyTrip.setKms(0);
-                    emptyTrip.setSpeedAVG(0);
-                    emptyTrip.setStartPlace("Sin localización");
-                    trips.add(emptyTrip);
-                }
-                //trips.add(new TripEntity(new Date(2017,07,11), new Time(18,00,00),
-                //        new Time(23,30,00),"Madrid", "A Coruña", 591, 72, 82));
-
-                HistoricFragmentTripAdapter adapter = new HistoricFragmentTripAdapter(trips, new HistoricFragmentTripAdapter.OnItemClickListener() {
-                    @Override public void onItemClick(TripDTO item) {
-                        Toast.makeText(getContext(), item.getStartPlace() + " - " + item.getEndPlace(), Toast.LENGTH_LONG).show();
-
-                        //Intent intent = new Intent(getActivity(), DashboardActivity.class);
-                        //intent.putExtra("idUser", item);
-                        //startActivity(intent);
-                    }
-                });
-                RecyclerView myView =  rootAux.findViewById(R.id.viajes);
-                myView.setHasFixedSize(true);
-                myView.setAdapter(adapter);
-                LinearLayoutManager llm = new LinearLayoutManager(getContext());
-                llm.setOrientation(LinearLayoutManager.VERTICAL);
-                myView.setLayoutManager(llm);
-            }
-        };*/
         final CallbackInterface scope = this;
         new GetCarBD(new CallbackInterface<CarDTO>() {
             @Override

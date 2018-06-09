@@ -20,6 +20,7 @@
         android:textStyle="bold"/>
 
     <!-- ÚLTIMO VIAJE -->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -48,21 +49,21 @@
     <!-- DATOS GENERALES -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5">
+        android:layout_height="wrap_content"
+        android:layout_weight="25">
 
         <TextView
             android:id="@+id/carDataTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="2dp"
             android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="20dp"
             android:text="@string/carDataTitle"
             android:textAllCaps="true"
-            android:textStyle="bold"
             android:textColor="@color/colorPrimaryExtraDark"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -75,15 +76,14 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <android.support.v7.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/card_view1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    card_view:cardBackgroundColor="@color/colorWhite"
                     card_view:cardCornerRadius="15dp"
                     card_view:cardElevation="2dp"
-                    card_view:cardUseCompatPadding="true"
-                    card_view:cardBackgroundColor="@color/colorWhite">
+                    card_view:cardUseCompatPadding="true">
 
                     <RelativeLayout
                         android:id="@+id/carDataLayout"
@@ -102,11 +102,11 @@
                             android:id="@+id/dashboardText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toRightOf="@id/dashboardIcon"
-                            android:layout_toEndOf="@id/dashboardIcon"
                             android:layout_alignBottom="@id/dashboardIcon"
                             android:layout_marginLeft="10dp"
                             android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@id/dashboardIcon"
+                            android:layout_toRightOf="@id/dashboardIcon"
                             android:text="@string/kmTitle"
                             android:textColor="@color/colorPrimary" />
 
@@ -114,21 +114,21 @@
                             android:id="@+id/dashboardValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toRightOf="@id/dashboardText"
-                            android:layout_toEndOf="@id/dashboardText"
                             android:layout_alignBottom="@id/dashboardText"
                             android:layout_marginLeft="10dp"
                             android:layout_marginStart="10dp"
-                            android:textColor="@color/colorPrimaryExtraDark"/>
+                            android:layout_toEndOf="@id/dashboardText"
+                            android:layout_toRightOf="@id/dashboardText"
+                            android:textColor="@color/colorPrimaryExtraDark" />
 
                         <ImageView
                             android:id="@+id/gasolineAVGIcon"
                             android:layout_width="18sp"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/dashboardIcon"
                             android:layout_above="@id/speedAVGIcon"
                             android:layout_alignEnd="@id/dashboardIcon"
                             android:layout_alignRight="@id/dashboardIcon"
+                            android:layout_below="@id/dashboardIcon"
                             android:contentDescription="@string/gasolineIconDescription"
                             app:srcCompat="@drawable/ic_gasoline_pump_accent" />
 
@@ -136,11 +136,11 @@
                             android:id="@+id/gasolineAVGText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/dashboardText"
                             android:layout_above="@id/speedAVGIcon"
-                            android:gravity="center"
-                            android:layout_alignStart="@id/dashboardText"
                             android:layout_alignLeft="@id/dashboardText"
+                            android:layout_alignStart="@id/dashboardText"
+                            android:layout_below="@id/dashboardText"
+                            android:gravity="center"
                             android:text="@string/gasolineAVGTitle"
                             android:textColor="@color/colorPrimary" />
 
@@ -148,21 +148,21 @@
                             android:id="@+id/gasolineAVGValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toRightOf="@id/gasolineAVGText"
-                            android:gravity="center"
-                            android:layout_toEndOf="@id/gasolineAVGText"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginStart="10dp"
                             android:layout_alignBottom="@id/gasolineAVGIcon"
                             android:layout_alignTop="@id/gasolineAVGIcon"
-                            android:textColor="@color/colorPrimaryExtraDark"/>
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@id/gasolineAVGText"
+                            android:layout_toRightOf="@id/gasolineAVGText"
+                            android:gravity="center"
+                            android:textColor="@color/colorPrimaryExtraDark" />
 
                         <ImageView
                             android:id="@+id/speedAVGIcon"
                             android:layout_width="20sp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
                             android:layout_alignLeft="@id/dashboardIcon"
+                            android:layout_alignParentBottom="true"
                             android:layout_alignStart="@id/dashboardIcon"
                             app:srcCompat="@drawable/ic_dashboard_accent" />
 
@@ -180,11 +180,11 @@
                             android:id="@+id/speedAVGValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toRightOf="@id/speedAVGText"
-                            android:layout_toEndOf="@id/speedAVGText"
+                            android:layout_alignBottom="@id/speedAVGIcon"
                             android:layout_marginLeft="10dp"
                             android:layout_marginStart="10dp"
-                            android:layout_alignBottom="@id/speedAVGIcon"
+                            android:layout_toEndOf="@id/speedAVGText"
+                            android:layout_toRightOf="@id/speedAVGText"
                             android:textColor="@color/colorPrimaryExtraDark" />
 
                     </RelativeLayout>
@@ -273,11 +273,10 @@
         </HorizontalScrollView>
     </RelativeLayout>
 
-    <!-- BOTÓN "CONDUCIR" -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5">
+        android:layout_height="wrap_content"
+        android:layout_weight="20">
 
         <Button
             android:id="@+id/driveButton"
@@ -286,15 +285,17 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
             android:layout_gravity="center"
             android:layout_marginBottom="26dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:background="@drawable/round_button_accent"
             android:hapticFeedbackEnabled="true"
             android:text="@string/driveButtonText"
             android:textColor="@android:color/background_light" />
 
     </RelativeLayout>
+
+    <!-- BOTÓN "CONDUCIR" -->
 
 </LinearLayout>

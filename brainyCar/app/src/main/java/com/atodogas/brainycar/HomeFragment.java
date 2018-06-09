@@ -226,7 +226,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Call
     }
 
     public void updateGeneralDataCar(CarDTO carDTO){
-        NumberFormat formatter = new DecimalFormat("#0.0");
+        NumberFormat formatter = new DecimalFormat("#0.00");
         dashboardValueElement.setText( (int) carDTO.getKms() + " km");
         gasolineAVGValueElement.setText( formatter.format(carDTO.getFuelConsumptionAVG()) + " l/100km");
         speedAVGValueElement.setText( formatter.format(carDTO.getSpeedAVG()) + " km/h");

@@ -43,15 +43,15 @@ public class HistoricFragmentTripAdapter extends RecyclerView.Adapter<HistoricFr
         SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yy");
         SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("H:mm");
         holder.date.setText(DATE_FORMAT.format(trips.get(position).getStartDate()).toString());
-        holder.startTime.setText(TIME_FORMAT.format(trips.get(position).getStartDate()).toString()+"h");
-        holder.endTime.setText(TIME_FORMAT.format(trips.get(position).getEndDate()).toString()+"h");
+        holder.startTime.setText(TIME_FORMAT.format(trips.get(position).getStartDate()).toString()+" h");
+        holder.endTime.setText(TIME_FORMAT.format(trips.get(position).getEndDate()).toString()+" h");
         holder.startPlace.setText(trips.get(position).getStartPlace());
         holder.endPlace.setText(trips.get(position).getEndPlace());
-        holder.km.setText(Float.toString(trips.get(position).getKms())+"km");
+        holder.km.setText(String.format("%.2f", trips.get(position).getKms())+" km");
         Time duration = new Time(trips.get(position).getEndDate().getTime() - trips.get(position).getStartDate().getTime());
-        holder.duration.setText(TIME_FORMAT.format(duration).toString()+"h");
-        holder.gasoline.setText(Float.toString(trips.get(position).getFuelConsumptionAVG())+"l/km");
-        holder.points.setText(Float.toString(trips.get(position).getSpeedAVG())+"km/h");
+        holder.duration.setText(TIME_FORMAT.format(duration).toString()+" h");
+        holder.gasoline.setText(String.format("%.2f", trips.get(position).getFuelConsumptionAVG())+" l/km");
+        holder.points.setText(String.format("%.2f", trips.get(position).getSpeedAVG())+" km/h");
         holder.bind(trips.get(position), listener);
     }
 

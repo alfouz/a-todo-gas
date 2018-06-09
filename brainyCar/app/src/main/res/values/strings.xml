@@ -234,11 +234,9 @@
     <string-array name="measure_array">
         <item>km</item>
         <item>velocidad</item>
-        <item>RPM</item>
         <item>consumo</item>
     </string-array>
     <string-array name="period_array">
-        <item>día</item>
         <item>semana</item>
         <item>mes</item>
         <item>año</item>
@@ -247,6 +245,7 @@
     <string name="period">Periodo</string>
     <string name="previous">Anterior</string>
     <string name="next">Siguiente</string>
+    <string name="selectDate">Seleccionar Fecha</string>
     <string name="noChartData">Datos de la gráfica no disponibles</string>
     <string name="noData">Sin Datos</string>
 

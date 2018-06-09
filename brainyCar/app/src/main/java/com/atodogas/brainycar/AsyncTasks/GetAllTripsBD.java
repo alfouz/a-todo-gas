@@ -45,8 +45,8 @@ public class GetAllTripsBD extends AsyncTask<Integer, Void, List<TripDTO>> {
                 tripDTO.setEndDate(new Date(tripDataEntities.get(tripDataEntities.size() - 1).getTime()));
             }
 
-            double lastLatitude = 999;
-            double lastLongitude = 999;
+            double lastLatitude = 255;
+            double lastLongitude = 255;
             float kms = 0;
             float mpg = 0;
             int numberMPGNotEmpty = 0;

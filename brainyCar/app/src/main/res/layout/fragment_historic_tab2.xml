@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/estadisticas"
+    android:id="@+id/tabEstadisticas"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16dp"
@@ -94,15 +94,6 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/buttonPrevious"
-            android:layout_width="wrap_content"
-            android:layout_weight="0"
-            android:layout_height="wrap_content"
-            android:text="@string/previous"
-            android:textColor="@color/colorPrimaryExtraDark"
-            android:background="@drawable/empty_rectangle"/>
-
         <TextView
             android:id="@+id/periodGraph"
             android:layout_width="wrap_content"
@@ -115,11 +106,11 @@
             android:hapticFeedbackEnabled="true"/>
 
         <Button
-            android:id="@+id/buttonNext"
+            android:id="@+id/buttonSelectDate"
             android:layout_width="wrap_content"
             android:layout_weight="0"
             android:layout_height="wrap_content"
-            android:text="@string/next"
+            android:text="@string/selectDate"
             android:textColor="@color/colorPrimaryExtraDark"
             android:background="@drawable/empty_rectangle"
             android:hapticFeedbackEnabled="true"/>

@@ -343,17 +343,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="14dp"
-            android:layout_marginEnd="14dp"
-            android:layout_marginStart="14dp"
+            android:layout_marginBottom="60dp"
             android:clipToPadding="false"
-            android:padding="10dp"
             android:orientation="horizontal"
+            android:padding="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <Button
+            <!-- TODO Activar e implementar botón de pausa de viaje -->
+            <!--<Button
                 android:id="@+id/pausarButton"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -365,21 +367,22 @@
                 android:background="@drawable/round_button"
                 android:text="PAUSAR"
                 android:textColor="@color/colorWhite"
-                android:hapticFeedbackEnabled="true"/>
+                android:hapticFeedbackEnabled="true"/> -->
 
             <Button
                 android:id="@+id/detenerButton"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginLeft="6dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
                 android:layout_weight="1"
                 android:background="@drawable/round_button_accent"
+                android:hapticFeedbackEnabled="true"
                 android:text="DETENER"
-                android:textColor="@color/colorWhite"
-                android:hapticFeedbackEnabled="true"/>
+                android:textColor="@color/colorWhite" />
 
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>

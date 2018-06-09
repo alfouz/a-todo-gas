@@ -66,8 +66,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         loadingLayout = findViewById(R.id.loadingLayout);
         loadingLayout.setVisibility(View.VISIBLE);
 
-        Button pausarButton = findViewById(R.id.pausarButton);
-        pausarButton.setOnClickListener(this);
+        //TODO Activar e implementar botón de pausa de viaje
+        //Button pausarButton = findViewById(R.id.pausarButton);
+        //pausarButton.setOnClickListener(this);
+
         View detenerButton = findViewById(R.id.detenerButton);
         detenerButton.setOnClickListener(this);
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
@@ -97,10 +99,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.pausarButton:
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                pausar();
-                break;
+            //TODO Activar e implementar botón de pausa de viaje
+            //case R.id.pausarButton:
+            //   v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            //    pausar();
+            //    break;
             case R.id.detenerButton:
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 detener();
@@ -108,14 +111,15 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    public void pausar() {
-        Context context = getApplicationContext();
-        CharSequence text = "clicked button Pausar";
-        int duration = Toast.LENGTH_SHORT;
-
-        Log.d(TAG, "clicked button Pausar");
-        Toast.makeText(context, text, duration).show();
-    }
+    //TODO Activar e implementar botón de pausa de viaje
+    //public void pausar() {
+    //    Context context = getApplicationContext();
+    //    CharSequence text = "clicked button Pausar";
+    //    int duration = Toast.LENGTH_SHORT;
+    //
+    //    Log.d(TAG, "clicked button Pausar");
+    //    Toast.makeText(context, text, duration).show();
+    //}
 
     public void detener() {
         Context context = getApplicationContext();

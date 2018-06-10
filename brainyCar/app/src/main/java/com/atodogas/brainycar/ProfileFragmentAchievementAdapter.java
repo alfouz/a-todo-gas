@@ -9,7 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.atodogas.brainycar.DTOs.AchievementDTO;
+import com.atodogas.brainycar.DTOs.TripDTO;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by belenvb on 21/04/2018.
@@ -17,10 +21,16 @@ import java.util.ArrayList;
 
 public class ProfileFragmentAchievementAdapter extends RecyclerView.Adapter<ProfileFragmentAchievementAdapter.MyViewHolder> {
 
-    public ArrayList<AchievementEntity> achievements;
+    public ArrayList<AchievementDTO> achievements;
+    private final ProfileFragmentAchievementAdapter.OnItemClickListener listener;
 
-    public ProfileFragmentAchievementAdapter(ArrayList<AchievementEntity> achievements){
+    public interface OnItemClickListener {
+        void onItemClick(AchievementDTO item);
+    }
+
+    public ProfileFragmentAchievementAdapter(ArrayList<AchievementDTO> achievements, ProfileFragmentAchievementAdapter.OnItemClickListener listener){
         this.achievements= achievements;
+        this.listener = listener;
     }
 
     @Override
@@ -52,6 +62,7 @@ public class ProfileFragmentAchievementAdapter extends RecyclerView.Adapter<Prof
                 break;
         }
 
+        holder.bind(achievements.get(position), listener);
     }
 
 
@@ -64,6 +75,8 @@ public class ProfileFragmentAchievementAdapter extends RecyclerView.Adapter<Prof
         private CardView achievementCardView;
         private TextView achievementTitle, achievementDescription, achievementLevel;
         private ImageView achievementIcon;
+        private AchievementDTO achievement;
+
         public MyViewHolder(View itemView) {
             super(itemView);
             achievementCardView = itemView.findViewById(R.id.achievementCardView);
@@ -71,6 +84,15 @@ public class ProfileFragmentAchievementAdapter extends RecyclerView.Adapter<Prof
             achievementDescription = itemView.findViewById(R.id.achievementDescription);
             achievementLevel = itemView.findViewById(R.id.achievementLevel);
             achievementIcon = itemView.findViewById(R.id.achievedIcon);
+        }
+
+        public void bind(final AchievementDTO item, final ProfileFragmentAchievementAdapter.OnItemClickListener listener) {
+            achievement = item;
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    listener.onItemClick(achievement);
+                }
+            });
         }
     }
 }

@@ -1,8 +1,12 @@
 package com.atodogas.brainycar.AsyncTasks;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
+import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.atodogas.brainycar.Database.AppDatabase;
 import com.atodogas.brainycar.Database.Entities.CarEntity;
@@ -15,7 +19,7 @@ public class CheckUserAndInsertBD extends AsyncTask<String, Void, UserEntity> {
 
     public CheckUserAndInsertBD(CallbackInterface callback, Context context) {
         this.callback = callback;
-        this.db = Room.databaseBuilder(context, AppDatabase.class, "brainyCar").build();
+        this.db = AppDatabase.getInstance(context);
     }
 
     @Override
@@ -36,9 +40,9 @@ public class CheckUserAndInsertBD extends AsyncTask<String, Void, UserEntity> {
             car.setIdUser(user.getId());
             car.setFuelType(0);
             car.setModel("VW GOLFO TDI 2011");
-            car.setKms(20000);
-            car.setAVGFuelConsumption(6.2f);
-            car.setAVGSpeed(36.5f);
+            car.setKms(0);
+            car.setAVGFuelConsumption(0);
+            car.setAVGSpeed(0);
             int idCar = (int) db.carDao().insertCar(car);
         }
 

@@ -18,7 +18,7 @@ public class GetCarBD extends AsyncTask<Integer, Void, CarDTO> {
 
     public GetCarBD(CallbackInterface callback, Context context) {
         this.callback = callback;
-        this.db = Room.databaseBuilder(context, AppDatabase.class, "brainyCar").build();
+        this.db = AppDatabase.getInstance(context);
     }
 
     @Override

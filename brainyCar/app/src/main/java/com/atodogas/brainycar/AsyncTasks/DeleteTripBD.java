@@ -18,7 +18,7 @@ public class DeleteTripBD extends AsyncTask<Integer, Void, Void> {
 
     public DeleteTripBD(Context context) {
         this.context = context;
-        this.db = Room.databaseBuilder(context, AppDatabase.class, "brainyCar").build();
+        this.db = AppDatabase.getInstance(context);
     }
 
     @Override

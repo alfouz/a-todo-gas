@@ -102,6 +102,8 @@ public class OnboardingActivity extends AppCompatActivity {
         prefManager.setFirstTimeLaunch(false);
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("idUser", getIntent().getIntExtra("idUser", - 1));
+        intent.putExtra("personName", getIntent().getStringExtra("personName"));
+        intent.putExtra("personPhotoUrl", getIntent().getStringExtra("personPhotoUrl"));
         startActivity(intent);
         finish();
     }

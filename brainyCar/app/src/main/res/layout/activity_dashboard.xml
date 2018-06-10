@@ -64,13 +64,13 @@
                 app:speedLimitTextColor="@color/colorPrimary"
                 app:subDivisionCircleColor="@color/colorTransparent"
                 app:divisionCircleColor="@color/colorTransparent"
-                app:dialSpeedAlertColor="@color/colorRed"
+                app:dialSpeedAlertColor="@color/colorTransparent"
                 app:speedDialRingInnerPadding="-3dp"
                 app:unitOfMeasurement="@string/rpm"
                 app:speedTextSize="50dp"
                 app:unitOfMeasurementTextSize="12dp"
                 app:speedLimitTextSize="14dp"
-                app:speed_limit="2"
+                app:speed_limit="2000"
                 app:maxSpeed="8"/>
 
             <in.unicodelabs.kdgaugeview.KdGaugeView
@@ -90,13 +90,13 @@
                 app:speedLimitTextColor="@color/colorPrimary"
                 app:subDivisionCircleColor="@color/colorTransparent"
                 app:divisionCircleColor="@color/colorTransparent"
-                app:dialSpeedAlertColor="@color/colorRed"
+                app:dialSpeedAlertColor="@color/colorTransparent"
                 app:speedDialRingInnerPadding="-3dp"
                 app:unitOfMeasurement="@string/kmHour"
                 app:speedTextSize="60dp"
                 app:unitOfMeasurementTextSize="14dp"
                 app:speedLimitTextSize="14dp"
-                app:speed_limit="130"
+                app:speed_limit="1300"
                 app:maxSpeed="250"/>
 
         </LinearLayout>
@@ -105,8 +105,8 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:layout_marginLeft="40dp"
-            android:layout_marginStart="40dp">
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp">
 
             <ImageView
                 android:id="@+id/engineTempIcon"

@@ -38,11 +38,11 @@
             android:textColor="@color/colorPrimaryExtraDark"
             android:textSize="12sp" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/lastTripLayout"
+        <include layout="@layout/fragment_historic_trip_cardview"
+            android:id="@+id/lastTrip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/lastTripTitle"/>
+            android:layout_below="@id/lastTripTitle" />
     </RelativeLayout>
 
 

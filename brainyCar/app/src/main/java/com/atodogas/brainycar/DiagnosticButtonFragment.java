@@ -1,11 +1,9 @@
 package com.atodogas.brainycar;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 import com.atodogas.brainycar.AsyncTasks.CallbackInterface;
 import com.atodogas.brainycar.AsyncTasks.ConnectOBD;
 import com.atodogas.brainycar.OBD.OBDAdapter;
-import com.atodogas.brainycar.OBD.OBDDatabase;
 import com.atodogas.brainycar.OBD.OBDMock;
 
 import java.io.IOException;
@@ -34,6 +31,7 @@ public class DiagnosticButtonFragment extends Fragment implements View.OnClickLi
     private TextView loadingTextView;
     private long startMilis;
     private ConnectOBD connectOBD;
+    private Button diagnosticButton;
 
     public DiagnosticButtonFragment() {
         // Required empty public constructor
@@ -51,7 +49,7 @@ public class DiagnosticButtonFragment extends Fragment implements View.OnClickLi
         connectOBD = new ConnectOBD(this);
 
         // Setting buttons for graph
-        Button diagnosticButton = root.findViewById(R.id.diagnosticButton);
+        diagnosticButton = root.findViewById(R.id.diagnosticButton);
         diagnosticButton.setOnClickListener(this);
 
         // Inflate the layout for this fragment
@@ -61,6 +59,7 @@ public class DiagnosticButtonFragment extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View v) {
         v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+        diagnosticButton.setVisibility(View.GONE);
         loadingLayout.setVisibility(View.VISIBLE);
         loadingTextView.setText(getString(R.string.loading_obteniendo_codigos_error));
         startMilis = System.currentTimeMillis();

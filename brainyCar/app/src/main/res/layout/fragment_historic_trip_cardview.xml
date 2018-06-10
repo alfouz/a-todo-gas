@@ -87,8 +87,8 @@
             android:layout_above="@id/endPlace"
             android:layout_toRightOf="@id/kmText"
             android:layout_toEndOf="@id/kmText"
-            android:layout_marginLeft="25dp"
-            android:layout_marginStart="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:contentDescription="@string/hourglassIconDescription"
             card_view:srcCompat="@drawable/ic_hourglass" />
 
@@ -96,8 +96,6 @@
             android:id="@+id/tripDashboardIcon"
             android:layout_width="15sp"
             android:layout_height="15sp"
-            android:layout_alignLeft="@id/startPlace"
-            android:layout_alignStart="@id/startPlace"
             android:layout_below="@id/startPlace"
             android:layout_above="@id/endPlace"
             android:contentDescription="@string/dashboardIconDescription"
@@ -111,8 +109,8 @@
             android:layout_above="@id/endPlace"
             android:layout_toRightOf="@id/durationText"
             android:layout_toEndOf="@id/durationText"
-            android:layout_marginLeft="25dp"
-            android:layout_marginStart="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:contentDescription="@string/gasolineIconDescription"
             card_view:srcCompat="@drawable/ic_gasoline_pump" />
 
@@ -124,8 +122,8 @@
             android:layout_above="@id/endPlace"
             android:layout_toRightOf="@id/gasolineText"
             android:layout_toEndOf="@id/gasolineText"
-            android:layout_marginLeft="25dp"
-            android:layout_marginStart="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:contentDescription="@string/pointsIconDescription"
             card_view:srcCompat="@drawable/ic_star" />
 

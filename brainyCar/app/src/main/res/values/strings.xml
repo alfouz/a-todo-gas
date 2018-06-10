@@ -194,6 +194,11 @@
     <string name="bluetoothOn">Bluetooth conectado</string>
     <string name="bluetoothOff">Bluetooth desconectado</string>
 
+
+    <!-- DASHBOARD ACITIVITY -->
+    <string name="bluetoothLoading">Conectando bluetooth</string>
+    <string name="obdLoading">Conectando a OBD</string>
+
     <!-- DIAGNOSTIC FRAGMENT -->
     <string name="diagnosticButton">I N I C I A R</string>
     <string name="healthResultsTitle">Diagnóstico</string>
@@ -207,7 +212,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="loading_obteniendo_codigos_error">Obteniendo Códigos de Error</string>
+    <string name="loading_obteniendo_codigos_error">Realizando diagnóstico</string>
     <string name="error_conectar_obd">Error al conectar con OBD</string>
     <string name="error_obtener_datos_obd">Error al obtener los datos</string>
 

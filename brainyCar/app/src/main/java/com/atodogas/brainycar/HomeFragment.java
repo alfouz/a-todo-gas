@@ -1,14 +1,9 @@
 package com.atodogas.brainycar;
 
 
-import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
@@ -19,19 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atodogas.brainycar.AsyncTasks.CallbackInterface;
-import com.atodogas.brainycar.AsyncTasks.GetAllTripsBD;
 import com.atodogas.brainycar.AsyncTasks.GetCarBD;
 import com.atodogas.brainycar.AsyncTasks.GetLastTripBD;
 import com.atodogas.brainycar.DTOs.CarDTO;
 import com.atodogas.brainycar.DTOs.TripDTO;
 
-import java.sql.Date;
 import java.sql.Time;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Set;
 
 
 /**
@@ -40,17 +32,12 @@ import java.util.Set;
 public class HomeFragment extends Fragment implements View.OnClickListener, CallbackInterface<TripDTO> {
 
     private static final String TAG = HomeFragment.class.getSimpleName();
-    private static final int REQUEST_ENABLE_BT = 1;
     private MainActivity mainActivity;
-    private String bluetoothState;
-
-    private RecyclerView lastTripLayout;
     
-    private TextView dashboardValueElement;
-    private TextView gasolineAVGValueElement;
-    private TextView speedAVGValueElement;
-    private TextView gasolineValueElement;
-    private TextView batteryValueElement;
+    private TextView dashboardValueElement, gasolineAVGValueElement, speedAVGValueElement,
+            gasolineValueElement, batteryValueElement, lastTripDate, lastTripStartTime,
+            lastTripStartPlace, lastTripEndTime, lastTripEndPlace, lastTripKmText,
+            lastTripDurationText, lastTripGasolineText, lastTripPointsText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,38 +49,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Call
 
         Button driveButton = view.findViewById(R.id.driveButton);
         driveButton.setOnClickListener(this);
-        lastTripLayout = view.findViewById(R.id.lastTripLayout);
-        lastTripLayout.setOnClickListener(this);
 
-        //**************************************BLUETOOTH**************************************
-        //we see if the device has bluetooth
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter == null) {
-            // Device does not support Bluetooth
-            bluetoothState = getResources().getString(R.string.bluetoothUnable);
-        } else {
-            // We see if it is enabled and if not we enable it
-            if (!mBluetoothAdapter.isEnabled()) {
-                bluetoothState = getResources().getString(R.string.bluetoothConecting);
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            } else {
-                bluetoothState = getResources().getString(R.string.bluetoothOn);
-            }
-
-            //TODO probando a mostrar dispositivos sincronizados
-            Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-            // If there are paired devices
-            if (pairedDevices.size() > 0) {
-                // Loop through paired devices
-                Log.d(TAG, "Dispositivos sincronizados por bluetooth:");
-                for (BluetoothDevice device : pairedDevices) {
-                    // Add the name and address to an array adapter to show in a ListView
-                    Log.d(TAG, device.getName() + "\n" + device.getAddress());
-                }
-            }
-        }
-        mainActivity.changeActionBarTitle(bluetoothState);
+        View lastTrip = view.findViewById(R.id.lastTrip);
+        lastTrip.setOnClickListener(this);
 
 
         //**************************************DATA**************************************
@@ -116,43 +74,52 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Call
             }
         }, getContext()).execute(user);
 
+        //LAST TRIP INFO
+        lastTripDate = view.findViewById(R.id.date);
+        lastTripDate.setText("--/--/----");
+
+        lastTripStartTime = view.findViewById(R.id.startTime);
+        lastTripStartTime.setText("--:-- h");
+
+        lastTripStartPlace = view.findViewById(R.id.startPlace);
+        lastTripStartPlace.setText("");
+
+        lastTripEndTime = view.findViewById(R.id.endTime);
+        lastTripEndTime.setText("--:-- h");
+
+        lastTripEndPlace = view.findViewById(R.id.endPlace);
+        lastTripEndPlace.setText("");
+
+        lastTripKmText = view.findViewById(R.id.kmText);
+        lastTripKmText.setText("- km");
+
+        lastTripDurationText = view.findViewById(R.id.durationText);
+        lastTripDurationText.setText("--:-- h");
+
+        lastTripGasolineText = view.findViewById(R.id.gasolineText);
+        lastTripGasolineText.setText("- l/100km");
+
+        lastTripPointsText = view.findViewById(R.id.pointsText);
+        lastTripPointsText.setText("- km/h");
+
+
         //GENERAL INFO
         dashboardValueElement = view.findViewById(R.id.dashboardValue);
-        dashboardValueElement.setText("0 km");
+        dashboardValueElement.setText("- km");
 
         gasolineAVGValueElement = view.findViewById(R.id.gasolineAVGValue);
-        gasolineAVGValueElement.setText("0 l/100km");
+        gasolineAVGValueElement.setText("- l/100km");
 
         speedAVGValueElement = view.findViewById(R.id.speedAVGValue);
-        speedAVGValueElement.setText("0 km/h");
+        speedAVGValueElement.setText("- km/h");
 
         gasolineValueElement = view.findViewById(R.id.gasolineValue);
-        gasolineValueElement.setText("0 l");
+        gasolineValueElement.setText("- l");
 
         batteryValueElement = view.findViewById(R.id.batteryValue);
-        batteryValueElement.setText("0 V");
+        batteryValueElement.setText("- V");
 
         return view;
-    }
-
-    // Results bluetooth request
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case REQUEST_ENABLE_BT:
-                switch(resultCode) {
-                    case Activity.RESULT_OK:
-                        bluetoothState = getResources().getString(R.string.bluetoothOn);
-                        break;
-                    case Activity.RESULT_CANCELED:
-                        bluetoothState = getResources().getString(R.string.bluetoothOff);
-                }
-                mainActivity.changeActionBarTitle(bluetoothState);
-                break;
-            default:
-                super.onActivityResult(requestCode, resultCode, data);
-                break;
-        }
     }
 
     @Override
@@ -162,7 +129,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Call
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 drive();
                 break;
-            case R.id.lastTripLayout:
+            case R.id.lastTrip:
+                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 tripDetail();
                 break;
         }
@@ -187,42 +155,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Call
     }
 
     @Override
-    public void doCallback(TripDTO tripDTO) {
-        ArrayList<TripDTO> trips = new ArrayList<TripDTO>();
-        TripDTO trip = tripDTO;
+    public void doCallback(TripDTO trip) {
 
-        if(trip==null){
-            TripDTO emptyTrip = new TripDTO();
-            emptyTrip.setStartDate(Calendar.getInstance().getTime());
-            emptyTrip.setEndDate(Calendar.getInstance().getTime());
-            emptyTrip.setEndPlace("Sin datos");
-            emptyTrip.setFuelConsumptionAVG(0);
-            emptyTrip.setHours(0);
-            emptyTrip.setMinutes(0);
-            emptyTrip.setId(-1);
-            emptyTrip.setKms(0);
-            emptyTrip.setSpeedAVG(0);
-            emptyTrip.setStartPlace("Sin datos");
-            trips.add(emptyTrip);
-        }else{
-            trips.add(trip);
+        if(trip!=null) {
+            SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yy");
+            SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("H:mm");
+            lastTripDate.setText(DATE_FORMAT.format(trip.getStartDate()).toString());
+            lastTripStartTime.setText(TIME_FORMAT.format(trip.getStartDate()).toString() + " h");
+            lastTripEndTime.setText(TIME_FORMAT.format(trip.getEndDate()).toString() + " h");
+            lastTripStartPlace.setText(trip.getStartPlace());
+            lastTripEndPlace.setText(trip.getEndPlace());
+            lastTripKmText.setText(String.format("%.2f", trip.getKms()) + " km");
+            Time duration = new Time(trip.getEndDate().getTime() - trip.getStartDate().getTime());
+            lastTripDurationText.setText(TIME_FORMAT.format(duration).toString() + " h");
+            lastTripGasolineText.setText(String.format("%.2f", trip.getFuelConsumptionAVG()) + " l/km");
+            lastTripPointsText.setText(String.format("%.2f", trip.getSpeedAVG()) + " km/h");
         }
-
-        HistoricFragmentTripAdapter adapter = new HistoricFragmentTripAdapter(trips, new HistoricFragmentTripAdapter.OnItemClickListener() {
-            @Override public void onItemClick(TripDTO item) {
-                Toast.makeText(getContext(), item.getStartPlace() + " - " + item.getEndPlace(), Toast.LENGTH_LONG).show();
-            }
-        });
-        lastTripLayout.setHasFixedSize(true);
-        lastTripLayout.setAdapter(adapter);
-        LinearLayoutManager llm = new LinearLayoutManager(getContext()) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        lastTripLayout.setLayoutManager(llm);
     }
 
     public void updateGeneralDataCar(CarDTO carDTO){

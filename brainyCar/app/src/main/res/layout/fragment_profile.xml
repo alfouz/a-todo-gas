@@ -11,7 +11,8 @@
         <TabHost
             android:id="@+id/tabHostProfile"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:hapticFeedbackEnabled="true">
 
             <LinearLayout
                 android:layout_width="match_parent"

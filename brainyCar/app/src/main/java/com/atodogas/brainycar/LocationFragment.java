@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.atodogas.brainycar.Utils.ColoredPoint;
 import com.atodogas.brainycar.AsyncTasks.CallbackInterface;
 import com.atodogas.brainycar.AsyncTasks.GetCarBD;
 import com.atodogas.brainycar.DTOs.CarDTO;
@@ -420,16 +421,6 @@ public class LocationFragment extends Fragment {
         }
     }
 
-    //Auxiliar class to get points coloured
-    class ColoredPoint {
-        public LatLng coords;
-        public int color;
-
-        public ColoredPoint(LatLng coords, int color) {
-            this.coords = coords;
-            this.color = color;
-        }
-    }
 
 }
 

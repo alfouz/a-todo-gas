@@ -179,11 +179,10 @@ public class HistoricFragment extends Fragment implements View.OnClickListener, 
         }
         HistoricFragmentTripAdapter adapter = new HistoricFragmentTripAdapter(trips, new HistoricFragmentTripAdapter.OnItemClickListener() {
             @Override public void onItemClick(TripDTO item) {
-                Toast.makeText(getContext(), item.getStartPlace() + " - " + item.getEndPlace(), Toast.LENGTH_LONG).show();
 
-                //Intent intent = new Intent(getActivity(), DashboardActivity.class);
-                //intent.putExtra("idUser", item);
-                //startActivity(intent);
+                Intent intent = new Intent(getActivity(), TripDetailsActivity.class);
+                intent.putExtra("idTrip", item.getId());
+                startActivity(intent);
             }
         });
 

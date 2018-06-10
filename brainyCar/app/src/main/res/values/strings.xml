@@ -253,6 +253,9 @@
     <string name="selectDate">Seleccionar Fecha</string>
     <string name="noChartData">Datos de la gráfica no disponibles</string>
     <string name="noData">Sin Datos</string>
+    <string name="startTrip">Inicio del trayecto: </string>
+    <string name="endTrip">Final del trayecto: </string>
+    <string name="tripDetails">Detalles de Viaje </string>
 
 
     <!-- PROFILE FRAGMENT -->

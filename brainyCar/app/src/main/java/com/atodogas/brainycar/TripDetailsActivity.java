@@ -107,17 +107,100 @@ public class TripDetailsActivity extends AppCompatActivity implements CallbackIn
         mMapView.onLowMemory();
     }
 
-    //TODO Using RPM, but need more data
-    public int getSegmentColorFromMetric(float metric) {
+    //Utilizando métricas que deben ser optimizadas
+    public int getSegmentColorFromMetric(float rpm, float speed) {
+        //Métrica planteada pero NO usada
+        // rpm/speed    20 | 40 | 60 | 80 | 100 | 120 | 140 | 160
+        // 1500         30   60   90   120  150   180   210   240
+        // 2500         50   100  150  200  250   300   350   400
+        // 3500         70   140  210  280  350   420   490   560
+        // 4500         90   180  270  360  450   540   630   720
+        // 5500         110  220  330  440  550   660   770   880
+        // 6500         130  260  390  510  640   770   900   1130
+        // 7500         150  300  450  600  750   900   1050  1300
+        // 8500         170  340  510  680  850   1020  1190  1360
+
+        //Usando esta métrica
+        //rpm/speed     20-60   60-100   100-120   120-160   160-inf
+        // <2500        verde   verde    verde     amarillo  rojo
+        // <4000        verde   verde   amarillo  rojo      negro
+        // <6000        amar    amar    rojo      negro     negro
+        // +6000        rojo    rojo    rojo      negro     negro
+
         int color;
-        if (metric < 2500) {
-            color = Color.GREEN;
-        } else if (metric < 4000) {
-            color = Color.YELLOW;
-        } else if (metric < 6000) {
-            color = Color.RED;
+
+        if (rpm < 2500) {
+            if(speed<60){
+                color = Color.GREEN;
+            }else{
+                if(speed<100){
+                    color = Color.GREEN;
+                }else{
+                    if(speed<120){
+                        color = Color.GREEN;
+                    }else{
+                        if(speed<160){
+                            color = Color.YELLOW;
+                        }else{
+                            color = Color.RED;
+                        }
+                    }
+                }
+            }
+        } else if (rpm < 4000) {
+            if(speed<60){
+                color = Color.GREEN;
+            }else{
+                if(speed<100){
+                    color = Color.GREEN;
+                }else{
+                    if(speed<120){
+                        color = Color.YELLOW;
+                    }else{
+                        if(speed<160){
+                            color = Color.RED;
+                        }else{
+                            color = Color.BLACK;
+                        }
+                    }
+                }
+            }
+        } else if (rpm < 6000) {
+            if(speed<60){
+                color = Color.YELLOW;
+            }else{
+                if(speed<100){
+                    color = Color.YELLOW;
+                }else{
+                    if(speed<120){
+                        color = Color.RED;
+                    }else{
+                        if(speed<160){
+                            color = Color.BLACK;
+                        }else{
+                            color = Color.BLACK;
+                        }
+                    }
+                }
+            }
         } else {
-            color = Color.BLACK;
+            if(speed<60){
+                color = Color.RED;
+            }else{
+                if(speed<100){
+                    color = Color.RED;
+                }else{
+                    if(speed<120){
+                        color = Color.RED;
+                    }else{
+                        if(speed<160){
+                            color = Color.BLACK;
+                        }else{
+                            color = Color.BLACK;
+                        }
+                    }
+                }
+            }
         }
         return color;
     }
@@ -256,14 +339,14 @@ public class TripDetailsActivity extends AppCompatActivity implements CallbackIn
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
 
-                googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
                 List<TripDataDTO> data = tripFinal.getTripData();
 
                 List<ColoredPoint> sourcePoints = new ArrayList<>();
                 for(TripDataDTO td : data){
 
-                    sourcePoints.add(new ColoredPoint(new LatLng(td.getLatitude(),td.getLongitude()), getSegmentColorFromMetric(td.getRPM())));
+                    sourcePoints.add(new ColoredPoint(new LatLng(td.getLatitude(),td.getLongitude()), getSegmentColorFromMetric(td.getRPM(), td.getSpeed())));
                 }
                 drawPathPolylineColoured(sourcePoints);
 
@@ -277,7 +360,7 @@ public class TripDetailsActivity extends AppCompatActivity implements CallbackIn
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    googleMap.addMarker(new MarkerOptions().position(startTrip).title(getString(R.string.startTrip)).snippet((addressStart != null) ? addressStart.getPostalCode() : "none"));
+                    googleMap.addMarker(new MarkerOptions().position(startTrip).title(getString(R.string.startTrip)).snippet((addressStart != null) ? addressStart.getAddressLine(0) : "none"));
 
                     LatLng endTrip = new LatLng(data.get(data.size() - 1).getLatitude(), data.get(data.size() - 1).getLongitude());
                     Address addressEnd = null;
@@ -286,7 +369,7 @@ public class TripDetailsActivity extends AppCompatActivity implements CallbackIn
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    googleMap.addMarker(new MarkerOptions().position(endTrip).title(getString(R.string.endTrip)).snippet((addressEnd != null) ? addressEnd.getPostalCode() : "none"));
+                    googleMap.addMarker(new MarkerOptions().position(endTrip).title(getString(R.string.endTrip)).snippet((addressEnd != null) ? addressEnd.getAddressLine(0) : "none"));
 
 
                 // For zooming automatically to the location of the marker

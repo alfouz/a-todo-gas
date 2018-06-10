@@ -31,31 +31,13 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         Log.d(TAG, "Escucha de cambios");
         switch(key){
-            case "bluetoothEnabled":
-                if(sharedPreferences.getBoolean(key, false)){
-                    Log.d(key, "true");
-                }else{
-                    Log.d(key, "false");
-                }
-                break;
-            case "locationEnabled":
-                if(sharedPreferences.getBoolean(key, false)){
-                    Log.d(key, "true");
-                }else{
-                    Log.d(key, "false");
-                }
+            case "carName":
+                Log.d(key, sharedPreferences.getString(key,""));
 
                 break;
             case "fuelType":
                 Log.d(key, sharedPreferences.getString(key,""));
 
-                break;
-            case "obdAvailable":
-                if(sharedPreferences.getBoolean(key, false)){
-                    Log.d(key, "true");
-                }else{
-                    Log.d(key, "false");
-                }
                 break;
         }
     }

@@ -2,7 +2,9 @@ package com.atodogas.brainycar;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
@@ -56,8 +58,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Call
 
         //**************************************DATA**************************************
         // CAR BRAND
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         TextView cardBrandElement = view.findViewById(R.id.carBrand);
-        cardBrandElement.setText("VW Golf TDI 2011");
+        cardBrandElement.setText(prefs.getString("carName", ""));
 
         int user = getActivity().getIntent().getIntExtra("idUser", -1);
         //LAST TRIP INFO

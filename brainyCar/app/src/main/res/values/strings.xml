@@ -312,4 +312,6 @@
     <!-- TRACKING SERVICE -->
     <string name="trackingNotificationTitle">Trayecto en curso</string>
     <string name="trackingNotificationSubtitle">El dispositivo está recopilando datos de conducción</string>
+    <string name="carName">Nombre del vehículo</string>
+    <string name="defaultCarName">Tu vehículo</string>
 </resources>

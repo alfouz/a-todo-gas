@@ -1,28 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/permissionCategory">
-
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="bluetoothEnabled"
-            android:title="@string/bluetoothSetting" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="locationEnabled"
-            android:title="@string/locationSetting" />
-    </PreferenceCategory>
     <PreferenceCategory android:title="@string/carCategory">
-
+        <EditTextPreference
+            android:defaultValue="@string/defaultCarName"
+            android:key="carName"
+            android:title="@string/carName" />
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/fuelType"
             android:entryValues="@array/fuelType"
             android:key="fuelType"
             android:title="@string/fuelSetting" />
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="obdAvailable"
-            android:title="@string/obdSetting" />
     </PreferenceCategory>
 </PreferenceScreen>

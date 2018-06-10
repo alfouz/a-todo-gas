@@ -198,6 +198,13 @@
     <!-- DASHBOARD ACITIVITY -->
     <string name="bluetoothLoading">Conectando bluetooth</string>
     <string name="obdLoading">Conectando a OBD</string>
+    <string name="stop">Detener</string>
+    <string name="rpm">x1000 rpm</string>
+    <string name="kmHour">km/h</string>
+    <string name="engineTempTitle">Temperatura motor:</string>
+    <string name="timeTitle">Tiempo transcurrido:</string>
+    <string name="dash">-</string>
+    <string name="engineTempIconDescription">Este icono representa la temperatura del motor del coche</string>
 
     <!-- DIAGNOSTIC FRAGMENT -->
     <string name="diagnosticButton">I N I C I A R</string>

@@ -25,20 +25,18 @@ import com.atodogas.brainycar.Services.TrackingService;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import in.unicodelabs.kdgaugeview.KdGaugeView;
+
 public class DashboardActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = DashboardActivity.class.getSimpleName();
 
-    private TextView temperaturaTextView;
-    private TextView bateriaTextView;
-    private TextView gasolinaTextView;
-    private TextView kmRecorridosTextView;
-    private TextView tiempoTranscurridoTextView;
-    private TextView revolucionesTextView;
-    private TextView velocidadTextView;
+    private TextView temperaturaTextView, bateriaTextView, gasolinaTextView, kmRecorridosTextView,
+            tiempoTranscurridoTextView;
+    private KdGaugeView revolucionesTextView, velocidadTextView;
 
     private LocalBroadcastManager localBroadcastManager;
-    private LinearLayout loadingLayout;
+    private LinearLayout loadingLayout, dashboardDataLayout;
     private TextView dashboardLoadingTextView;
 
     private String bluetoothState;
@@ -60,13 +58,15 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         gasolinaTextView = (TextView) findViewById(R.id.gasolinaTextView);
         kmRecorridosTextView = (TextView) findViewById(R.id.kmRecorridosTextView);
         tiempoTranscurridoTextView = findViewById(R.id.tiempoTranscurridoTextView);
-        revolucionesTextView = (TextView) findViewById(R.id.revolucionesTextView);
-        velocidadTextView = (TextView) findViewById(R.id.velocidadTextView);
+        revolucionesTextView = (KdGaugeView) findViewById(R.id.rpmMeter);
+        velocidadTextView = (KdGaugeView) findViewById(R.id.kmHourMeter);
         dashboardLoadingTextView = (TextView) findViewById(R.id.dashboardLoadingTextView);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         loadingLayout = findViewById(R.id.loadingLayout);
         loadingLayout.setVisibility(View.VISIBLE);
+        dashboardDataLayout = findViewById(R.id.dashboardDataLayout);
+        dashboardDataLayout.setVisibility(View.INVISIBLE);
 
         View detenerButton = findViewById(R.id.detenerButton);
         detenerButton.setOnClickListener(this);
@@ -166,11 +166,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         tiempoTranscurridoTextView.setText(dashboardDTO.hours + " h " + dashboardDTO.minutes + " m " + dashboardDTO.seconds + " s");
 
         if(dashboardDTO.rpm != -1){
-            revolucionesTextView.setText("" + dashboardDTO.rpm);
+            revolucionesTextView.setSpeed(dashboardDTO.rpm/1000);
         }
 
         if(dashboardDTO.speed != -1){
-            velocidadTextView.setText("" + dashboardDTO.speed);
+            velocidadTextView.setSpeed(dashboardDTO.speed);
         }
     }
 
@@ -201,10 +201,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             case REQUEST_ENABLE_BT:
                 if (resultCode == Activity.RESULT_OK) {
                     dashboardLoadingTextView.setText(getResources().getString(R.string.obdLoading));
-                    localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.DASHBOARD_DTO));
-                } else {
-                    localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.OBD_NOT_CONNECTED));
                 }
+                
+                // TODO esto se hace igual tnato si el bluetooth se conecta como si no?
+                localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.DASHBOARD_DTO));
+                localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.OBD_NOT_CONNECTED));
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
@@ -231,6 +232,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
             if(loadingLayout.getVisibility() == View.VISIBLE){
                 loadingLayout.setVisibility(View.INVISIBLE);
+                dashboardDataLayout.setVisibility(View.VISIBLE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             }
         }

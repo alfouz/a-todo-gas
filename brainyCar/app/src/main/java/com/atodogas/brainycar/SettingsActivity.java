@@ -29,7 +29,11 @@ public class SettingsActivity extends AppCompatActivity {
         myToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("idUser", getIntent().getIntExtra("idUser", - 1));
+                intent.putExtra("personName", getIntent().getStringExtra("personName"));
+                intent.putExtra("personPhotoUrl", getIntent().getStringExtra("personPhotoUrl"));
+                startActivity(intent);
             }
         });
 

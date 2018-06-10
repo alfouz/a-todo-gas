@@ -157,6 +157,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 //Pasamos a la activity de ajustes
                 intent = new Intent(this, SettingsActivity.class);
+                intent.putExtra("idUser", getIntent().getIntExtra("idUser", - 1));
+                intent.putExtra("personName", getIntent().getStringExtra("personName"));
+                intent.putExtra("personPhotoUrl", getIntent().getStringExtra("personPhotoUrl"));
                 startActivity(intent);
                 return true;
             case R.id.action_about:

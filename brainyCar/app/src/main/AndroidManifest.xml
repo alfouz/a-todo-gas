@@ -82,7 +82,10 @@
             android:name=".Services.OBDService"
             android:exported="false" />
 
-        <activity android:name=".TripDetailsActivity"></activity>
+        <activity android:name=".TripDetailsActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

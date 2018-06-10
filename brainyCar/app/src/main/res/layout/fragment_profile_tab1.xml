@@ -77,27 +77,23 @@
             android:id="@+id/numberAchievementsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="14dp"
-            android:layout_marginRight="14dp"
-            android:layout_toLeftOf="@+id/numberAchievementsText"
-            android:layout_toStartOf="@+id/numberAchievementsText"
-            android:text="@string/numberAchievementsTitle"
+            android:layout_below="@id/numberRankingTitle"
+            android:layout_marginTop="5dp"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimaryExtraDark"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:text="@string/numberAchievementsTitle"/>
 
         <TextView
             android:id="@+id/numberAchievementsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="135dp"
-            android:layout_marginRight="135dp"
-            android:text="- de -"
-            android:textColor="@color/colorPrimary" />
+            android:layout_toRightOf="@id/numberAchievementsTitle"
+            android:layout_alignBaseline="@id/numberAchievementsTitle"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/colorPrimary"
+            android:text="- de -"/>
     </RelativeLayout>
 
     <RelativeLayout

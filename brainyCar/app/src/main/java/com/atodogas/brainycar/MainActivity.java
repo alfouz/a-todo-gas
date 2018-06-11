@@ -45,11 +45,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         // Setting action bar
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-<<<<<<< HEAD
 
-=======
         changeActionBarTitle(getResources().getString(R.string.home));
->>>>>>> ad29ebdb73b87713ced514bb7ed0ca137cbf2fbc
+
     }
 
     public void changeActionBarTitle(String newTitle) {

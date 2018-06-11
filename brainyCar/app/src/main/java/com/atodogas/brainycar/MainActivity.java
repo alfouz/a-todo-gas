@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         // Setting action bar
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+
     }
 
     public void changeActionBarTitle(String newTitle) {
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private boolean loadFragment(Fragment fragment) {
         //switching fragment
+
         if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             actualFragmentMenu = fragment;
             return true;
         }
+
         return false;
     }
 

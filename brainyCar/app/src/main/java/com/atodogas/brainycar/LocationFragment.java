@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -167,6 +168,7 @@ public class LocationFragment extends Fragment {
         fuelStationsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getView().performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 getFuelStationsAPI();
             }
         });
@@ -175,6 +177,7 @@ public class LocationFragment extends Fragment {
         carLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getView().performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 setLastCarPosition(car);
             }
         });

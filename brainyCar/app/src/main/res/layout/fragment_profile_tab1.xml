@@ -30,68 +30,22 @@
         android:padding="15dp">
 
         <TextView
-            android:id="@+id/numberPointsTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAllCaps="true"
-            android:textColor="@color/colorPrimaryExtraDark"
-            android:textStyle="bold"
-            android:visibility="gone"
-            android:text="@string/numberPointsTitle"/>
-
-        <TextView
-            android:id="@+id/numberPointsText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/numberPointsTitle"
-            android:layout_alignBaseline="@id/numberPointsTitle"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:visibility="gone"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:id="@+id/numberRankingTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/numberPointsTitle"
-            android:layout_marginTop="5dp"
-            android:textAllCaps="true"
-            android:textColor="@color/colorPrimaryExtraDark"
-            android:textStyle="bold"
-            android:visibility="gone"
-            android:text="@string/numberRankingTitle"/>
-
-        <TextView
-            android:id="@+id/numberRankingText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/numberRankingTitle"
-            android:layout_alignBaseline="@id/numberRankingTitle"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:visibility="gone"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
             android:id="@+id/numberAchievementsTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/numberRankingTitle"
+            android:gravity="center"
             android:layout_marginTop="5dp"
-            android:textAllCaps="true"
             android:textColor="@color/colorPrimaryExtraDark"
             android:textStyle="bold"
             android:text="@string/numberAchievementsTitle"/>
 
         <TextView
             android:id="@+id/numberAchievementsText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/numberAchievementsTitle"
-            android:layout_alignBaseline="@id/numberAchievementsTitle"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:layout_below="@id/numberAchievementsTitle"
+            android:layout_marginTop="5dp"
             android:textColor="@color/colorPrimary"
             android:text="- de -"/>
     </RelativeLayout>

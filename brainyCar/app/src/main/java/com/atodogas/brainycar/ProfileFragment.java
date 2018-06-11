@@ -3,7 +3,6 @@ package com.atodogas.brainycar;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -12,31 +11,23 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
 
 import android.content.Intent;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.atodogas.brainycar.AsyncTasks.CallbackInterface;
 import com.atodogas.brainycar.AsyncTasks.GetAllAchievementsBD;
 import com.atodogas.brainycar.AsyncTasks.GetImageFromUrl;
 import com.atodogas.brainycar.DTOs.AchievementDTO;
-import com.atodogas.brainycar.DTOs.TripDTO;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,21 +72,11 @@ public class ProfileFragment extends Fragment {
 
         summaryTab();
 
-
-        // TODO hay que adaptar el botón de share a cada logro
-        /*Button btnCompartir = root.findViewById(R.id.share_button);
-        btnCompartir.setOnClickListener(this);*/
-
         // Inflate the layout for this fragment
         return root;
     }
 
     private void summaryTab(){
-        //TODO actualmente no hay puntos ni posiciones al no haber nube
-        TextView numberPointsText = root.findViewById(R.id.numberPointsText);
-        numberPointsText.setText("725 puntos");
-        TextView numberRankingText = root.findViewById(R.id.numberRankingText);
-        numberRankingText.setText("12 th");
 
         final TextView numberAchievementsText = root.findViewById(R.id.numberAchievementsText);
         final TextView goldTextView = root.findViewById(R.id.goldTextView);
@@ -178,7 +159,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onItemClick(AchievementDTO item) {
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-
+                getView().performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, "Logro: " + item.getTitle());
                 startActivity(sharingIntent);

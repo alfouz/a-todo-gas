@@ -41,4 +41,13 @@ public class SettingsActivity extends AppCompatActivity {
         ft.add(R.id.settingsContainer, new SettingsFragment());
         ft.commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra("idUser", getIntent().getIntExtra("idUser", - 1));
+        intent.putExtra("personName", getIntent().getStringExtra("personName"));
+        intent.putExtra("personPhotoUrl", getIntent().getStringExtra("personPhotoUrl"));
+        startActivity(intent);
+    }
 }

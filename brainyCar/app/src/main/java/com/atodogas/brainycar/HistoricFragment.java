@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.GestureDetector;
@@ -27,11 +28,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atodogas.brainycar.AsyncTasks.CallbackInterface;
+import com.atodogas.brainycar.AsyncTasks.DeleteTripBD;
 import com.atodogas.brainycar.AsyncTasks.GetAllTripsBD;
 import com.atodogas.brainycar.AsyncTasks.GetCarBD;
 import com.atodogas.brainycar.AsyncTasks.GetLastTripBD;
 import com.atodogas.brainycar.DTOs.CarDTO;
 import com.atodogas.brainycar.DTOs.TripDTO;
+import com.atodogas.brainycar.Utils.SwipeController;
+import com.atodogas.brainycar.Utils.SwipeControllerActions;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -177,7 +181,7 @@ public class HistoricFragment extends Fragment implements View.OnClickListener, 
             emptyTrip.setStartPlace("Sin datos");
             trips.add(emptyTrip);
         }
-        HistoricFragmentTripAdapter adapter = new HistoricFragmentTripAdapter(trips, new HistoricFragmentTripAdapter.OnItemClickListener() {
+        final HistoricFragmentTripAdapter adapter = new HistoricFragmentTripAdapter(trips, new HistoricFragmentTripAdapter.OnItemClickListener() {
             @Override public void onItemClick(TripDTO item) {
                 getView().performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 Intent intent = new Intent(getActivity(), TripDetailsActivity.class);
@@ -192,6 +196,35 @@ public class HistoricFragment extends Fragment implements View.OnClickListener, 
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         myView.setLayoutManager(llm);
+
+        SwipeController swipeController = new SwipeController(new SwipeControllerActions() {
+            @Override
+            public void onRightClicked(int position) {
+                TripDTO tripToDelete = adapter.trips.get(position);
+                if (tripToDelete.getId()>=0){
+                    new DeleteTripBD(getContext()).execute(tripToDelete.getId());
+                }else{
+                    Toast.makeText(getContext(), "Borrando elemento vacío", Toast.LENGTH_SHORT).show();
+                }
+                adapter.trips.remove(position);
+                adapter.notifyItemRemoved(position);
+                adapter.notifyItemRangeChanged(position, adapter.getItemCount());
+            }
+            @Override
+            public void onLeftClicked(int position) {
+                TripDTO tripToDelete = adapter.trips.get(position);
+                if (tripToDelete.getId()>=0){
+                    new DeleteTripBD(getContext()).execute(tripToDelete.getId());
+                }else{
+                    Toast.makeText(getContext(), "Borrando elemento vacío", Toast.LENGTH_SHORT).show();
+                }
+                adapter.trips.remove(position);
+                adapter.notifyItemRemoved(position);
+                adapter.notifyItemRangeChanged(position, adapter.getItemCount());
+            }
+        });
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
+        itemTouchhelper.attachToRecyclerView(myView);
 
         LinearLayout loadingLayout = root.findViewById(R.id.loadingLayout);
         loadingLayout.setVisibility(View.GONE);

@@ -263,6 +263,7 @@
     <string name="startTrip">Inicio del trayecto: </string>
     <string name="endTrip">Final del trayecto: </string>
     <string name="tripDetails">Detalles de Viaje </string>
+    <string name="tripDelete">Eliminar</string>
 
 
     <!-- PROFILE FRAGMENT -->

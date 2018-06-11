@@ -45,51 +45,43 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:layout_margin="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_margin="10dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:paddingTop="40dp"
+                android:paddingTop="18dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:layout_gravity="bottom"
-                android:layout_height="match_parent">
-
-                <!--
-                <in.unicodelabs.kdgaugeview.KdGaugeView
-                    android:id="@+id/rpmMeter"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp"
-                    app:dialInactiveColor="@color/colorTransparent"
-                    app:dialSpeedColor="@color/colorPrimary"
-                    app:dialActiveColor="@color/colorPrimaryLigth2"
-                    app:speedTextColor="@color/colorPrimaryExtraDark"
-                    app:unitOfMeasurementTextColor="@color/colorPrimaryExtraDark"
-                    app:speedLimitTextColor="@color/colorPrimary"
-                    app:subDivisionCircleColor="@color/colorTransparent"
-                    app:divisionCircleColor="@color/colorTransparent"
-                    app:dialSpeedAlertColor="@color/colorTransparent"
-                    app:speedDialRingInnerPadding="0dp"
-                    app:unitOfMeasurement="@string/rpm"
-                    app:speedTextSize="50dp"
-                    app:unitOfMeasurementTextSize="12dp"
-                    app:speedLimitTextSize="14dp"
-                    app:speed_limit="2000"
-                    app:maxSpeed="8"/>
-
-                -->
+                android:layout_height="wrap_content">
 
                 <com.github.anastr.speedviewlib.TubeSpeedometer
                     android:id="@+id/rpmMeter"
+                    app:sv_withEffects3D="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:sv_withEffects3D="false"
-                    sv_speedTextPosition="CENTER"
+                    app:sv_speedometerWidth="20dp"
+                    app:sv_minSpeed="0"
+                    app:sv_maxSpeed="9"
+                    app:sv_unitUnderSpeedText="true"
+                    app:sv_speedTextPosition="BOTTOM_CENTER"
+                    app:sv_unitSpeedInterval="10dp"
                     app:sv_speedometerColor="@color/colorPrimary"
-                    app:sv_speedometerWidth="20dp"/>
+                    app:sv_speedTextColor="@color/colorPrimaryExtraDark"
+                    app:sv_unitTextColor="@color/colorPrimaryExtraDark"
+                    app:sv_textColor="@color/colorPrimary"
+                    app:sv_speedTextSize="20dp"
+                    app:sv_unitTextSize="13dp"
+                    app:sv_unit="@string/rpm"
+                    app:sv_withTremble="false"
+                    app:sv_lowSpeedColor="@color/colorAccent"
+                    app:sv_mediumSpeedColor="@color/colorAccent"
+                    app:sv_highSpeedColor="@color/colorRed"
+                    app:sv_lowSpeedPercent="20"
+                    app:sv_mediumSpeedPercent="34"/>
 
 
             </FrameLayout>
@@ -98,42 +90,33 @@
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:paddingTop="20dp"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
-                <!--
-                <in.unicodelabs.kdgaugeview.KdGaugeView
-                    android:id="@+id/kmHourMeter"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp"
-                    app:dialInactiveColor="@color/colorTransparent"
-                    app:dialSpeedColor="@color/colorAccent"
-                    app:dialActiveColor="@color/colorPrimaryLigth2"
-                    app:speedTextColor="@color/colorPrimaryExtraDark"
-                    app:unitOfMeasurementTextColor="@color/colorPrimaryExtraDark"
-                    app:speedLimitTextColor="@color/colorPrimary"
-                    app:subDivisionCircleColor="@color/colorTransparent"
-                    app:divisionCircleColor="@color/colorTransparent"
-                    app:dialSpeedAlertColor="@color/colorTransparent"
-                    app:speedDialRingInnerPadding="0dp"
-                    app:unitOfMeasurement="@string/kmHour"
-                    app:speedTextSize="60dp"
-                    app:unitOfMeasurementTextSize="14dp"
-                    app:speedLimitTextSize="14dp"
-                    app:speed_limit="1300"
-                    app:maxSpeed="250"/>
-
-                 -->
 
                 <com.github.anastr.speedviewlib.TubeSpeedometer
                     android:id="@+id/kmHourMeter"
+                    app:sv_withEffects3D="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:sv_withEffects3D="false"
-                    sv_speedTextPosition="CENTER"
+                    app:sv_speedometerWidth="20dp"
+                    app:sv_minSpeed="0"
+                    app:sv_maxSpeed="250"
+                    app:sv_unitUnderSpeedText="true"
+                    app:sv_speedTextPosition="BOTTOM_CENTER"
+                    app:sv_unitSpeedInterval="10dp"
                     app:sv_speedometerColor="@color/colorAccent"
-                    app:sv_speedometerWidth="20dp"/>
+                    app:sv_speedTextColor="@color/colorPrimaryExtraDark"
+                    app:sv_unitTextColor="@color/colorPrimaryExtraDark"
+                    app:sv_textColor="@color/colorPrimary"
+                    app:sv_speedTextSize="40dp"
+                    app:sv_unitTextSize="15dp"
+                    app:sv_unit="@string/kmHour"
+                    app:sv_withTremble="false"
+                    app:sv_lowSpeedColor="@color/colorAccent"
+                    app:sv_mediumSpeedColor="@color/colorAccent"
+                    app:sv_highSpeedColor="@color/colorRed"
+                    app:sv_lowSpeedPercent="20"
+                    app:sv_mediumSpeedPercent="52"/>
 
 
             </FrameLayout>

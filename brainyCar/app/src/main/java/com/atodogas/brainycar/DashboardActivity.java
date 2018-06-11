@@ -35,7 +35,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private TextView temperaturaTextView, bateriaTextView, gasolinaTextView, kmRecorridosTextView,
             tiempoTranscurridoTextView;
-    private TubeSpeedometer revolucionesTextView, velocidadTextView;
+    private TubeSpeedometer velocidadMeter, revolucionesMeter;
 
     private LocalBroadcastManager localBroadcastManager;
     private LinearLayout loadingLayout, dashboardDataLayout;
@@ -61,8 +61,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         gasolinaTextView = (TextView) findViewById(R.id.gasolinaTextView);
         kmRecorridosTextView = (TextView) findViewById(R.id.kmRecorridosTextView);
         tiempoTranscurridoTextView = findViewById(R.id.tiempoTranscurridoTextView);
-        revolucionesTextView = (TubeSpeedometer) findViewById(R.id.rpmMeter);
-        velocidadTextView = (TubeSpeedometer) findViewById(R.id.kmHourMeter);
+        revolucionesMeter = (TubeSpeedometer) findViewById(R.id.rpmMeter);
+        velocidadMeter = (TubeSpeedometer) findViewById(R.id.kmHourMeter);
         dashboardLoadingTextView = (TextView) findViewById(R.id.dashboardLoadingTextView);
 
         loadingLayout = findViewById(R.id.loadingLayout);
@@ -191,14 +191,13 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         tiempoTranscurridoTextView.setText(dashboardDTO.hours + " h " + dashboardDTO.minutes + " m " + dashboardDTO.seconds + " s");
 
+
         if(dashboardDTO.rpm != -1){
-            //revolucionesTextView.speedTo(dashboardDTO.rpm/1000);
-            revolucionesTextView.speedTo(5);
+            revolucionesMeter.speedTo((float)dashboardDTO.rpm/1000f);
         }
 
         if(dashboardDTO.speed != -1){
-            //velocidadTextView.speedTo(dashboardDTO.speed);
-            velocidadTextView.speedTo(120);
+            velocidadMeter.speedTo(dashboardDTO.speed);
         }
     }
 
@@ -261,6 +260,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
                 Log.d(TAG, "OBD no conectado");
                 Toast.makeText(context, text, duration).show();
+                openHome();
             }
         }
     };

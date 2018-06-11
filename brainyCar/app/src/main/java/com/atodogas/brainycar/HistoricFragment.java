@@ -220,7 +220,7 @@ public class HistoricFragment extends Fragment implements View.OnClickListener, 
                                 break;
 
                             case DialogInterface.BUTTON_NEGATIVE:
-                                Toast.makeText(getContext(), R.string.tripDeleteMessageUndeleted, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getContext(), R.string.tripDeleteMessageUndeleted, Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     }
@@ -252,7 +252,7 @@ public class HistoricFragment extends Fragment implements View.OnClickListener, 
                                 break;
 
                             case DialogInterface.BUTTON_NEGATIVE:
-                                Toast.makeText(getContext(), R.string.tripDeleteMessageUndeleted, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getContext(), R.string.tripDeleteMessageUndeleted, Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     }

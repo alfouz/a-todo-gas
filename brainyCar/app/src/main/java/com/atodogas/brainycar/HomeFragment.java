@@ -35,6 +35,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Call
 
     private static final String TAG = HomeFragment.class.getSimpleName();
     private MainActivity mainActivity;
+    private TripDTO lastTrip;
     
     private TextView dashboardValueElement, gasolineAVGValueElement, speedAVGValueElement,
             gasolineValueElement, batteryValueElement, lastTripDate, lastTripStartTime,
@@ -154,13 +155,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Call
 
     public void tripDetail() {
         Log.d(TAG, "clicked to see details of last trip");
-        Toast.makeText(mainActivity,"clicked to see details of last trip",Toast.LENGTH_SHORT).show();
+
+        if(lastTrip != null){
+            Intent intent = new Intent(getActivity(), TripDetailsActivity.class);
+            intent.putExtra("idTrip", lastTrip.getId());
+            startActivity(intent);
+        }
     }
 
     @Override
     public void doCallback(TripDTO trip) {
 
         if(trip!=null) {
+            lastTrip = trip;
             SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yy");
             SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("H:mm");
             lastTripDate.setText(DATE_FORMAT.format(trip.getStartDate()).toString());

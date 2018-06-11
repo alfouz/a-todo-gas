@@ -2,10 +2,6 @@ package com.atodogas.brainycar.DTOs;
 
 import android.support.annotation.NonNull;
 
-/**
- * Created by xurxo on 6/05/18.
- */
-
 public class CarDTO {
     private int id;
     private String model;
@@ -14,6 +10,7 @@ public class CarDTO {
     private float fuelConsumptionAVG;
     private float speedAVG;
     private float fuelTankLevel;
+    private float battery;
     private double latitude;
     private double longitude;
 
@@ -43,6 +40,10 @@ public class CarDTO {
 
     public void setFuelTankLevel(float fuelTankLevel) {
         this.fuelTankLevel = fuelTankLevel;
+    }
+
+    public void setBattery(float battery) {
+        this.battery = battery;
     }
 
     public void setLatitude(double latitude) {
@@ -79,6 +80,10 @@ public class CarDTO {
 
     public float getFuelTankLevel() {
         return fuelTankLevel;
+    }
+
+    public float getBattery() {
+        return battery;
     }
 
     public double getLatitude() {

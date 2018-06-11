@@ -7,7 +7,9 @@ import android.location.Geocoder;
 import android.os.AsyncTask;
 
 import com.atodogas.brainycar.Database.AppDatabase;
+import com.atodogas.brainycar.Database.Entities.AchievementEntity;
 import com.atodogas.brainycar.Database.Entities.CarEntity;
+import com.atodogas.brainycar.Database.Entities.ChallengeEntity;
 import com.atodogas.brainycar.Database.Entities.TripDataEntity;
 import com.atodogas.brainycar.Database.Entities.TripEntity;
 import com.atodogas.brainycar.Utils.Distances;
@@ -22,7 +24,7 @@ public class UpdateCarTripInfoBD extends AsyncTask<TripEntity, Void, Void> {
 
     public UpdateCarTripInfoBD(Context context) {
         this.context = context;
-        this.db = Room.databaseBuilder(context, AppDatabase.class, "brainyCar").build();
+        this.db = AppDatabase.getInstance(context);
     }
 
     @Override
@@ -134,6 +136,44 @@ public class UpdateCarTripInfoBD extends AsyncTask<TripEntity, Void, Void> {
         db.carDao().updateCar(car);
         db.tripDao().updateTrip(trip);
 
+        checkAchievements(car.getIdUser(), kms, speedAVG, tripDatas);
+
         return null;
+    }
+
+    private void checkAchievements(int idUser, float kms, float speedAvg, List<TripDataEntity> tripDataEntities){
+        List<ChallengeEntity> challengesNotAchievement = db.challengeDao().getChallengesNotAchievement(idUser);
+
+        for(ChallengeEntity challenge : challengesNotAchievement){
+            boolean isAchieve = false;
+            if(challenge.getVariable().equals("kms")){
+                isAchieve = false;
+                if(challenge.getOperator().equals(">=") && kms >= challenge.getObjective() ){
+                    isAchieve = true;
+                }
+            }
+            else if(challenge.getVariable().equals("rpm") && speedAvg > 1){
+                isAchieve = true;
+                for(TripDataEntity tripData : tripDataEntities){
+                    if(challenge.getOperator().equals("<=") && tripData.getRPM() > challenge.getObjective()){
+                        isAchieve = false;
+                    }
+                }
+            }
+            else if(challenge.getVariable().equals("speedAVG")){
+                isAchieve = false;
+                if(challenge.getOperator().equals(">=") && speedAvg >= challenge.getObjective()){
+                    isAchieve = true;
+                }
+            }
+
+            if(isAchieve){
+                AchievementEntity achievementEntity = new AchievementEntity();
+
+                achievementEntity.setIdUser(idUser);
+                achievementEntity.setIdChallenge(challenge.getId());
+                db.achievementDao().insertAchievement(achievementEntity);
+            }
+        }
     }
 }

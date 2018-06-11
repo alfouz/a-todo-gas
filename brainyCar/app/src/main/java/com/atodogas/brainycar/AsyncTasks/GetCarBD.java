@@ -18,7 +18,7 @@ public class GetCarBD extends AsyncTask<Integer, Void, CarDTO> {
 
     public GetCarBD(CallbackInterface callback, Context context) {
         this.callback = callback;
-        this.db = Room.databaseBuilder(context, AppDatabase.class, "brainyCar").build();
+        this.db = AppDatabase.getInstance(context);
     }
 
     @Override
@@ -45,6 +45,12 @@ public class GetCarBD extends AsyncTask<Integer, Void, CarDTO> {
             carDTO.setFuelTankLevel(tripDataEntities.get(tripDataEntities.size() - 1).getFuelTankLevel());
             carDTO.setLatitude(tripDataEntities.get(tripDataEntities.size() - 1).getLatitude());
             carDTO.setLongitude(tripDataEntities.get(tripDataEntities.size() - 1).getLongitude());
+            for (int i = tripDataEntities.size() - 1; i >= 0; i--){
+                if(tripDataEntities.get(i).getBattery() > 1){
+                    carDTO.setBattery(tripDataEntities.get(i).getBattery());
+                    break;
+                }
+            }
         }
         else {
             carDTO.setFuelTankLevel(-1);

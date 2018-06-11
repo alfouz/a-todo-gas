@@ -20,7 +20,7 @@ public class GetAllTripsBD extends AsyncTask<Integer, Void, List<TripDTO>> {
 
     public GetAllTripsBD(CallbackInterface callback, Context context) {
         this.callback = callback;
-        this.db = Room.databaseBuilder(context, AppDatabase.class, "brainyCar").build();
+        this.db = AppDatabase.getInstance(context);
     }
 
     @Override
@@ -45,8 +45,8 @@ public class GetAllTripsBD extends AsyncTask<Integer, Void, List<TripDTO>> {
                 tripDTO.setEndDate(new Date(tripDataEntities.get(tripDataEntities.size() - 1).getTime()));
             }
 
-            double lastLatitude = 999;
-            double lastLongitude = 999;
+            double lastLatitude = 255;
+            double lastLongitude = 255;
             float kms = 0;
             float mpg = 0;
             int numberMPGNotEmpty = 0;

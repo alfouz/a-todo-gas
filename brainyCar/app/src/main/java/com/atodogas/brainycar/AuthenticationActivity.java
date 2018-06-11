@@ -50,8 +50,7 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
         Task<GoogleSignInAccount> silentSignIn = mGoogleSignInClient.silentSignIn();
 
         if (silentSignIn.isSuccessful()) {
-            new CheckUserAndInsertBD(this, getApplicationContext()).execute(silentSignIn.getResult().getId());
-            personName = silentSignIn.getResult().getDisplayName();
+            initializeData(silentSignIn.getResult());
         }
     }
 
@@ -71,7 +70,7 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
         Task<GoogleSignInAccount> silentSignIn = mGoogleSignInClient.silentSignIn();
 
         if (silentSignIn.isSuccessful()) {
-            new CheckUserAndInsertBD(this, getApplicationContext()).execute(silentSignIn.getResult().getId());
+            initializeData(silentSignIn.getResult());
         }
     }
 
@@ -98,9 +97,7 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-            personName = account.getDisplayName();
-            //personPhotoUrl = account.getPhotoUrl().toString();
-            email = account.getEmail();
+            initializeData(account);
 
             new CheckUserAndInsertBD(this, getApplicationContext()).execute(account.getId());
         } catch (ApiException e) {
@@ -109,6 +106,16 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
 
         }
+    }
+
+    private void initializeData(GoogleSignInAccount account){
+        personName = account.getDisplayName();
+        if(account.getPhotoUrl() != null){
+            personPhotoUrl = account.getPhotoUrl().toString();
+        }
+        email = account.getEmail();
+
+        new CheckUserAndInsertBD(this, getApplicationContext()).execute(account.getId());
     }
 
 
@@ -120,7 +127,8 @@ public class AuthenticationActivity extends AppCompatActivity implements View.On
             // Signed in successfully, show next UI.
             Intent intent = new Intent(this, OnboardingActivity.class);
             intent.putExtra("idUser", user.getId());
-            intent.putExtra("userName", personName);
+            intent.putExtra("personName", personName);
+            intent.putExtra("personPhotoUrl", personPhotoUrl);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

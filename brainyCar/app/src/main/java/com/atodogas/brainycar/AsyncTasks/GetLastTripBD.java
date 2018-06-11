@@ -19,7 +19,7 @@ public class GetLastTripBD extends AsyncTask<Integer, Void, TripDTO> {
 
     public GetLastTripBD(CallbackInterface callback, Context context) {
         this.callback = callback;
-        this.db = Room.databaseBuilder(context, AppDatabase.class, "brainyCar").build();
+        this.db = AppDatabase.getInstance(context);
     }
 
     @Override

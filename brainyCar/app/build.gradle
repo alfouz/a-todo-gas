@@ -8,8 +8,8 @@ android {
         applicationId "com.atodogas.brainycar"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 2
-        versionName "1.2"
+        versionCode 3
+        versionName "1.2.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -38,6 +38,7 @@ dependencies {
     implementation 'com.android.support:support-vector-drawable:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation 'in.unicodelabs.sorbh:kdgaugeview:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
@@ -49,4 +50,5 @@ dependencies {
     compile 'com.android.support:preference-v7:27.1.1'
     compile 'android.arch.persistence.room:runtime:1.0.0'
     annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
+    compile 'com.loopj.android:android-async-http:1.4.9'
 }

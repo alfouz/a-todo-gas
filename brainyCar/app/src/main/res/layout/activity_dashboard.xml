@@ -1,387 +1,303 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.atodogas.brainycar.DashboardActivity">
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/Toolbar"
+        app:popupTheme="@style/OverflowToolbar" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
+    <LinearLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:layout_below="@+id/my_toolbar">
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:indeterminate="true" />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/my_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/dashboardLoadingTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dashboardDataLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/my_toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <in.unicodelabs.kdgaugeview.KdGaugeView
+                android:id="@+id/rpmMeter"
+                android:paddingLeft="20dp"
+                android:paddingStart="20dp"
+                android:paddingRight="30dp"
+                android:paddingEnd="30dp"
+                android:layout_width="0dp"
                 android:layout_weight="1"
-                android:theme="@style/Toolbar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:popupTheme="@style/OverflowToolbar"
-                tools:layout_editor_absoluteY="567dp" />
+                android:layout_height="wrap_content"
+                app:dialInactiveColor="@color/colorTransparent"
+                app:dialSpeedColor="@color/colorPrimary"
+                app:dialActiveColor="@color/colorPrimaryLigth2"
+                app:speedTextColor="@color/colorPrimaryExtraDark"
+                app:unitOfMeasurementTextColor="@color/colorPrimaryExtraDark"
+                app:speedLimitTextColor="@color/colorPrimary"
+                app:subDivisionCircleColor="@color/colorTransparent"
+                app:divisionCircleColor="@color/colorTransparent"
+                app:dialSpeedAlertColor="@color/colorTransparent"
+                app:speedDialRingInnerPadding="-3dp"
+                app:unitOfMeasurement="@string/rpm"
+                app:speedTextSize="50dp"
+                app:unitOfMeasurementTextSize="12dp"
+                app:speedLimitTextSize="14dp"
+                app:speed_limit="2000"
+                app:maxSpeed="8"/>
+
+            <in.unicodelabs.kdgaugeview.KdGaugeView
+                android:id="@+id/kmHourMeter"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:paddingRight="20dp"
+                android:paddingEnd="20dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                app:dialInactiveColor="@color/colorTransparent"
+                app:dialSpeedColor="@color/colorAccent"
+                app:dialActiveColor="@color/colorPrimaryLigth2"
+                app:speedTextColor="@color/colorPrimaryExtraDark"
+                app:unitOfMeasurementTextColor="@color/colorPrimaryExtraDark"
+                app:speedLimitTextColor="@color/colorPrimary"
+                app:subDivisionCircleColor="@color/colorTransparent"
+                app:divisionCircleColor="@color/colorTransparent"
+                app:dialSpeedAlertColor="@color/colorTransparent"
+                app:speedDialRingInnerPadding="-3dp"
+                app:unitOfMeasurement="@string/kmHour"
+                app:speedTextSize="60dp"
+                app:unitOfMeasurementTextSize="14dp"
+                app:speedLimitTextSize="14dp"
+                app:speed_limit="1300"
+                app:maxSpeed="250"/>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/loadingLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp">
 
-            <ProgressBar
-                android:id="@+id/progressBar2"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/engineTempIcon"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:indeterminate="true" />
+                app:srcCompat="@drawable/ic_engine_accent"
+                android:contentDescription="@string/engineTempIconDescription"/>
+
+            <ImageView
+                android:id="@+id/batteryIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/engineTempIcon"
+                android:layout_marginTop="16dp"
+                app:srcCompat="@drawable/ic_battery_accent"
+                android:contentDescription="@string/batteryDescription"/>
+
+            <ImageView
+                android:id="@+id/gasolineIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/batteryIcon"
+                android:layout_marginTop="16dp"
+                app:srcCompat="@drawable/ic_gasoline_pump_accent"
+                android:contentDescription="@string/gasolineIconDescription"/>
+
+            <ImageView
+                android:id="@+id/kmIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gasolineIcon"
+                android:layout_marginTop="16dp"
+                app:srcCompat="@drawable/ic_dashboard_accent"
+                android:contentDescription="@string/dashboardIconDescription"/>
+
+            <ImageView
+                android:id="@+id/timeIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kmIcon"
+                android:layout_marginTop="16dp"
+                app:srcCompat="@drawable/ic_hourglass_accent"
+                android:contentDescription="@string/hourglassIconDescription"/>
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
+                android:id="@+id/engineTempTitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Conectando OBD"
-                android:textAlignment="center" />
-        </LinearLayout>
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_alignBottom="@+id/engineTempIcon"
+                android:layout_toEndOf="@+id/engineTempIcon"
+                android:layout_toRightOf="@+id/engineTempIcon"
+                android:text="@string/engineTempTitle"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"/>
 
-        <TextView
-            android:id="@+id/revolucionesTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/textView39"
-            android:layout_alignLeft="@+id/textView39"
-            android:layout_alignStart="@+id/textView39"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
-            android:text="0"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loadingLayout" />
+            <TextView
+                android:id="@+id/batteryTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_alignBottom="@+id/batteryIcon"
+                android:layout_toEndOf="@+id/engineTempIcon"
+                android:layout_toRightOf="@+id/engineTempIcon"
+                android:text="@string/batteryTitle"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"/>
 
-        <TextView
-            android:id="@+id/velocidadTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="32dp"
-            android:layout_marginTop="8dp"
-            android:text="0"
-            android:textSize="50sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loadingLayout" />
+            <TextView
+                android:id="@+id/gasolineTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_alignBottom="@+id/gasolineIcon"
+                android:layout_toEndOf="@+id/gasolineIcon"
+                android:layout_toRightOf="@+id/gasolineIcon"
+                android:text="@string/gasolineTitle"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"/>
 
-        <TextView
-            android:id="@+id/textView37"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/velocidadTextView"
-            android:layout_alignStart="@+id/velocidadTextView"
-            android:layout_below="@+id/textView39"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="24dp"
-            android:text="km/h"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/velocidadTextView" />
+            <TextView
+                android:id="@+id/kmTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_alignBottom="@+id/kmIcon"
+                android:layout_toEndOf="@+id/kmIcon"
+                android:layout_toRightOf="@+id/kmIcon"
+                android:text="@string/kmTitle"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"/>
 
-        <TextView
-            android:id="@+id/textView39"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/velocidadTextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:text="RPM"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/revolucionesTextView" />
-    </android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/timeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_alignBottom="@+id/timeIcon"
+                android:layout_toEndOf="@+id/timeIcon"
+                android:layout_toRightOf="@+id/timeIcon"
+                android:text="@string/timeTitle"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"/>
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/temperaturaTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_alignBottom="@+id/engineTempTitle"
+                android:layout_toEndOf="@+id/engineTempTitle"
+                android:layout_toRightOf="@+id/engineTempTitle"
+                android:text="@string/dash"
+                android:textSize="16sp"/>
 
-        <ImageView
-            android:id="@+id/imageView19"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_engine_accent" />
 
-        <ImageView
-            android:id="@+id/imageView20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/imageView19"
-            android:layout_alignStart="@+id/imageView19"
-            android:layout_below="@+id/imageView19"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView19"
-            app:srcCompat="@drawable/ic_battery_accent" />
+            <TextView
+                android:id="@+id/bateriaTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_alignBottom="@+id/batteryTitle"
+                android:layout_toEndOf="@+id/batteryTitle"
+                android:layout_toRightOf="@+id/batteryTitle"
+                android:text="@string/dash"
+                android:textSize="16sp"/>
 
-        <ImageView
-            android:id="@+id/imageView21"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/imageView20"
-            android:layout_alignStart="@+id/imageView20"
-            android:layout_below="@+id/imageView20"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView20"
-            app:srcCompat="@drawable/ic_gasoline_pump_accent" />
 
-        <ImageView
-            android:id="@+id/imageView22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/imageView21"
-            android:layout_alignStart="@+id/imageView21"
-            android:layout_below="@+id/imageView21"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView21"
-            app:srcCompat="@drawable/ic_dashboard_accent" />
+            <TextView
+                android:id="@+id/gasolinaTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_alignBottom="@+id/gasolineTitle"
+                android:layout_toEndOf="@+id/gasolineTitle"
+                android:layout_toRightOf="@+id/gasolineTitle"
+                android:text="@string/dash"
+                android:textSize="16sp"/>
 
-        <ImageView
-            android:id="@+id/imageView23"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/imageView22"
-            android:layout_alignStart="@+id/imageView22"
-            android:layout_below="@+id/imageView22"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView22"
-            app:srcCompat="@drawable/ic_hourglass_accent" />
 
-        <TextView
-            android:id="@+id/textView26"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageView19"
-            android:layout_marginStart="16dp"
-            android:layout_toEndOf="@+id/imageView19"
-            android:layout_toRightOf="@+id/imageView19"
-            android:text="Temperatura motor: "
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView19"
-            app:layout_constraintStart_toEndOf="@+id/imageView19"
-            app:layout_constraintTop_toTopOf="@+id/imageView19" />
+            <TextView
+                android:id="@+id/kmRecorridosTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_alignBottom="@+id/kmTitle"
+                android:layout_toEndOf="@+id/kmTitle"
+                android:layout_toRightOf="@+id/kmTitle"
+                android:text="@string/dash"
+                android:textSize="16sp"/>
 
-        <TextView
-            android:id="@+id/temperaturaTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageView19"
-            android:layout_marginStart="8dp"
-            android:layout_toEndOf="@+id/textView26"
-            android:layout_toRightOf="@+id/textView26"
-            android:text="0 ºC"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView26"
-            app:layout_constraintStart_toEndOf="@+id/textView26"
-            app:layout_constraintTop_toTopOf="@+id/textView26" />
 
-        <TextView
-            android:id="@+id/textView27"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/imageView21"
-            android:layout_alignLeft="@+id/textView26"
-            android:layout_alignStart="@+id/textView26"
-            android:layout_marginStart="16dp"
-            android:text="Batería: "
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView20"
-            app:layout_constraintStart_toEndOf="@+id/imageView20"
-            app:layout_constraintTop_toTopOf="@+id/imageView20" />
+            <TextView
+                android:id="@+id/tiempoTranscurridoTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_alignBottom="@+id/timeTitle"
+                android:layout_toEndOf="@+id/timeTitle"
+                android:layout_toRightOf="@+id/timeTitle"
+                android:text="@string/dash"
+                android:textSize="16sp"/>
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/bateriaTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView27"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/textView27"
-            android:layout_toRightOf="@+id/textView27"
-            android:text="0 V"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView27"
-            app:layout_constraintStart_toEndOf="@+id/textView27"
-            app:layout_constraintTop_toTopOf="@+id/textView27" />
-
-        <TextView
-            android:id="@+id/textView28"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageView21"
-            android:layout_alignLeft="@+id/textView27"
-            android:layout_alignStart="@+id/textView27"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/gasolineTitle"
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView21"
-            app:layout_constraintStart_toEndOf="@+id/imageView21"
-            app:layout_constraintTop_toTopOf="@+id/imageView21" />
-
-        <TextView
-            android:id="@+id/gasolinaTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView28"
-            android:layout_alignBottom="@+id/textView28"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/textView28"
-            android:layout_toRightOf="@+id/textView28"
-            android:text="-"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView28"
-            app:layout_constraintStart_toEndOf="@+id/textView28"
-            app:layout_constraintTop_toTopOf="@+id/textView28" />
-
-        <TextView
-            android:id="@+id/textView29"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/imageView23"
-            android:layout_alignLeft="@+id/textView28"
-            android:layout_alignStart="@+id/textView28"
-            android:layout_marginStart="16dp"
-            android:text="Km recorridos: "
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-            app:layout_constraintStart_toEndOf="@+id/imageView22"
-            app:layout_constraintTop_toTopOf="@+id/imageView22" />
-
-        <TextView
-            android:id="@+id/kmRecorridosTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/imageView23"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/textView29"
-            android:layout_toRightOf="@+id/textView29"
-            android:text="0 Km"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView29"
-            app:layout_constraintStart_toEndOf="@+id/textView29"
-            app:layout_constraintTop_toTopOf="@+id/textView29" />
-
-        <TextView
-            android:id="@+id/textView30"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageView23"
-            android:layout_alignLeft="@+id/textView29"
-            android:layout_alignStart="@+id/textView29"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:text="Tiempo transcurrido: "
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView23"
-            app:layout_constraintStart_toEndOf="@+id/imageView23"
-            app:layout_constraintTop_toTopOf="@+id/imageView23" />
-
-        <TextView
-            android:id="@+id/tiempoTranscurridoTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView30"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/textView30"
-            android:layout_toRightOf="@+id/textView30"
-            android:text="0 h 0 m 0 s"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView30"
-            app:layout_constraintStart_toEndOf="@+id/textView30"
-            app:layout_constraintTop_toTopOf="@+id/textView30" />
-
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="14dp"
-            android:layout_marginEnd="14dp"
-            android:layout_marginStart="14dp"
-            android:clipToPadding="false"
-            android:padding="10dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <Button
-                android:id="@+id/pausarButton"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginRight="6dp"
-                android:layout_weight="1"
-                android:background="@drawable/round_button"
-                android:text="PAUSAR"
-                android:textColor="@color/colorWhite"
-                android:hapticFeedbackEnabled="true"/>
-
+            android:layout_height="0dp"
+            android:layout_weight="1">
             <Button
                 android:id="@+id/detenerButton"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="6dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
                 android:background="@drawable/round_button_accent"
-                android:text="DETENER"
-                android:textColor="@color/colorWhite"
-                android:hapticFeedbackEnabled="true"/>
+                android:hapticFeedbackEnabled="true"
+                android:text="@string/stop"
+                android:textColor="@color/colorWhite" />
+        </FrameLayout>
 
-        </LinearLayout>
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

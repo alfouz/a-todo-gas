@@ -1,6 +1,7 @@
 package com.atodogas.brainycar;
 
-import android.app.ProgressDialog;
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,34 +15,32 @@ import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atodogas.brainycar.Services.Extra.DashboardDTO;
-import com.atodogas.brainycar.Services.OBDService;
 import com.atodogas.brainycar.Services.TrackingService;
-
-import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+
+import in.unicodelabs.kdgaugeview.KdGaugeView;
 
 public class DashboardActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = DashboardActivity.class.getSimpleName();
 
-    private TextView temperaturaTextView;
-    private TextView bateriaTextView;
-    private TextView gasolinaTextView;
-    private TextView kmRecorridosTextView;
-    private TextView tiempoTranscurridoTextView;
-    private TextView revolucionesTextView;
-    private TextView velocidadTextView;
+    private TextView temperaturaTextView, bateriaTextView, gasolinaTextView, kmRecorridosTextView,
+            tiempoTranscurridoTextView;
+    private KdGaugeView revolucionesTextView, velocidadTextView;
 
     private LocalBroadcastManager localBroadcastManager;
-    private LinearLayout loadingLayout;
+    private LinearLayout loadingLayout, dashboardDataLayout;
+    private TextView dashboardLoadingTextView;
+
+    private String bluetoothState;
+    private static final int REQUEST_ENABLE_BT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,15 +58,16 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         gasolinaTextView = (TextView) findViewById(R.id.gasolinaTextView);
         kmRecorridosTextView = (TextView) findViewById(R.id.kmRecorridosTextView);
         tiempoTranscurridoTextView = findViewById(R.id.tiempoTranscurridoTextView);
-        revolucionesTextView = (TextView) findViewById(R.id.revolucionesTextView);
-        velocidadTextView = (TextView) findViewById(R.id.velocidadTextView);
+        revolucionesTextView = (KdGaugeView) findViewById(R.id.rpmMeter);
+        velocidadTextView = (KdGaugeView) findViewById(R.id.kmHourMeter);
+        dashboardLoadingTextView = (TextView) findViewById(R.id.dashboardLoadingTextView);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         loadingLayout = findViewById(R.id.loadingLayout);
         loadingLayout.setVisibility(View.VISIBLE);
+        dashboardDataLayout = findViewById(R.id.dashboardDataLayout);
+        dashboardDataLayout.setVisibility(View.INVISIBLE);
 
-        Button pausarButton = findViewById(R.id.pausarButton);
-        pausarButton.setOnClickListener(this);
         View detenerButton = findViewById(R.id.detenerButton);
         detenerButton.setOnClickListener(this);
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
@@ -84,8 +84,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onStart() {
         super.onStart();
-        localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.DASHBOARD_DTO));
-        localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.OBD_NOT_CONNECTED));
+        bluetoothConexion();
     }
 
     @Override
@@ -97,24 +96,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.pausarButton:
-                v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                pausar();
-                break;
             case R.id.detenerButton:
                 v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 detener();
                 break;
         }
-    }
-
-    public void pausar() {
-        Context context = getApplicationContext();
-        CharSequence text = "clicked button Pausar";
-        int duration = Toast.LENGTH_SHORT;
-
-        Log.d(TAG, "clicked button Pausar");
-        Toast.makeText(context, text, duration).show();
     }
 
     public void detener() {
@@ -180,11 +166,50 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         tiempoTranscurridoTextView.setText(dashboardDTO.hours + " h " + dashboardDTO.minutes + " m " + dashboardDTO.seconds + " s");
 
         if(dashboardDTO.rpm != -1){
-            revolucionesTextView.setText("" + dashboardDTO.rpm);
+            revolucionesTextView.setSpeed(dashboardDTO.rpm/1000);
         }
 
         if(dashboardDTO.speed != -1){
-            velocidadTextView.setText("" + dashboardDTO.speed);
+            velocidadTextView.setSpeed(dashboardDTO.speed);
+        }
+    }
+
+    private void bluetoothConexion() {
+        //we see if the device has bluetooth
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter != null) {
+            dashboardLoadingTextView.setText(getResources().getString(R.string.bluetoothLoading));
+            // Device does support Bluetooth
+            // We see if it is enabled and if not we enable it
+            if (!mBluetoothAdapter.isEnabled()) {
+                bluetoothState = getResources().getString(R.string.bluetoothConecting);
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            } else {
+                dashboardLoadingTextView.setText(getResources().getString(R.string.obdLoading));
+                localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.DASHBOARD_DTO));
+            }
+        } else {
+            localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.OBD_NOT_CONNECTED));
+        }
+    }
+
+    // Results bluetooth request
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_ENABLE_BT:
+                if (resultCode == Activity.RESULT_OK) {
+                    dashboardLoadingTextView.setText(getResources().getString(R.string.obdLoading));
+                }
+                
+                // TODO esto se hace igual tnato si el bluetooth se conecta como si no?
+                localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.DASHBOARD_DTO));
+                localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.OBD_NOT_CONNECTED));
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
         }
     }
 
@@ -207,6 +232,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
             if(loadingLayout.getVisibility() == View.VISIBLE){
                 loadingLayout.setVisibility(View.INVISIBLE);
+                dashboardDataLayout.setVisibility(View.VISIBLE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             }
         }

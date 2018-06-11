@@ -45,7 +45,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         // Setting action bar
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+<<<<<<< HEAD
 
+=======
+        changeActionBarTitle(getResources().getString(R.string.home));
+>>>>>>> ad29ebdb73b87713ced514bb7ed0ca137cbf2fbc
     }
 
     public void changeActionBarTitle(String newTitle) {
@@ -76,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.navigation_home:
                 fragment = new HomeFragment();
+                changeActionBarTitle(getResources().getString(R.string.home));
                 break;
 
             case R.id.navigation_location:
@@ -136,6 +141,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 //Pasamos a la activity de ajustes
                 intent = new Intent(this, SettingsActivity.class);
+                intent.putExtra("idUser", getIntent().getIntExtra("idUser", - 1));
+                intent.putExtra("personName", getIntent().getStringExtra("personName"));
+                intent.putExtra("personPhotoUrl", getIntent().getStringExtra("personPhotoUrl"));
                 startActivity(intent);
                 return true;
             case R.id.action_about:

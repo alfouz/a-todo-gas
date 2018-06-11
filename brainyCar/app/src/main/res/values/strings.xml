@@ -174,9 +174,11 @@
     <string name="lastTripTitle">Último Viaje</string>
     <string name="carDataTitle">Datos Generales</string>
     <string name="kmTitle">Kilómetros recorridos:</string>
-    <string name="gasolineTitle">AVG:</string>string>
-    <string name="coolantTitle">Líquido refrigerante:</string>
-    <string name="coolantIconDescription">Este icono representa el nivel líquido refrigerante del coche</string>
+    <string name="speedAVGTitle">Velocidad Media:</string>
+    <string name="gasolineAVGTitle">Consumo Medio:</string>
+    <string name="gasolineTitle">Gasolina:</string>
+    <string name="batteryTitle">Batería:</string>
+    <string name="batteryDescription">Este icono representa el nivel de bateria del coche</string>
     <string name="gasolineIconDescription">Este icono representa el nivel de gasolina del coche</string>
     <string name="hourglassIconDescription">Este icono representa el tiempo realizado</string>
     <string name="dashboardIconDescription">Este icono representa los kilómetros recorridos</string>
@@ -192,6 +194,18 @@
     <string name="bluetoothOn">Bluetooth conectado</string>
     <string name="bluetoothOff">Bluetooth desconectado</string>
 
+
+    <!-- DASHBOARD ACITIVITY -->
+    <string name="bluetoothLoading">Conectando bluetooth</string>
+    <string name="obdLoading">Conectando a OBD</string>
+    <string name="stop">Detener</string>
+    <string name="rpm">x1000 rpm</string>
+    <string name="kmHour">km/h</string>
+    <string name="engineTempTitle">Temperatura motor:</string>
+    <string name="timeTitle">Tiempo transcurrido:</string>
+    <string name="dash">-</string>
+    <string name="engineTempIconDescription">Este icono representa la temperatura del motor del coche</string>
+
     <!-- DIAGNOSTIC FRAGMENT -->
     <string name="diagnosticButton">I N I C I A R</string>
     <string name="healthResultsTitle">Diagnóstico</string>
@@ -205,7 +219,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="loading_obteniendo_codigos_error">Obteniendo Códigos de Error</string>
+    <string name="loading_obteniendo_codigos_error">Realizando diagnóstico</string>
     <string name="error_conectar_obd">Error al conectar con OBD</string>
     <string name="error_obtener_datos_obd">Error al obtener los datos</string>
 
@@ -232,11 +246,9 @@
     <string-array name="measure_array">
         <item>km</item>
         <item>velocidad</item>
-        <item>RPM</item>
         <item>consumo</item>
     </string-array>
     <string-array name="period_array">
-        <item>día</item>
         <item>semana</item>
         <item>mes</item>
         <item>año</item>
@@ -245,7 +257,12 @@
     <string name="period">Periodo</string>
     <string name="previous">Anterior</string>
     <string name="next">Siguiente</string>
+    <string name="selectDate">Seleccionar Fecha</string>
     <string name="noChartData">Datos de la gráfica no disponibles</string>
+    <string name="noData">Sin Datos</string>
+    <string name="startTrip">Inicio del trayecto: </string>
+    <string name="endTrip">Final del trayecto: </string>
+    <string name="tripDetails">Detalles de Viaje </string>
 
 
     <!-- PROFILE FRAGMENT -->
@@ -295,4 +312,6 @@
     <!-- TRACKING SERVICE -->
     <string name="trackingNotificationTitle">Trayecto en curso</string>
     <string name="trackingNotificationSubtitle">El dispositivo está recopilando datos de conducción</string>
+    <string name="carName">Nombre del vehículo</string>
+    <string name="defaultCarName">Tu vehículo</string>
 </resources>

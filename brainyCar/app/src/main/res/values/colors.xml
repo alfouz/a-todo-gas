@@ -8,6 +8,8 @@
     <color name="colorBlack">#000000</color>
     <color name="colorPrimaryLigth">#f2f2f2</color>
     <color name="colorPrimaryLigth2">#e2e2e2</color>
+    <color name="colorTransparent">#00FFFFFF</color>
+    <color name="colorRed">#e45757</color>
 
     <!-- ONBOARDING SLIDES -->
     <array name="array_dot_active">

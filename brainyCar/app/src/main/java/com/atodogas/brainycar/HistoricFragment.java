@@ -3,11 +3,14 @@ package com.atodogas.brainycar;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.GestureDetector;
@@ -27,11 +30,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atodogas.brainycar.AsyncTasks.CallbackInterface;
+import com.atodogas.brainycar.AsyncTasks.DeleteTripBD;
 import com.atodogas.brainycar.AsyncTasks.GetAllTripsBD;
 import com.atodogas.brainycar.AsyncTasks.GetCarBD;
 import com.atodogas.brainycar.AsyncTasks.GetLastTripBD;
 import com.atodogas.brainycar.DTOs.CarDTO;
 import com.atodogas.brainycar.DTOs.TripDTO;
+import com.atodogas.brainycar.Utils.SwipeController;
+import com.atodogas.brainycar.Utils.SwipeControllerActions;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -177,7 +183,7 @@ public class HistoricFragment extends Fragment implements View.OnClickListener, 
             emptyTrip.setStartPlace("Sin datos");
             trips.add(emptyTrip);
         }
-        HistoricFragmentTripAdapter adapter = new HistoricFragmentTripAdapter(trips, new HistoricFragmentTripAdapter.OnItemClickListener() {
+        final HistoricFragmentTripAdapter adapter = new HistoricFragmentTripAdapter(trips, new HistoricFragmentTripAdapter.OnItemClickListener() {
             @Override public void onItemClick(TripDTO item) {
                 getView().performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 Intent intent = new Intent(getActivity(), TripDetailsActivity.class);
@@ -192,6 +198,73 @@ public class HistoricFragment extends Fragment implements View.OnClickListener, 
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         myView.setLayoutManager(llm);
+
+        SwipeController swipeController = new SwipeController(new SwipeControllerActions() {
+            @Override
+            public void onRightClicked(final int position) {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                TripDTO tripToDelete = adapter.trips.get(position);
+                                if (tripToDelete.getId()>=0){
+                                    new DeleteTripBD(getContext()).execute(tripToDelete.getId());
+                                    Toast.makeText(getContext(), R.string.tripDeleteMessageDeleted, Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(getContext(), R.string.tripDeleteMessageEmpty, Toast.LENGTH_SHORT).show();
+                                }
+                                adapter.trips.remove(position);
+                                adapter.notifyItemRemoved(position);
+                                adapter.notifyItemRangeChanged(position, adapter.getItemCount());
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                Toast.makeText(getContext(), R.string.tripDeleteMessageUndeleted, Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage(getString(R.string.tripDeleteMessage)).setPositiveButton(getString(R.string.tripDeleteMessageYes), dialogClickListener)
+                        .setNegativeButton(getString(R.string.tripDeleteMessageNo), dialogClickListener).show();
+
+
+            }
+            @Override
+            public void onLeftClicked(final int position) {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                TripDTO tripToDelete = adapter.trips.get(position);
+                                if (tripToDelete.getId()>=0){
+                                    new DeleteTripBD(getContext()).execute(tripToDelete.getId());
+                                    Toast.makeText(getContext(), R.string.tripDeleteMessageDeleted, Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(getContext(), R.string.tripDeleteMessageEmpty, Toast.LENGTH_SHORT).show();
+                                }
+                                adapter.trips.remove(position);
+                                adapter.notifyItemRemoved(position);
+                                adapter.notifyItemRangeChanged(position, adapter.getItemCount());
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                Toast.makeText(getContext(), R.string.tripDeleteMessageUndeleted, Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage(getString(R.string.tripDeleteMessage)).setPositiveButton(getString(R.string.tripDeleteMessageYes), dialogClickListener)
+                        .setNegativeButton(getString(R.string.tripDeleteMessageNo), dialogClickListener).show();
+            }
+        });
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
+        itemTouchhelper.attachToRecyclerView(myView);
 
         LinearLayout loadingLayout = root.findViewById(R.id.loadingLayout);
         loadingLayout.setVisibility(View.GONE);

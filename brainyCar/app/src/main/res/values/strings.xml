@@ -263,6 +263,13 @@
     <string name="startTrip">Inicio del trayecto: </string>
     <string name="endTrip">Final del trayecto: </string>
     <string name="tripDetails">Detalles de Viaje </string>
+    <string name="tripDelete">Eliminar</string>
+    <string name="tripDeleteMessage">¿Estás seguro de querer eliminar este viaje?</string>
+    <string name="tripDeleteMessageEmpty">Borrando elemento vacío</string>
+    <string name="tripDeleteMessageDeleted">Viaje eliminado permanentemente</string>
+    <string name="tripDeleteMessageUndeleted">Piensa bien antes de eliminar permanentemente un viaje</string>
+    <string name="tripDeleteMessageYes">Sí</string>
+    <string name="tripDeleteMessageNo">No</string>
 
 
     <!-- PROFILE FRAGMENT -->

@@ -163,12 +163,12 @@ public class SwipeController extends Callback {
         View itemView = viewHolder.itemView;
         Paint p = new Paint();
 
-        RectF leftButton = new RectF(itemView.getLeft()+5, itemView.getTop()+12, itemView.getLeft() + buttonWidthWithoutPadding +20, itemView.getBottom()-12);
+        RectF leftButton = new RectF(itemView.getLeft()+15, itemView.getTop()+12, itemView.getLeft() + buttonWidthWithoutPadding +20, itemView.getBottom()-12);
         p.setColor(Color.RED);
         c.drawRoundRect(leftButton, corners, corners, p);
         drawText("Eliminar", c, leftButton, p);
 
-        RectF rightButton = new RectF(itemView.getRight() - buttonWidthWithoutPadding-20, itemView.getTop()+12, itemView.getRight()-5, itemView.getBottom()-12);
+        RectF rightButton = new RectF(itemView.getRight() - buttonWidthWithoutPadding-20, itemView.getTop()+12, itemView.getRight()-15, itemView.getBottom()-12);
         p.setColor(Color.RED);
         c.drawRoundRect(rightButton, corners, corners, p);
         drawText("Eliminar", c, rightButton, p);

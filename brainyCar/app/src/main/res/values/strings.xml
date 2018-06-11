@@ -189,10 +189,6 @@
     <string name="pointToPointDescription">Este icono representa el lugar de inicio y fin de un viaje</string>
     <string name="lineDescription">Línea horizontal que divide visualmente la pantalla</string>
     <string name="slidesDescription">Icono que indica que se puede deslizar a la derecha y/o izquierda para ver más info</string>
-    <string name="bluetoothConecting">Conectando bluetooth...</string>
-    <string name="bluetoothUnable">No se dispone de bluetooth</string>
-    <string name="bluetoothOn">Bluetooth conectado</string>
-    <string name="bluetoothOff">Bluetooth desconectado</string>
 
 
     <!-- DASHBOARD ACITIVITY -->
@@ -205,6 +201,10 @@
     <string name="timeTitle">Tiempo transcurrido:</string>
     <string name="dash">-</string>
     <string name="engineTempIconDescription">Este icono representa la temperatura del motor del coche</string>
+    <string name="locationPermissionUnableDashboard">La información presentada será de menor precisión</string>
+    <string name="bluetoothUnable">Debe disponer de bluetooth para poder entrar en modo conducción</string>
+    <string name="locationLoading">Conectando GPS</string>
+
 
     <!-- DIAGNOSTIC FRAGMENT -->
     <string name="diagnosticButton">I N I C I A R</string>
@@ -266,9 +266,7 @@
 
 
     <!-- PROFILE FRAGMENT -->
-    <string name="numberPointsTitle">Puntuación:</string>
-    <string name="numberRankingTitle">Puesto Ranking:</string>
-    <string name="numberAchievementsTitle">Logros:</string>
+    <string name="numberAchievementsTitle">Logros totales conseguidos</string>
     <string name="medal">Medalla:</string>
     <string name="gold">Oro</string>
     <string name="silver">Plata</string>

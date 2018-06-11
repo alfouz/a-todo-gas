@@ -16,23 +16,27 @@
         android:id="@+id/carLocationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:clickable="true"
-        app:backgroundTint="@color/colorPrimaryLigth"
+        app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toTopOf="@+id/fuelStationsButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_steering_wheel_accent" />
+        app:srcCompat="@drawable/ic_steering_wheel_white" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fuelStationsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:clickable="true"
-        app:backgroundTint="@color/colorPrimaryLigth"
+        app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/mapView"
         app:layout_constraintEnd_toEndOf="@+id/mapView"
-        app:srcCompat="@drawable/ic_gasoline_pump_accent" />
+        app:srcCompat="@drawable/ic_gasoline_pump_white" />
 
 
 </android.support.constraint.ConstraintLayout>

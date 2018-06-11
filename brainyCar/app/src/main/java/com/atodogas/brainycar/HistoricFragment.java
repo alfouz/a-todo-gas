@@ -179,7 +179,7 @@ public class HistoricFragment extends Fragment implements View.OnClickListener, 
         }
         HistoricFragmentTripAdapter adapter = new HistoricFragmentTripAdapter(trips, new HistoricFragmentTripAdapter.OnItemClickListener() {
             @Override public void onItemClick(TripDTO item) {
-
+                getView().performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 Intent intent = new Intent(getActivity(), TripDetailsActivity.class);
                 intent.putExtra("idTrip", item.getId());
                 startActivity(intent);

@@ -1,31 +1,33 @@
 package com.atodogas.brainycar;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atodogas.brainycar.Services.Extra.DashboardDTO;
 import com.atodogas.brainycar.Services.TrackingService;
+import com.github.anastr.speedviewlib.TubeSpeedometer;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-
-import in.unicodelabs.kdgaugeview.KdGaugeView;
 
 public class DashboardActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -33,14 +35,15 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private TextView temperaturaTextView, bateriaTextView, gasolinaTextView, kmRecorridosTextView,
             tiempoTranscurridoTextView;
-    private KdGaugeView revolucionesTextView, velocidadTextView;
+    private TubeSpeedometer revolucionesTextView, velocidadTextView;
 
     private LocalBroadcastManager localBroadcastManager;
     private LinearLayout loadingLayout, dashboardDataLayout;
     private TextView dashboardLoadingTextView;
 
-    private String bluetoothState;
     private static final int REQUEST_ENABLE_BT = 1;
+
+    private static final int MY_PERMISSION_LOCATION_FINE = 1234;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +61,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         gasolinaTextView = (TextView) findViewById(R.id.gasolinaTextView);
         kmRecorridosTextView = (TextView) findViewById(R.id.kmRecorridosTextView);
         tiempoTranscurridoTextView = findViewById(R.id.tiempoTranscurridoTextView);
-        revolucionesTextView = (KdGaugeView) findViewById(R.id.rpmMeter);
-        velocidadTextView = (KdGaugeView) findViewById(R.id.kmHourMeter);
+        revolucionesTextView = (TubeSpeedometer) findViewById(R.id.rpmMeter);
+        velocidadTextView = (TubeSpeedometer) findViewById(R.id.kmHourMeter);
         dashboardLoadingTextView = (TextView) findViewById(R.id.dashboardLoadingTextView);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         loadingLayout = findViewById(R.id.loadingLayout);
         loadingLayout.setVisibility(View.VISIBLE);
         dashboardDataLayout = findViewById(R.id.dashboardDataLayout);
@@ -70,15 +72,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         View detenerButton = findViewById(R.id.detenerButton);
         detenerButton.setOnClickListener(this);
-        localBroadcastManager = LocalBroadcastManager.getInstance(this);
-
-        boolean isRunningServices = getIntent().getBooleanExtra("isRunningServices", false);
-        if(!isRunningServices){
-            int idUser = getIntent().getIntExtra("idUser", - 1);
-            Intent trackingServiceIntent = new Intent(this, TrackingService.class);
-            trackingServiceIntent.putExtra("idUser", idUser);
-            startService(trackingServiceIntent);
-        }
     }
 
     @Override
@@ -90,7 +83,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onStop() {
         super.onStop();
-        localBroadcastManager.unregisterReceiver(dashboardDTOReceive);
+        if (localBroadcastManager != null){
+            localBroadcastManager.unregisterReceiver(dashboardDTOReceive);
+        }
     }
 
     @Override
@@ -111,10 +106,41 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         Log.d(TAG, "clicked button Detener");
         Toast.makeText(context, text, duration).show();
 
+        stopTrackingService();
+        openHome();
+    }
 
+    private void startTrackingService(){
+
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+
+        boolean isRunningServices = getIntent().getBooleanExtra("isRunningServices", false);
+        if(!isRunningServices){
+            int idUser = getIntent().getIntExtra("idUser", - 1);
+            Intent trackingServiceIntent = new Intent(this, TrackingService.class);
+            trackingServiceIntent.putExtra("idUser", idUser);
+            startService(trackingServiceIntent);
+        }
+
+        dashboardLoadingTextView.setText(getResources().getString(R.string.locationLoading));
+        if (checkPermissionLocation()) {
+            //TODO más precisión con la localización
+        } else {
+            askPermission();
+        }
+
+        if (loadingLayout.getVisibility() == View.VISIBLE) {
+            loadingLayout.setVisibility(View.INVISIBLE);
+            dashboardDataLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void stopTrackingService(){
         Intent trackingServiceIntent = new Intent(this, TrackingService.class);
         stopService(trackingServiceIntent);
+    }
 
+    private void openHome(){
         Intent intent = new Intent(this, MainActivity.class);
         int idUser = getIntent().getIntExtra("idUser", - 1);
         intent.putExtra("idUser", idUser);
@@ -166,11 +192,13 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         tiempoTranscurridoTextView.setText(dashboardDTO.hours + " h " + dashboardDTO.minutes + " m " + dashboardDTO.seconds + " s");
 
         if(dashboardDTO.rpm != -1){
-            revolucionesTextView.setSpeed(dashboardDTO.rpm/1000);
+            //revolucionesTextView.speedTo(dashboardDTO.rpm/1000);
+            revolucionesTextView.speedTo(5);
         }
 
         if(dashboardDTO.speed != -1){
-            velocidadTextView.setSpeed(dashboardDTO.speed);
+            //velocidadTextView.speedTo(dashboardDTO.speed);
+            velocidadTextView.speedTo(120);
         }
     }
 
@@ -182,15 +210,18 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             // Device does support Bluetooth
             // We see if it is enabled and if not we enable it
             if (!mBluetoothAdapter.isEnabled()) {
-                bluetoothState = getResources().getString(R.string.bluetoothConecting);
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             } else {
                 dashboardLoadingTextView.setText(getResources().getString(R.string.obdLoading));
+                startTrackingService();
                 localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.DASHBOARD_DTO));
+                localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.OBD_NOT_CONNECTED));
             }
         } else {
-            localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.OBD_NOT_CONNECTED));
+            Toast.makeText(this, getText(R.string.bluetoothUnable), Toast.LENGTH_LONG).show();
+            openHome();
+
         }
     }
 
@@ -201,11 +232,13 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             case REQUEST_ENABLE_BT:
                 if (resultCode == Activity.RESULT_OK) {
                     dashboardLoadingTextView.setText(getResources().getString(R.string.obdLoading));
+                    startTrackingService();
+                    localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.DASHBOARD_DTO));
+                    localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.OBD_NOT_CONNECTED));
+                } else {
+                    Toast.makeText(this, getText(R.string.bluetoothUnable), Toast.LENGTH_SHORT).show();
+                    openHome();
                 }
-                
-                // TODO esto se hace igual tnato si el bluetooth se conecta como si no?
-                localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.DASHBOARD_DTO));
-                localBroadcastManager.registerReceiver(dashboardDTOReceive, new IntentFilter(TrackingService.OBD_NOT_CONNECTED));
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
@@ -229,12 +262,41 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 Log.d(TAG, "OBD no conectado");
                 Toast.makeText(context, text, duration).show();
             }
-
-            if(loadingLayout.getVisibility() == View.VISIBLE){
-                loadingLayout.setVisibility(View.INVISIBLE);
-                dashboardDataLayout.setVisibility(View.VISIBLE);
-                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-            }
         }
     };
+
+    // Check for permission to access Location
+    private boolean checkPermissionLocation() {
+        // Ask for permission if it wasn't granted yet
+        return (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED);
+    }
+
+    // Asks for permission
+    @SuppressLint("NewApi")
+    private void askPermission() {
+        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                MY_PERMISSION_LOCATION_FINE
+        );
+    }
+
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSION_LOCATION_FINE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission granted
+                    if (checkPermissionLocation()) {
+                        //TODO más precisión con la localización
+                    }
+                } else {
+                    Toast.makeText(this, getText(R.string.locationPermissionUnableDashboard), Toast.LENGTH_SHORT).show();
+                }
+            }
+            break;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }

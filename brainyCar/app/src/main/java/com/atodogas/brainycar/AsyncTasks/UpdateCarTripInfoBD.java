@@ -1,10 +1,13 @@
 package com.atodogas.brainycar.AsyncTasks;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
+import android.support.v4.app.NotificationCompat;
 
 import com.atodogas.brainycar.Database.AppDatabase;
 import com.atodogas.brainycar.Database.Entities.AchievementEntity;
@@ -12,6 +15,7 @@ import com.atodogas.brainycar.Database.Entities.CarEntity;
 import com.atodogas.brainycar.Database.Entities.ChallengeEntity;
 import com.atodogas.brainycar.Database.Entities.TripDataEntity;
 import com.atodogas.brainycar.Database.Entities.TripEntity;
+import com.atodogas.brainycar.R;
 import com.atodogas.brainycar.Utils.Distances;
 
 import java.io.IOException;
@@ -21,6 +25,7 @@ import java.util.Locale;
 public class UpdateCarTripInfoBD extends AsyncTask<TripEntity, Void, Void> {
     private AppDatabase db;
     private Context context;
+    public static final String NOTIFICATION_CHANNEL_ID_NEW_ACHIEVEMENT = "com.atodogas.brainycar.AsyncTasks.UpdateCarTripInfoBD.NEW_ACHIEVEMENT";
 
     public UpdateCarTripInfoBD(Context context) {
         this.context = context;
@@ -144,6 +149,7 @@ public class UpdateCarTripInfoBD extends AsyncTask<TripEntity, Void, Void> {
     private void checkAchievements(int idUser, float kms, float speedAvg, List<TripDataEntity> tripDataEntities){
         List<ChallengeEntity> challengesNotAchievement = db.challengeDao().getChallengesNotAchievement(idUser);
 
+        boolean newAchievementDetected = false;
         for(ChallengeEntity challenge : challengesNotAchievement){
             boolean isAchieve = false;
             if(challenge.getVariable().equals("kms")){
@@ -168,12 +174,26 @@ public class UpdateCarTripInfoBD extends AsyncTask<TripEntity, Void, Void> {
             }
 
             if(isAchieve){
+                newAchievementDetected = true;
                 AchievementEntity achievementEntity = new AchievementEntity();
 
                 achievementEntity.setIdUser(idUser);
                 achievementEntity.setIdChallenge(challenge.getId());
                 db.achievementDao().insertAchievement(achievementEntity);
             }
+        }
+
+        if(newAchievementDetected){
+            NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+            Notification notification = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID_NEW_ACHIEVEMENT)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle("Conseguiste nuevos logros")
+                    .setContentText("Has conseguido uno o varios logros con el último viaje")
+                    .build();
+
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(NOTIFICATION_CHANNEL_ID_NEW_ACHIEVEMENT,0, notification);
         }
     }
 }

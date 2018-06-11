@@ -98,6 +98,7 @@
                     app:sv_withEffects3D="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:sv_speedTextFormat="INTEGER"
                     app:sv_speedometerWidth="20dp"
                     app:sv_minSpeed="0"
                     app:sv_maxSpeed="250"

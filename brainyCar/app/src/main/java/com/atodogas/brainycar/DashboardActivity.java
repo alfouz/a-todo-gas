@@ -41,6 +41,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private LinearLayout loadingLayout, dashboardDataLayout;
     private TextView dashboardLoadingTextView;
 
+    private boolean isRunningServices;
+
     private static final int REQUEST_ENABLE_BT = 1;
 
     private static final int MY_PERMISSION_LOCATION_FINE = 1234;
@@ -72,6 +74,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         View detenerButton = findViewById(R.id.detenerButton);
         detenerButton.setOnClickListener(this);
+
+        isRunningServices = getIntent().getBooleanExtra("isRunningServices", false);
     }
 
     @Override
@@ -114,24 +118,24 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
 
-        boolean isRunningServices = getIntent().getBooleanExtra("isRunningServices", false);
         if(!isRunningServices){
             int idUser = getIntent().getIntExtra("idUser", - 1);
+            String personName = getIntent().getStringExtra("personName");
+            String personPhotoUrl = getIntent().getStringExtra("personPhotoUrl");
+
             Intent trackingServiceIntent = new Intent(this, TrackingService.class);
             trackingServiceIntent.putExtra("idUser", idUser);
+            trackingServiceIntent.putExtra("personName", personName);
+            trackingServiceIntent.putExtra("personPhotoUrl", personPhotoUrl);
             startService(trackingServiceIntent);
+            isRunningServices = true;
         }
 
-        dashboardLoadingTextView.setText(getResources().getString(R.string.locationLoading));
+        //dashboardLoadingTextView.setText(getResources().getString(R.string.locationLoading));
         if (checkPermissionLocation()) {
             //TODO más precisión con la localización
         } else {
-            askPermission();
-        }
-
-        if (loadingLayout.getVisibility() == View.VISIBLE) {
-            loadingLayout.setVisibility(View.INVISIBLE);
-            dashboardDataLayout.setVisibility(View.VISIBLE);
+            //askPermission();
         }
     }
 
@@ -143,7 +147,12 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private void openHome(){
         Intent intent = new Intent(this, MainActivity.class);
         int idUser = getIntent().getIntExtra("idUser", - 1);
+        String personName = getIntent().getStringExtra("personName");
+        String personPhotoUrl = getIntent().getStringExtra("personPhotoUrl");
+
         intent.putExtra("idUser", idUser);
+        intent.putExtra("personName", personName);
+        intent.putExtra("personPhotoUrl", personPhotoUrl);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -253,6 +262,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             if(TrackingService.DASHBOARD_DTO.equals(action)) {
                 DashboardDTO dashboardDTO = intent.getParcelableExtra("DashboardDTO");
                 updateDashboardInformation(dashboardDTO);
+
+                if (loadingLayout.getVisibility() == View.VISIBLE) {
+                    loadingLayout.setVisibility(View.INVISIBLE);
+                    dashboardDataLayout.setVisibility(View.VISIBLE);
+                }
             }
             else if (TrackingService.OBD_NOT_CONNECTED.equals(action)){
                 CharSequence text = "OBD no conectado";
@@ -272,7 +286,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 == PackageManager.PERMISSION_GRANTED);
     }
 
-    // Asks for permission
+    /*// Asks for permission
     @SuppressLint("NewApi")
     private void askPermission() {
         requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -298,5 +312,5 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             break;
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
+    }*/
 }

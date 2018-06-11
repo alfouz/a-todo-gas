@@ -145,10 +145,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Call
         //Pasamos a la activity de dashboard
         Intent intent2 = getActivity().getIntent();
         int idUser = intent2.getIntExtra("idUser", -1);
+        String personName = intent2.getStringExtra("personName");
+        String personPhotoUrl = intent2.getStringExtra("personPhotoUrl");
 
         if(idUser > 0){
             Intent intent = new Intent(getActivity(), DashboardActivity.class);
             intent.putExtra("idUser", idUser);
+            intent.putExtra("personName", personName);
+            intent.putExtra("personPhotoUrl", personPhotoUrl);
             startActivity(intent);
         }
     }

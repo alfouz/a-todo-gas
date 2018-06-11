@@ -85,6 +85,9 @@ public class TrackingService extends Service implements SensorEventListener,
     public int onStartCommand(Intent intent, int flags, int startId) {
         Intent notificationIntent = new Intent(getApplicationContext(), DashboardActivity.class);
         notificationIntent.putExtra("isRunningServices", true);
+        notificationIntent.putExtra("idUser", intent.getIntExtra("idUser", - 1));
+        notificationIntent.putExtra("personName", intent.getStringExtra("personName"));
+        notificationIntent.putExtra("personPhotoUrl", intent.getStringExtra("personPhotoUrl"));
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,

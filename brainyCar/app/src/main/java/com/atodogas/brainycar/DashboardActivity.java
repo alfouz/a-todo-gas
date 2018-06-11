@@ -24,13 +24,10 @@ import android.widget.Toast;
 
 import com.atodogas.brainycar.Services.Extra.DashboardDTO;
 import com.atodogas.brainycar.Services.TrackingService;
-import com.github.anastr.speedviewlib.Gauge;
 import com.github.anastr.speedviewlib.TubeSpeedometer;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-
-import in.unicodelabs.kdgaugeview.KdGaugeView;
 
 public class DashboardActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -123,6 +120,18 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             Intent trackingServiceIntent = new Intent(this, TrackingService.class);
             trackingServiceIntent.putExtra("idUser", idUser);
             startService(trackingServiceIntent);
+        }
+
+        dashboardLoadingTextView.setText(getResources().getString(R.string.locationLoading));
+        if (checkPermissionLocation()) {
+            //TODO más precisión con la localización
+        } else {
+            askPermission();
+        }
+
+        if (loadingLayout.getVisibility() == View.VISIBLE) {
+            loadingLayout.setVisibility(View.INVISIBLE);
+            dashboardDataLayout.setVisibility(View.VISIBLE);
         }
     }
 
@@ -245,21 +254,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             if(TrackingService.DASHBOARD_DTO.equals(action)) {
                 DashboardDTO dashboardDTO = intent.getParcelableExtra("DashboardDTO");
                 updateDashboardInformation(dashboardDTO);
-
-                //TODO comentado hasta arreglar bug
-                /*
-                dashboardLoadingTextView.setText(getResources().getString(R.string.locationLoading));
-                if (checkPermissionLocation()) {
-                    //TODO más precisión con la localización
-                } else {
-                    askPermission();
-                }
-                */
-                //TODO al arreglar bug borrar esto que está mas abajo
-                if (loadingLayout.getVisibility() == View.VISIBLE) {
-                    loadingLayout.setVisibility(View.INVISIBLE);
-                    dashboardDataLayout.setVisibility(View.VISIBLE);
-                }
             }
             else if (TrackingService.OBD_NOT_CONNECTED.equals(action)){
                 CharSequence text = "OBD no conectado";
@@ -300,13 +294,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 } else {
                     Toast.makeText(this, getText(R.string.locationPermissionUnableDashboard), Toast.LENGTH_SHORT).show();
                 }
-
-                if (loadingLayout.getVisibility() == View.VISIBLE) {
-                    loadingLayout.setVisibility(View.INVISIBLE);
-                    dashboardDataLayout.setVisibility(View.VISIBLE);
-                }
-                break;
             }
+            break;
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }

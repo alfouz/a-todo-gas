@@ -3,9 +3,11 @@ package com.atodogas.brainycar;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -199,28 +201,66 @@ public class HistoricFragment extends Fragment implements View.OnClickListener, 
 
         SwipeController swipeController = new SwipeController(new SwipeControllerActions() {
             @Override
-            public void onRightClicked(int position) {
-                TripDTO tripToDelete = adapter.trips.get(position);
-                if (tripToDelete.getId()>=0){
-                    new DeleteTripBD(getContext()).execute(tripToDelete.getId());
-                }else{
-                    Toast.makeText(getContext(), "Borrando elemento vacío", Toast.LENGTH_SHORT).show();
-                }
-                adapter.trips.remove(position);
-                adapter.notifyItemRemoved(position);
-                adapter.notifyItemRangeChanged(position, adapter.getItemCount());
+            public void onRightClicked(final int position) {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                TripDTO tripToDelete = adapter.trips.get(position);
+                                if (tripToDelete.getId()>=0){
+                                    new DeleteTripBD(getContext()).execute(tripToDelete.getId());
+                                    Toast.makeText(getContext(), R.string.tripDeleteMessageDeleted, Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(getContext(), R.string.tripDeleteMessageEmpty, Toast.LENGTH_SHORT).show();
+                                }
+                                adapter.trips.remove(position);
+                                adapter.notifyItemRemoved(position);
+                                adapter.notifyItemRangeChanged(position, adapter.getItemCount());
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                Toast.makeText(getContext(), R.string.tripDeleteMessageUndeleted, Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage(getString(R.string.tripDeleteMessage)).setPositiveButton(getString(R.string.tripDeleteMessageYes), dialogClickListener)
+                        .setNegativeButton(getString(R.string.tripDeleteMessageNo), dialogClickListener).show();
+
+
             }
             @Override
-            public void onLeftClicked(int position) {
-                TripDTO tripToDelete = adapter.trips.get(position);
-                if (tripToDelete.getId()>=0){
-                    new DeleteTripBD(getContext()).execute(tripToDelete.getId());
-                }else{
-                    Toast.makeText(getContext(), "Borrando elemento vacío", Toast.LENGTH_SHORT).show();
-                }
-                adapter.trips.remove(position);
-                adapter.notifyItemRemoved(position);
-                adapter.notifyItemRangeChanged(position, adapter.getItemCount());
+            public void onLeftClicked(final int position) {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                TripDTO tripToDelete = adapter.trips.get(position);
+                                if (tripToDelete.getId()>=0){
+                                    new DeleteTripBD(getContext()).execute(tripToDelete.getId());
+                                    Toast.makeText(getContext(), R.string.tripDeleteMessageDeleted, Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(getContext(), R.string.tripDeleteMessageEmpty, Toast.LENGTH_SHORT).show();
+                                }
+                                adapter.trips.remove(position);
+                                adapter.notifyItemRemoved(position);
+                                adapter.notifyItemRangeChanged(position, adapter.getItemCount());
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                Toast.makeText(getContext(), R.string.tripDeleteMessageUndeleted, Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage(getString(R.string.tripDeleteMessage)).setPositiveButton(getString(R.string.tripDeleteMessageYes), dialogClickListener)
+                        .setNegativeButton(getString(R.string.tripDeleteMessageNo), dialogClickListener).show();
             }
         });
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);

@@ -180,8 +180,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Call
             lastTripStartPlace.setText(trip.getStartPlace());
             lastTripEndPlace.setText(trip.getEndPlace());
             lastTripKmText.setText(String.format("%.2f", trip.getKms()) + " km");
-            Time duration = new Time(trip.getEndDate().getTime() - trip.getStartDate().getTime());
-            lastTripDurationText.setText(TIME_FORMAT.format(duration).toString() + " h");
+
+            String duration = trip.getHours() + ":";
+            duration += trip.getMinutes() > 9 ? trip.getMinutes() : "0" + trip.getMinutes() ;
+            lastTripDurationText.setText(duration + " h");
             lastTripGasolineText.setText(String.format("%.2f", trip.getFuelConsumptionAVG()) + " l/km");
             lastTripPointsText.setText(String.format("%.2f", trip.getSpeedAVG()) + " km/h");
         }

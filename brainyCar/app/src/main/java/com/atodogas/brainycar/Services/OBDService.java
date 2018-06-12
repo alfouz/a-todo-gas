@@ -51,7 +51,9 @@ public class OBDService extends Service implements CallbackInterface<OBDAdapter>
         super.onDestroy();
 
         obdThread.terminate();
-        adapter.close();
+        if(adapter != null){
+            adapter.close();
+        }
         connectOBD.close();
     }
 
@@ -66,9 +68,9 @@ public class OBDService extends Service implements CallbackInterface<OBDAdapter>
         adapter = obdAdapter;
 
         // TODO: Borrar/Comentar mockup cuando no se necesite
-        if(obdAdapter == null){
+        /*if(obdAdapter == null){
             adapter = new OBDMock(obdDatabase);
-        }
+        }*/
 
         if(adapter != null){
             obdThread.start();
@@ -98,9 +100,6 @@ public class OBDService extends Service implements CallbackInterface<OBDAdapter>
                     intent.putExtra("OBDDTO", dto);
                     localBroadcastManager.sendBroadcast(intent);
 
-                    /*if(adapter instanceof OBDReal) {
-                        obdDatabase.insertRow(dto);
-                    }*/
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {

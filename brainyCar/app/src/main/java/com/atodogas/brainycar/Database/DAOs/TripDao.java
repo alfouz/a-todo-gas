@@ -12,7 +12,7 @@ import java.util.List;
 
 @Dao
 public interface TripDao {
-    @Query("SELECT * FROM Trips WHERE idCar = :idCar")
+    @Query("SELECT * FROM Trips WHERE idCar = :idCar ORDER BY id DESC")
     List<TripEntity> getAllCarTrips(int idCar);
 
     @Query("SELECT * FROM Trips WHERE id = :id")

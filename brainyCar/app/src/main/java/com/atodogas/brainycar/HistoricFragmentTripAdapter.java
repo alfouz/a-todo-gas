@@ -48,8 +48,11 @@ public class HistoricFragmentTripAdapter extends RecyclerView.Adapter<HistoricFr
         holder.startPlace.setText(trips.get(position).getStartPlace());
         holder.endPlace.setText(trips.get(position).getEndPlace());
         holder.km.setText(String.format("%.2f", trips.get(position).getKms())+" km");
-        Time duration = new Time(trips.get(position).getEndDate().getTime() - trips.get(position).getStartDate().getTime());
-        holder.duration.setText(TIME_FORMAT.format(duration).toString()+" h");
+
+        String duration = trips.get(position).getHours() + ":";
+        duration += trips.get(position).getMinutes() > 9 ? trips.get(position).getMinutes() : "0" + trips.get(position).getMinutes() ;
+
+        holder.duration.setText(duration + " h");
         holder.gasoline.setText(String.format("%.2f", trips.get(position).getFuelConsumptionAVG())+" l/km");
         holder.points.setText(String.format("%.2f", trips.get(position).getSpeedAVG())+" km/h");
         holder.bind(trips.get(position), listener);

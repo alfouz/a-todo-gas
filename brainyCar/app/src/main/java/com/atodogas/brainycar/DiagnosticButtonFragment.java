@@ -46,8 +46,6 @@ public class DiagnosticButtonFragment extends Fragment implements View.OnClickLi
         loadingLayout.setVisibility(View.INVISIBLE);
         loadingTextView = root.findViewById(R.id.loadingTextView);
 
-        connectOBD = new ConnectOBD(this);
-
         // Setting buttons for graph
         diagnosticButton = root.findViewById(R.id.diagnosticButton);
         diagnosticButton.setOnClickListener(this);
@@ -63,15 +61,16 @@ public class DiagnosticButtonFragment extends Fragment implements View.OnClickLi
         loadingLayout.setVisibility(View.VISIBLE);
         loadingTextView.setText(getString(R.string.loading_obteniendo_codigos_error));
         startMilis = System.currentTimeMillis();
+        connectOBD = new ConnectOBD(this);
         connectOBD.execute();
     }
 
     @Override
     public void doCallback(OBDAdapter obdAdapter) {
         // TODO: Para hacer pruebas con datos mockeados
-        if(obdAdapter == null){
+        /*if(obdAdapter == null){
             obdAdapter = new OBDMock(null);
-        }
+        }*/
 
         try {
             if(obdAdapter != null){
@@ -120,6 +119,8 @@ public class DiagnosticButtonFragment extends Fragment implements View.OnClickLi
             }
             else {
                 Toast.makeText(getActivity().getApplicationContext(), getString(R.string.error_conectar_obd), Toast.LENGTH_LONG).show();
+                loadingLayout.setVisibility(View.GONE);
+                diagnosticButton.setVisibility(View.VISIBLE);
             }
         } catch (IOException e) {
             Toast.makeText(getActivity().getApplicationContext(), getString(R.string.error_obtener_datos_obd), Toast.LENGTH_LONG).show();

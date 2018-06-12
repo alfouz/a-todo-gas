@@ -309,7 +309,6 @@ public class TripDetailsActivity extends AppCompatActivity implements CallbackIn
     public void setTripLayout(List<TripDTO> tripdtos){
         HistoricFragmentTripAdapter adapter = new HistoricFragmentTripAdapter(tripdtos, new HistoricFragmentTripAdapter.OnItemClickListener() {
             @Override public void onItemClick(TripDTO item) {
-                Toast.makeText(getApplicationContext(), item.getStartPlace() + " - " + item.getEndPlace(), Toast.LENGTH_LONG).show();
             }
         });
         tripDetailsLayout.setHasFixedSize(true);

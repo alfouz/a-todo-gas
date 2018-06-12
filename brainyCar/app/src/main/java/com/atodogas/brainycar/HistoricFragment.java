@@ -330,13 +330,18 @@ public class HistoricFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void drawPlot(java.util.Date date) {
+        List<TripDTO> tripsOrdered = new ArrayList<>();
         List<TripDTO> tripsFilter = new ArrayList<>();
         List<TripDTO> tripsToDraw = new ArrayList<>();
         java.util.Date dateTrip1 = null;
         java.util.Date dateTrip2 = null;
 
+        for(int i = trips.size() - 1; i >= 0; i--){
+            tripsOrdered.add(trips.get(i));
+        }
+
         if(spinnerPeriod.getSelectedItemPosition() == 0){
-            for(TripDTO trip : trips){
+            for(TripDTO trip : tripsOrdered){
                 if(compareByWeek(date, trip.getStartDate())){
                     tripsFilter.add(trip);
                 }
@@ -371,7 +376,7 @@ public class HistoricFragment extends Fragment implements View.OnClickListener, 
             }
         }
         else if(spinnerPeriod.getSelectedItemPosition() == 1){
-            for(TripDTO trip : trips){
+            for(TripDTO trip : tripsOrdered){
                 if(compareByMonth(date, trip.getStartDate())){
                     tripsFilter.add(trip);
                 }
@@ -414,7 +419,7 @@ public class HistoricFragment extends Fragment implements View.OnClickListener, 
             }
         }
         else if(spinnerPeriod.getSelectedItemPosition() == 2){
-            for(TripDTO trip : trips){
+            for(TripDTO trip : tripsOrdered){
                 if(compareByYear(date, trip.getStartDate())){
                     tripsFilter.add(trip);
                 }
